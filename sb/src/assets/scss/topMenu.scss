@@ -1,0 +1,53 @@
+.topMenu {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    height: var(--menu-top-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+        &__title {
+            font-family: Roboto;
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+        &__subtitle {
+        }
+    }
+
+    .login {
+        transition: transform 0.7s ease-out;
+        border-radius: 50%;
+        border: 1.8px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            path {
+                transition: 0.3s cubic-bezier(1, -0.12, 1, 1);
+            }
+            circle {
+                transition: 1s ease-in-out;
+                fill: white;
+            }
+        }
+        &.active {
+            transform: rotateY(-180deg);
+            svg {
+                path {
+                    stroke: white;
+                }
+                circle {
+                    fill: var(--accent);
+                }
+            }
+            border-color: transparent;
+        }
+    }
+}

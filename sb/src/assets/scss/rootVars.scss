@@ -1,0 +1,24 @@
+@import 'mixins.scss';
+
+html {
+    font-size: 14px;
+}
+
+:root {
+    //размеры
+    --side-menu-width: 120px;
+    --side-menu-height: 70vh; //так же, минимальная высота для основного блока
+    --menu-top-height: 110px;
+
+    --pageSide-gap: 50px; //отступ левой панели от основного контента
+    --pageTop-gap: 10px; //отступ верхней панели от контента
+
+    --page-max-height: 90vh; //максимальная высота основного блока
+
+    @include if_size('large') {
+        --side-menu-width: 90px;
+    }
+
+    //цвета
+    --accent: #5794da;
+}

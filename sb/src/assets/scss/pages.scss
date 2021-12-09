@@ -1,0 +1,17 @@
+.page {
+    margin-left: calc(var(--side-menu-width) + var(--pageSide-gap));
+
+    padding-top: 35px;
+    padding-bottom: 35px;
+
+    background: #ffffff;
+    box-shadow: 0px 0px 80px rgba(198, 204, 216, 0.35);
+    border-radius: 40px;
+
+    min-height: var(--side-menu-height);
+    max-height: var(--page-max-height);
+
+    &-main {
+        display: flex;
+    }
+}

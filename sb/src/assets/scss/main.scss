@@ -1,0 +1,19 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import './rootVars.scss';
+@import './pages.scss';
+
+html {
+    position: relative;
+}
+
+a {
+    color: inherit;
+    &:hover {
+        color: inherit;
+    }
+}
+
+//регулирует отступ контента+левого сайдбара от верхнего меню
+.content {
+    margin-top: calc(var(--menu-top-height) + var(--pageTop-gap));
+}
