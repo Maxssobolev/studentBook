@@ -1,6 +1,7 @@
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL } from '../actions/UserActions';
 
 const initialState = {
+  isLogged: false,
   userData: null,
   error: '', // добавили для сохранения текста ошибки
   isFetching: false, // добавили для реакции на статус "загружаю" или нет
@@ -14,6 +15,7 @@ export function userReducer(state = initialState, action) {
     case LOGIN_SUCCESS:
       return {
         ...state,
+        isLogged: true,
         isFetching: false,
         userData: action.payload,
       };
