@@ -17,3 +17,15 @@ a {
 .content {
     margin-top: calc(var(--menu-top-height) + var(--pageTop-gap));
 }
+
+//button
+.button {
+    border-radius: 50%;
+    min-width: 140px;
+    height: 40px;
+
+    &_blue {
+        height: 50px;
+        min-width: 170px;
+    }
+}
