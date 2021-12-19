@@ -4,8 +4,9 @@ import moment from 'moment';
 
 import Button from '../Button/Button'
 import { getRemainTime } from '../Utils/getRemainTime';
+import Like from '../Actions/Like/Like';
 
-export default function NewsCard({ __id, title, description, publishDate, deadline }) {
+export default function NewsCard({ __id, title, description, publishDate, deadline, isLiked }) {
 
     const remainTime = getRemainTime(deadline)
 
@@ -20,13 +21,16 @@ export default function NewsCard({ __id, title, description, publishDate, deadli
                         <div className="dates__deadline">{remainTime}</div>
                     </div>
                     <div className="button-wrapper">
-                        <Button text='Подробнее' />
+                        <Button type="readmore" />
                     </div>
                 </div>
 
             </div>
             <div className="newsCard-controllers">
-
+                <Like
+                    newsCardId={__id}
+                    __isLiked={isLiked}
+                />
             </div>
 
         </div>

@@ -1,6 +1,7 @@
 @import 'mixins.scss';
 
 html {
+    font-family: 'Montserrat';
     font-size: 14px;
 }
 
@@ -15,6 +16,14 @@ html {
 
     --page-max-height: 90vh; //максимальная высота основного блока
 
+    --newsCard-height: 300px; //высота карточек на главной
+
     //цвета
     --accent: #5794da;
+    --deadline: #85a1c1;
+
+    //fontsize
+    --fz-head: 1.714rem;
+    --fz-medium: 1.15rem;
+    --fz-small: 1rem;
 }

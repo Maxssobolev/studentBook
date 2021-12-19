@@ -13,5 +13,53 @@
 
     &-main {
         display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        //стили для карточек новостей
+        .newsCard-wrapper {
+            display: flex;
+            align-items: center;
+            width: 80%;
+            height: var(--newsCard-height);
+        }
+        .newsCard {
+            display: flex;
+            flex-direction: column;
+
+            flex-grow: 1;
+            height: 100%;
+            padding: 26px;
+            box-shadow: 0px 4px 15px rgba(133, 161, 193, 0.25);
+            border-radius: 20px;
+
+            font-size: 1.285rem;
+            &__title {
+                font-size: var(--fz-head);
+                font-weight: 700;
+                margin-bottom: 15px;
+            }
+            &__footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: auto;
+                .dates {
+                    &__publish {
+                        font-weight: 300;
+                    }
+                    &__deadline {
+                        font-weight: 700;
+                        color: var(--deadline);
+                        font-size: var(--fz-small);
+                    }
+                }
+            }
+
+            &-controllers {
+                margin-left: 40px;
+                width: 70px;
+            }
+        }
     }
 }

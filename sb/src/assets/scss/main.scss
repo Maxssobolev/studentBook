@@ -1,6 +1,8 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import '../fonts/fonts.scss';
 @import './rootVars.scss';
 @import './pages.scss';
+@import './actions.scss';
 
 html {
     position: relative;
@@ -20,12 +22,26 @@ a {
 
 //button
 .button {
-    border-radius: 50%;
-    min-width: 140px;
+    font-size: var(--fz-medium);
+    font-family: 'Montserrat';
+    background: transparent;
+    border-radius: 40px;
+    border: 1px solid #000000;
+    min-width: 225px;
     height: 40px;
+    font-weight: 500;
 
     &_blue {
+        font-weight: 700;
+        font-size: var(--fz-head);
+        color: white;
+        background: var(--accent);
+        border-color: transparent;
         height: 50px;
         min-width: 170px;
+    }
+
+    svg {
+        margin-left: 5px;
     }
 }
