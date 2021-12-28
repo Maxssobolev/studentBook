@@ -5,6 +5,7 @@ import moment from 'moment';
 import Button from '../Button/Button'
 import { getRemainTime } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
+import { Link } from 'react-router-dom';
 
 export default function NewsCard({ __id, title, description, publishDate, deadline, isLiked }) {
 
@@ -21,7 +22,11 @@ export default function NewsCard({ __id, title, description, publishDate, deadli
                         <div className="dates__deadline">{remainTime}</div>
                     </div>
                     <div className="button-wrapper">
-                        <Button type="readmore" />
+                        <Link to={{
+                            pathname: `/view/news/${__id}`,
+                        }}>
+                            <Button type="readmore" />
+                        </Link>
                     </div>
                 </div>
 

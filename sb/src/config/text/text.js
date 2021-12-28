@@ -4,5 +4,10 @@ export const TEXT = {
     button: {
         readmore: 'Подробнее',
         showmore: 'Показать еще',
+    },
+    page: {
+        notFound: {
+            title: 'Попробуйте изменить параметры URL'
+        }
     }
 }

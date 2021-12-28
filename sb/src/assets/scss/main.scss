@@ -24,12 +24,20 @@ a {
 .button {
     font-size: var(--fz-medium);
     font-family: 'Montserrat';
-    background: transparent;
+    background: var(--btn-readmore-bg);
     border-radius: 40px;
-    border: 1px solid #000000;
+    border: 1px solid var(--btn-readmore-border-color);
     min-width: 225px;
     height: 40px;
-    font-weight: 500;
+    font-weight: 400;
+    transition: 300ms ease-out;
+    &:hover {
+        background: var(--btn-readmore-hover-bg);
+        color: var(--btn-readmore-hover-color);
+        svg {
+            fill: var(--btn-readmore-hover-color);
+        }
+    }
 
     &_blue {
         font-weight: 700;
@@ -42,6 +50,7 @@ a {
     }
 
     svg {
+        transition: 300ms ease-out;
         margin-left: 5px;
     }
 }
