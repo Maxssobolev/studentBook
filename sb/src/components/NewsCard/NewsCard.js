@@ -7,7 +7,7 @@ import { getRemainTime } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
 import { Link } from 'react-router-dom';
 
-export default function NewsCard({ __id, title, description, publishDate, deadline, isLiked }) {
+export default function NewsCard({ __id, title, content, publishDate, deadline, isLiked }) {
 
     const remainTime = getRemainTime(deadline)
 
@@ -15,7 +15,7 @@ export default function NewsCard({ __id, title, description, publishDate, deadli
         <div className="newsCard-wrapper">
             <div className="newsCard">
                 <div className="newsCard__title">{title}</div>
-                <div className="newsCard__description">{description}...</div>
+                <div className="newsCard__content">{content}...</div>
                 <div className="newsCard__footer">
                     <div className="dates">
                         <div className="dates__publish">{moment(publishDate).format('D MMMM, HH:mm')}</div>

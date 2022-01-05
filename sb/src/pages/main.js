@@ -1,18 +1,26 @@
 import React from 'react';
+import axios from 'axios'
+import { useState } from 'react';
+import { useEffect } from 'react';
 import NewsCard from '../components/NewsCard/NewsCard';
 
-const news = [
-    {
+//config
+import { API } from '../config/api/api';
+
+export default function MainPage() {
+    const [news, setNews] = useState([{
         id: '1',
         title: 'Начало зачетной недели',
-        description: 'Сессия – это наиболее сложный период обучения для любого студента высшего учебного заведения. В это время проверяются знания и умения учащихся, накопленные на протяжении всего семестра. От того, будут ли экзамены сданы успешно, зависит многое: возможность продолжения учебы, перевода с платного отделения на бюджет, с заочной или вечерней формы на дневную, перспективы получения стипендии или перехода в другой вуз.',
+        content: 'Сессия – это наиболее сложный период обучения для любого студента высшего учебного заведения. В это время проверяются знания и умения учащихся, накопленные на протяжении всего семестра. От того, будут ли экзамены сданы успешно, зависит многое: возможность продолжения учебы, перевода с платного отделения на бюджет, с заочной или вечерней формы на дневную, перспективы получения стипендии или перехода в другой вуз.',
         date: '2021-12-10T17:00:00',
         deadline: '2021-12-10T19:00:00',
         isLiked: false
-    }
-]
-
-export default function MainPage() {
+    }])
+    /*useEffect(() => {
+        axios.get(`${API.news}`).then(
+            (res) => setNews(res.data)
+        )
+    }, [news])*/
 
     return (
         <div className="page page-main">
@@ -22,7 +30,7 @@ export default function MainPage() {
                         key={`newsCardItem_${item.id}`}
                         __id={item.id}
                         title={item.title}
-                        description={item.description.slice(0, 200)}
+                        content={item.content.slice(0, 200)}
                         publishDate={item.date}
                         deadline={item.deadline}
                         isLiked={item.isLiked}
