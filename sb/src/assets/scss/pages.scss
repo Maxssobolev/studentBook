@@ -11,10 +11,16 @@
     min-height: var(--side-menu-height);
     max-height: var(--page-max-height);
 
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
     &-main {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-between;
 
         //стили для карточек новостей
         .newsCard-wrapper {
@@ -22,6 +28,10 @@
             align-items: center;
             width: 80%;
             height: var(--newsCard-height);
+            margin-bottom: 50px;
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
         .newsCard {
             display: flex;

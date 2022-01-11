@@ -6,6 +6,7 @@
 
 html {
     position: relative;
+    overflow-y: hidden;
 }
 
 a {
@@ -40,13 +41,17 @@ a {
     }
 
     &_blue {
-        font-weight: 700;
         font-size: var(--fz-head);
         color: white;
-        background: var(--accent);
-        border-color: transparent;
-        height: 50px;
-        min-width: 170px;
+        background: var(--btn-showmore-bg);
+        border-color: var(--btn-showmore-border-color);
+        height: 80px;
+        min-width: 250px;
+
+        &:hover {
+            background: var(--btn-showmore-hover-bg);
+            color: var(--btn-showmore-hover-color);
+        }
     }
 
     svg {

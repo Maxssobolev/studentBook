@@ -3,11 +3,13 @@ import axios from 'axios'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import NewsCard from '../components/NewsCard/NewsCard';
+import Button from '../components/Button/Button'
 
 //config
 import { API } from '../config/api/api';
 
 export default function MainPage() {
+
     const [news, setNews] = useState([{
         id: '1',
         title: 'Начало зачетной недели',
@@ -15,12 +17,17 @@ export default function MainPage() {
         date: '2021-12-10T17:00:00',
         deadline: '2021-12-10T19:00:00',
         isLiked: false
-    }])
-    /*useEffect(() => {
-        axios.get(`${API.news}`).then(
-            (res) => setNews(res.data)
-        )
-    }, [news])*/
+    },
+    {
+        id: '2',
+        title: 'Начало зачетной недели',
+        content: 'Сессия – это наиболее сложный период обучения для любого студента высшего учебного заведения. В это время проверяются знания и умения учащихся, накопленные на протяжении всего семестра. От того, будут ли экзамены сданы успешно, зависит многое: возможность продолжения учебы, перевода с платного отделения на бюджет, с заочной или вечерней формы на дневную, перспективы получения стипендии или перехода в другой вуз.',
+        date: '2021-12-10T17:00:00',
+        deadline: '2022-01-20T19:00:00',
+        isLiked: true
+    },])
+
+
 
     return (
         <div className="page page-main">
@@ -37,6 +44,11 @@ export default function MainPage() {
                     />
                 )
             })}
+
+            <Button
+                type='showmore'
+                handler={() => { }}
+            />
         </div>
     )
 }
