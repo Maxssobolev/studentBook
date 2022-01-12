@@ -8,13 +8,13 @@ html {
 :root {
     //размеры
     --side-menu-width: 90px;
-    --side-menu-height: 70vh; //так же, минимальная высота для основного блока
+    --side-menu-height: 80vh; //так же, минимальная высота для основного блока
     --menu-top-height: 110px;
 
     --pageSide-gap: 50px; //отступ левой панели от основного контента
     --pageTop-gap: 10px; //отступ верхней панели от контента
 
-    --page-max-height: 90vh; //максимальная высота основного блока
+    --page-max-height: 80vh; //максимальная высота основного блока
 
     --newsCard-height: 300px; //высота карточек на главной
 
@@ -38,7 +38,7 @@ html {
     --btn-showmore-hover-color: #fff;
     /*-END showmore btn*/
 
-    //fontsize
+    //fontsize 1rem = 14px !!!
     --fz-head: 1.714rem;
     --fz-medium: 1.15rem;
     --fz-small: 1rem;

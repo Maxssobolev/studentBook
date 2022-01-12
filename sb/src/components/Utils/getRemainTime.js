@@ -15,3 +15,31 @@ export function getRemainTime(deadline) {
     }
     return remain_time = remain_time ? `Актуально еще ${remain_time}` : `Событие закончилось ${moment(deadline).format('D MMMM, HH:mm')}`;
 }
+
+export function getRemainDeadline(publishDate, deadline) {
+    let wholeRopeWidth = '';
+    let progress = '';
+    let fromStartToNow = '';
+    let remain_time = '';
+
+    let publicDate = moment(publishDate);
+    let pubicDate_startPoint = moment(publishDate);
+
+    if (deadline !== '0000-00-00') {
+        deadline = moment(deadline);
+        wholeRopeWidth = deadline.diff(publicDate, 'hours');
+        fromStartToNow = moment().diff(pubicDate_startPoint, 'hours');
+        progress = 100 - (fromStartToNow / wholeRopeWidth) * 100 + '%';
+    }
+    if (moment(deadline).isAfter(moment())) {
+        let remain_actual_time = moment(deadline).diff(moment(), 'hours');
+        remain_time =
+            Math.floor(remain_actual_time / 24) > 0
+                ? Math.floor(remain_actual_time / 24) +
+                'д ' +
+                (remain_actual_time - 24 * Math.floor(remain_actual_time / 24)) +
+                'ч'
+                : remain_actual_time - 24 * Math.floor(remain_actual_time / 24) + 'ч';
+    }
+    return [remain_time, progress]
+}
