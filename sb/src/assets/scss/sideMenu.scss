@@ -6,7 +6,6 @@
     border-radius: 15px;
 
     background: var(--side-menu-bg);
-    //box-shadow: 0px 0px 80px rgba(198, 204, 216, 0.35);
 
     display: flex;
     flex-direction: column;
@@ -33,7 +32,7 @@
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        box-shadow: inset 0px 4px 15px rgba(133, 161, 193, 0.16);
+        border: 1px solid #D0E2F6;
 
         display: flex;
         align-items: center;
@@ -73,8 +72,10 @@
 
         &.active {
             background: var(--accent);
+            border-color: var(--accent);
             svg {
                 stroke: white !important;
+                stroke-opacity: 1 !important;
             }
         }
     }

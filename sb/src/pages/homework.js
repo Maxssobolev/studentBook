@@ -8,6 +8,20 @@ import Card from '../components/Card/Card';
 import moment from 'moment';
 import { TEXT } from '../config/text/text';
 
+//animation
+import { Transition } from 'react-transition-group';
+const duration = 500;
+const defaultStyle = {
+    transition: `opacity ${duration}ms easy-in-out`,
+    opacity: 0
+}
+const transitionStyles = {
+    entering: { opacity: 0.5 },
+    entered: { opacity: 1 },
+    existing: { opacity: 0.5 },
+    exited: { opacity: 0 },
+}
+
 export default function HomeWorkPage() {
     const [sortBy, setSortBy] = useState('date')
     const [homeworks, setHomeworks] = useState([
@@ -89,12 +103,13 @@ export default function HomeWorkPage() {
             }
         ))
     }
-
+    ///СДЕЛАТЬ АНИМАЦИЮ!!!
     return (
         <>
-            <div className="page page-homework">
-                {dataToShow.length > 0 ?
 
+            <div className="page page-homework">
+
+                {dataToShow.length > 0 ?
                     dataToShow.map((item) => {
                         return (
                             <Card
@@ -110,12 +125,15 @@ export default function HomeWorkPage() {
                             />
                         )
                     })
+
+
                     :
                     <div className="nothing-to-show">
-                        {TEXT.page.nothingToShow.title}
+                        {TEXT.page.inDevelop.title}
                     </div>
                 }
             </div>
+
             <div className="rightsidebar">
                 <div className="filters">
                     <div className="filters__radio-wrapper" onChange={handleChangeSort} >

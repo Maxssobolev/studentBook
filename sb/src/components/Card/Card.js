@@ -17,17 +17,7 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
     return (
         <div className="main-card-wrapper">
             {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
-            {type === 'homework' && (
-                <div className="deadline-indicator">
-
-                    <div className="deadline-indicator__progress" style={{
-                        width: progress
-                    }}>
-                        <div className="deadline-indicator__progress-bomb"><img src={BombIcon} alt="deadline" /></div>
-                    </div>
-                    <div className="deadline-indicator__substrate"></div>
-                </div>
-            )}
+            {type === 'homework' && (<div></div>)}
 
             <div className="newsCard-wrapper">
                 <div className="newsCard">

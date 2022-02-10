@@ -11,6 +11,9 @@ export const TEXT = {
         },
         nothingToShow: {
             title: 'Показывать нечего'
+        },
+        inDevelop: {
+            title: 'В разработке'
         }
     }
 }

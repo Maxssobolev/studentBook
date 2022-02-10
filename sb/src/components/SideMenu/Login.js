@@ -10,7 +10,7 @@ export default function Login() {
     return (
         <NavLink
             to='/lk'
-            activeClassName=''
+            activeClassName='active'
             className="sideMenu__item"
             data-title={'Личный кабинет'}
         >
