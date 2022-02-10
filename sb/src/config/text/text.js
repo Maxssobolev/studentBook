@@ -8,6 +8,9 @@ export const TEXT = {
     page: {
         notFound: {
             title: 'Попробуйте изменить параметры URL'
+        },
+        nothingToShow: {
+            title: 'Показывать нечего'
         }
     }
 }

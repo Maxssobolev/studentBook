@@ -6,6 +6,7 @@ import { customSelectStyles } from '../components/Utils/customSelectStyles';
 import { DropdownIndicator } from '../components/Utils/dropdownIndicator';
 import Card from '../components/Card/Card';
 import moment from 'moment';
+import { TEXT } from '../config/text/text';
 
 export default function HomeWorkPage() {
     const [sortBy, setSortBy] = useState('date')
@@ -47,7 +48,7 @@ export default function HomeWorkPage() {
         //изначально данные отсортированны по дате (сначала новые)
         homeworks.sort(
             (a, b) => {
-                return new moment(b.date).format('YYYYMMDD') - new moment(a.date).format('YYYYMMDD')
+                return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
             }
         )
     )
@@ -61,12 +62,12 @@ export default function HomeWorkPage() {
                     ...(homeworks.filter(({ subjectID }) => subjectID === selectedOpt.id))
                 ].sort(
                     (a, b) => {
-                        //сохраняем прежнюю сортировку
                         if (sortBy === 'deadline') {
-                            return new moment(b.deadline).format('YYYYMMDD') - new moment(a.deadline).format('YYYYMMDD')
+                            //Если сортировка по дедлайну, то вначале те, что сгорят быстрее
+                            return new moment(a.deadline).format('YYYYMMDD') - new moment(b.deadline).format('YYYYMMDD')
                         }
                         else {
-                            return new moment(a[sortBy]).format('YYYYMMDD') - new moment(b[sortBy]).format('YYYYMMDD')
+                            return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
                         }
                     }
                 ))
@@ -80,10 +81,10 @@ export default function HomeWorkPage() {
             (a, b) => {
                 if (event.target.value === 'deadline') {
                     //Если сортировка по дедлайну, то вначале те, что сгорят быстрее
-                    return new moment(b[event.target.value]).format('YYYYMMDD') - new moment(a[event.target.value]).format('YYYYMMDD')
+                    return new moment(a[event.target.value]).format('YYYYMMDD') - new moment(b[event.target.value]).format('YYYYMMDD')
                 }
                 else {
-                    return new moment(a[event.target.value]).format('YYYYMMDD') - new moment(b[event.target.value]).format('YYYYMMDD')
+                    return new moment(b[event.target.value]).format('YYYYMMDD') - new moment(a[event.target.value]).format('YYYYMMDD')
                 }
             }
         ))
@@ -111,7 +112,7 @@ export default function HomeWorkPage() {
                     })
                     :
                     <div className="nothing-to-show">
-                        Показывать нечего
+                        {TEXT.page.nothingToShow.title}
                     </div>
                 }
             </div>
