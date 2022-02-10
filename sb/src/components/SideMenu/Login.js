@@ -11,10 +11,10 @@ export default function Login() {
         <NavLink
             to='/lk'
             activeClassName=''
-            className={isLogged ? 'login active' : 'login'}
-
+            className="sideMenu__item"
+            data-title={'Личный кабинет'}
         >
-            <UserIcon className="login__icon" />
+            <UserIcon />
         </NavLink>
     )
 }

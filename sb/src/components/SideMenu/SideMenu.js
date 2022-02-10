@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
+import Login from './Login'
 
 import '../../assets/scss/sideMenu.scss'
 //Обьект с навигацией
@@ -10,6 +10,9 @@ export default function SideMenu() {
 
     return (
         <div className="sideMenu">
+            <div className="sideMenu__item-wrapper" >
+                <Login />
+            </div>
             {nav.map((item, idx) => {
                 let Icon = item.icon
                 return (

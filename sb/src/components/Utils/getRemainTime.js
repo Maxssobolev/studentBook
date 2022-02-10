@@ -41,5 +41,5 @@ export function getRemainDeadline(publishDate, deadline) {
                 'ч'
                 : remain_actual_time - 24 * Math.floor(remain_actual_time / 24) + 'ч';
     }
-    return [remain_time, progress]
+    return { remain_time, progress }
 }

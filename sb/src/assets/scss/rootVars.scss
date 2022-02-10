@@ -1,34 +1,50 @@
 @import 'mixins.scss';
 
 html {
-    font-family: 'Montserrat';
+    font-family: 'Roboto';
     font-size: 14px;
 }
-
+body{
+    line-height: normal;
+    font-family: inherit;
+    font-weight: inherit;
+}
 :root {
+    
+    
     //размеры
-    --side-menu-width: 90px;
+    --rightside-menu-width: 235px;
+    --side-menu-width: 80px;
     --side-menu-height: 80vh; //так же, минимальная высота для основного блока
     --menu-top-height: 110px;
 
-    --pageSide-gap: 50px; //отступ левой панели от основного контента
+    --pageSide-gap: 15px; //отступ левой и правой панели от основного контента
     --pageTop-gap: 10px; //отступ верхней панели от контента
 
     --page-max-height: 80vh; //максимальная высота основного блока
 
-    --newsCard-height: 300px; //высота карточек на главной
+    --newsCard-height: 270px; //высота карточек на главной и в домашке
+    --newsCard-width: 240px; //ширина карточек на главной и в домашке
 
     //цвета
     --accent: #5794da;
     --deadline: #85a1c1;
+    --black: #212121;
 
+    --body-bg: #FAFBFC; //
+    --side-menu-bg: #fff;
+    --content-bg: #fff;
+    --right-menu-bg: #fff;
+    --radio-color: #5B3DEA;
+    
     //button
 
     /*BEGIN readmore btn*/
-    --btn-readmore-bg: #fff;
-    --btn-readmore-border-color: #000;
-    --btn-readmore-hover-bg: #000;
-    --btn-readmore-hover-color: #fff;
+    --btn-readmore-color: #fff;
+    --btn-readmore-bg: var(--accent);
+    --btn-readmore-border-color: var(--accent);
+    --btn-readmore-hover-bg: transparent;
+    --btn-readmore-hover-color: var(--accent);
     /*-END readmore btn*/
 
     /*BEGIN showmore btn*/
@@ -39,7 +55,7 @@ html {
     /*-END showmore btn*/
 
     //fontsize 1rem = 14px !!!
-    --fz-head: 1.714rem;
+    --fz-head: 1.43rem;
     --fz-medium: 1.15rem;
     --fz-small: 1rem;
 }

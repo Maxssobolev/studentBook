@@ -1,9 +1,5 @@
 .topMenu {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-
+    margin-bottom: 20px;
     height: var(--menu-top-height);
 
     display: flex;
@@ -12,15 +8,15 @@
 
     .logo {
         &__title {
-            font-family: Roboto;
+            font-family: Gilroy;
             font-size: 1.7rem;
-            font-weight: 700;
+            font-weight: bold;
         }
         &__subtitle {
         }
     }
 
-    .login {
+    /*.login {
         transition: transform 0.7s ease-out;
         border-radius: 50%;
         border: 1.8px solid black;
@@ -49,5 +45,5 @@
             }
             border-color: transparent;
         }
-    }
+    }*/
 }

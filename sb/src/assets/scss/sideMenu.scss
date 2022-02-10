@@ -1,15 +1,12 @@
 .sideMenu {
-    position: fixed;
-    z-index: 2;
-
-    padding: 50px 0;
+    padding: 15px 0;
 
     width: var(--side-menu-width);
     height: var(--side-menu-height);
-    border-radius: 40px;
+    border-radius: 15px;
 
-    background: #ffffff;
-    box-shadow: 0px 0px 80px rgba(198, 204, 216, 0.35);
+    background: var(--side-menu-bg);
+    //box-shadow: 0px 0px 80px rgba(198, 204, 216, 0.35);
 
     display: flex;
     flex-direction: column;

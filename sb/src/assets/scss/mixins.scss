@@ -2,9 +2,10 @@ $breakpoints: (
     'extra-small': 375px,
     'small': 425px,
     'tablet': 1024px,
-    'medium': 1366px,
-    'large': 1440px,
-    'extra-large': 1600px,
+    'm': 1366px,
+    'l': 1440px,
+    'xl': 1600px,
+    'xxl': 2800px,
 ) !default;
 
 @mixin if_size($breakpoint) {
