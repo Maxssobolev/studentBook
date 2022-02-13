@@ -1,0 +1,85 @@
+.timetable{
+    position: relative;
+
+    .leftside{
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: -75px;
+        transform: translate(0,-50%);
+
+
+        font-family: 'Gilroy';
+        font-weight: 700;
+        font-size: var(--fz-medium);
+
+        background: var(--timetable-bg);
+        border-radius: 20px;
+        
+        line-height: 1.1rem;
+
+        padding: 10px 13px;
+        .day{
+            color: var(--black);
+            text-transform: capitalize;
+        }
+        .week{
+            color: var(--timetable-date-color);
+        }
+    }
+    .rightside{
+        padding: 10px 35px;
+        border-radius: 40px;
+        background: var(--timetable-bg);
+
+        .subjects{
+
+            .subject{
+                display: flex;
+                align-items: center;
+
+                font-family: 'Gilroy';
+                font-weight: 700;
+
+                &_prev, &_next{
+                    color: var(--timetable-prev-color);
+                    position: relative;
+
+                    &::before{
+                        content: '';
+                        position: absolute;
+                        left: -10px;
+                        z-index: 2;
+                        width: 5px;
+                        height: 5px;
+                        background: var(--timetable-prev-color);
+                        border-radius: 50%;
+
+                    }
+                }
+                &_now{
+                    color: var(--black);
+                    font-size: var(--fz-medium);
+                    padding-left: 5px;
+                    line-height: 1.5rem;
+                    &::before{
+                        content: '';
+                        position: absolute;
+                        left: 24px;
+                        z-index: 2;
+                        width: 7px;
+                        height: 7px;
+                        background: var(--black);
+                        border-radius: 50%;
+                        
+                    }
+                }
+
+                &__separator{
+                    margin: 0 5px;
+                }
+                
+            }
+        }
+    }
+}

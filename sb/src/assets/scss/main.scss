@@ -4,16 +4,12 @@
 @import './pages.scss';
 @import './actions.scss';
 @import './mixins.scss';
-
+@import './timetable.scss';
 
 html {
     position: relative;
     overflow-y: hidden;
     
-}
-
-body{
-    background: var(--body-bg);
 }
 
 a {
@@ -96,12 +92,20 @@ a {
     
     $card-padding: 15px;
     
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: 2fr 1fr 2fr 3fr;
+
+    &_hw{
+        grid-template-rows: 1fr 2fr 1fr 2fr 3fr;
+    }
 
     height: 100%;
-
+    &__subject{
+        color: var(--accent);
+        font-family: Roboto;
+        font-weight: bold;
+        padding: 0 $card-padding;
+    }
     &__title {
         font-size: var(--fz-head);
         font-family: Gilroy;

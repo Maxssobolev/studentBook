@@ -8,6 +8,9 @@ body{
     line-height: normal;
     font-family: inherit;
     font-weight: inherit;
+
+    //background: url('../img//bg-templates.svg') ;
+    background: var(--body-bg);
 }
 :root {
     
@@ -36,6 +39,10 @@ body{
     --content-bg: #fff;
     --right-menu-bg: #fff;
     --radio-color: #5B3DEA;
+
+    --timetable-date-color: rgba(87, 148, 218, 1);
+    --timetable-bg: #fff;
+    --timetable-prev-color: #85A1C1;
     
     //button
 

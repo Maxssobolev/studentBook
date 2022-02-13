@@ -7,13 +7,14 @@ import { getRemainDeadline } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion/dist/es/index'
-
-//bomb icon
-import BombIcon from '../../assets/img/bomb.png'
+import { getSubject } from '../../config/subjectsList'
 
 export default function Card({ __id, title, content, publishDate, deadline, isLiked, type, subjectID }) {
 
     const { progress } = getRemainDeadline(publishDate, deadline)
+
+    //if it is homework's card
+    const subject = getSubject(subjectID)
 
     return (
         <motion.div
@@ -21,13 +22,14 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
             intial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
             layout
-            className="main-card-wrapper"
+            className='main-card-wrapper'
         >
             {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
             {type === 'homework' && (<div></div>)}
 
             <div className="newsCard-wrapper">
-                <div className="newsCard">
+                <div className={`newsCard ${type === 'homework' ? 'newsCard_hw' : ''}`}>
+                    {type === 'homework' && <div className="newsCard__subject">{subject.label}</div>}
                     <div className="newsCard__title">{title}</div>
                     <div className="newsCard__date">
                         <div className="dates__publish">{moment(publishDate).format('D MMMM, HH:mm')}</div>

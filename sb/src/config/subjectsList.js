@@ -19,8 +19,11 @@ export const subjects = [
 
 
 export const getSubject = (id) => {
+    let res = ''
     subjects.forEach((itm) => {
-        if (itm.id == id)
-            return itm
+        if (itm.id === id) {
+            res = itm
+        }
     })
+    return res
 } 
