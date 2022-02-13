@@ -7,20 +7,7 @@ import { DropdownIndicator } from '../components/Utils/dropdownIndicator';
 import Card from '../components/Card/Card';
 import moment from 'moment';
 import { TEXT } from '../config/text/text';
-
-//animation
-import { Transition } from 'react-transition-group';
-const duration = 500;
-const defaultStyle = {
-    transition: `opacity ${duration}ms easy-in-out`,
-    opacity: 0
-}
-const transitionStyles = {
-    entering: { opacity: 0.5 },
-    entered: { opacity: 1 },
-    existing: { opacity: 0.5 },
-    exited: { opacity: 0 },
-}
+import { motion, AnimatePresence } from 'framer-motion/dist/es/index'
 
 export default function HomeWorkPage() {
     const [sortBy, setSortBy] = useState('date')
@@ -103,30 +90,34 @@ export default function HomeWorkPage() {
             }
         ))
     }
-    ///СДЕЛАТЬ АНИМАЦИЮ!!!
+
     return (
         <>
 
             <div className="page page-homework">
 
                 {dataToShow.length > 0 ?
-                    dataToShow.map((item) => {
-                        return (
-                            <Card
-                                key={`hwCardItem_${item.id}`}
-                                type="homework"
-                                subjectID={item.subjectID}
-                                __id={item.id}
-                                title={item.title}
-                                content={item.content}
-                                publishDate={item.date}
-                                deadline={item.deadline}
-                                isLiked={item.isLiked}
-                            />
-                        )
-                    })
-
-
+                    (<motion.div layout className='page-homework-cardsWrapper'>
+                        <AnimatePresence>
+                            {
+                                dataToShow.map((item) => {
+                                    return (
+                                        <Card
+                                            key={`hwCardItem_${item.id}`}
+                                            type="homework"
+                                            subjectID={item.subjectID}
+                                            __id={item.id}
+                                            title={item.title}
+                                            content={item.content}
+                                            publishDate={item.date}
+                                            deadline={item.deadline}
+                                            isLiked={item.isLiked}
+                                        />
+                                    )
+                                })
+                            }
+                        </AnimatePresence>
+                    </motion.div>)
                     :
                     <div className="nothing-to-show">
                         {TEXT.page.inDevelop.title}

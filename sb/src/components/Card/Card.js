@@ -6,6 +6,7 @@ import Button from '../Button/Button'
 import { getRemainDeadline } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion/dist/es/index'
 
 //bomb icon
 import BombIcon from '../../assets/img/bomb.png'
@@ -15,7 +16,13 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
     const { progress } = getRemainDeadline(publishDate, deadline)
 
     return (
-        <div className="main-card-wrapper">
+        <motion.div
+            animate={{ opacity: 1 }}
+            intial={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            layout
+            className="main-card-wrapper"
+        >
             {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
             {type === 'homework' && (<div></div>)}
 
@@ -43,6 +50,6 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
