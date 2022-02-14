@@ -34,7 +34,7 @@ a {
     border-radius: 20px;
     color: var(--btn-readmore-color);
     border: 1px solid var(--btn-readmore-border-color);
-    width: 225px;
+    width: 100%;
     height: 40px;
     font-weight: 700;
     transition: 300ms ease-out;
@@ -128,6 +128,7 @@ a {
             padding: 0 $card-padding;
         }
         .button-wrapper{
+            padding: 0 $card-padding;
             margin-top: 10px;   
         }
     }

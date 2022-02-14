@@ -22,16 +22,14 @@
         grid-template-rows: max-content;
         grid-row-gap: 15px;
 
-        @include if_size('xxl'){
-            justify-content: space-evenly;
-        }
-        @include if_size('l'){
-            justify-content: space-between;
-        }
         @media  (max-width: 1200px){
-            grid-template-columns: auto auto;
-            justify-content: space-evenly;
+            grid-template-columns: 1fr 1fr;
+            justify-items: center;
         }
+        @include if_size('xl'){
+            justify-items: center;
+        }
+        
       }
 
     &-main {

@@ -5,12 +5,12 @@ $breakpoints: (
     'm': 1366px,
     'l': 1440px,
     'xl': 1600px,
-    'xxl': 2800px,
+    
 ) !default;
 
 @mixin if_size($breakpoint) {
     @if map-has-key($breakpoints, $breakpoint) {
-        @media (max-width: map-get($breakpoints, $breakpoint)) {
+        @media (min-width: map-get($breakpoints, $breakpoint)) {
             @content;
         }
     } @else {

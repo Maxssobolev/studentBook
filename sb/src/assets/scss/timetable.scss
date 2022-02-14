@@ -28,7 +28,10 @@
         }
     }
     .rightside{
-        padding: 10px 35px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px 10px 35px;
         border-radius: 40px;
         background: var(--timetable-bg);
 
@@ -75,11 +78,55 @@
                     }
                 }
 
+                &_next_empty{
+                    &::before{
+                        background: transparent;
+                    }
+                }
+                .emptySub{
+                    //имитируем "наличие текста"
+                    height: 1rem;
+                }
+
                 &__separator{
                     margin: 0 5px;
                 }
+
                 
             }
+            
+        }
+        .arrow-down{
+            position: relative;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            cursor: pointer;
+
+            &::before{
+                position: absolute;
+                content: '';
+                height: 25px;
+                width: 2px;
+                background: rgba(87, 148, 218, 0.1);
+                left: -10px;
+                
+            }
+            svg{
+                transition: .3s ease-in-out;
+            }
+            &:hover{
+                svg {
+                    fill-opacity: 0.5;
+                }
+            }
+        }
+
+        &.loading{
+            height: 70px;
         }
     }
 }
