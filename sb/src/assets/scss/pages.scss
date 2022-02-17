@@ -37,8 +37,32 @@
     }
 
     &-homework{
-        .deadline-circle{
+        .deadline-chart{
+            align-self: center;
+            margin: 0 15px;
             position: relative;
+            background: var(--deadline-bg);
+            height: 30px;
+            border-radius: 10px;
+            &__progress{
+                position: absolute;
+                background: var(--deadline-progress);
+                height: 30px;
+                border-radius: 10px 0 0 10px;
+            }
+            &__text{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: var(--deadline-color);
+                font-family: Roboto;
+                font-weight: 600;
+            }
+        }
+        /*.deadline-circle{
+            position: relative;
+            
             .circle-diagram-wrapper{
                 position: absolute;
                 top: -22px;
@@ -62,8 +86,8 @@
                     //percent of filling
                     display: none;
                 }
-            }
-        }
+            
+        }}*/
         &-cardsWrapper{
             @include grid;
         }

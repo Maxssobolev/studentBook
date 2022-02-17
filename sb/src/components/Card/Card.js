@@ -25,21 +25,28 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
             layout
             className='main-card-wrapper'
         >
-            {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
-            {type === 'homework' && (
-                <div className='deadline-circle'>
-                    <CircleDiagram current={remainTime} percentOfFilling={progress} />
-                </div>
-            )}
+
+
 
             <div className="newsCard-wrapper">
                 <div className={`newsCard ${type === 'homework' ? 'newsCard_hw' : ''}`}>
+
                     {type === 'homework' && <div className="newsCard__subject">{subject.label}</div>}
+                    {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
+                    {type === 'homework' && (
+                        <div className="deadline-chart">
+                            <div className="deadline-chart__progress" style={{ width: progress }}></div>
+                            <div className="deadline-chart__text">{remainTime}</div>
+                        </div>
+                    )}
                     <div className="newsCard__title">{title}</div>
                     <div className="newsCard__date">
                         <div className="dates__publish">{moment(publishDate).format('D MMMM, HH:mm')}</div>
                     </div>
-                    <div className="newsCard__content">{content.slice(0, 95)}{content.length > 95 ? '...' : ''}</div>
+                    {/* Если карточка должна отображать новость, то появляется ее краткое описание */}
+                    {type !== 'homework' && (
+                        <div className="newsCard__content">{content.slice(0, 95)}{content.length > 95 ? '...' : ''}</div>
+                    )}
                     <div className="newsCard__footer">
                         <div className="newsCard__footer-controllers">
                             <Like

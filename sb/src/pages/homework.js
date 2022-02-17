@@ -108,7 +108,6 @@ export default function HomeWorkPage() {
                                             subjectID={item.subjectID}
                                             __id={item.id}
                                             title={item.title}
-                                            content={item.content}
                                             publishDate={item.date}
                                             deadline={item.deadline}
                                             isLiked={item.isLiked}

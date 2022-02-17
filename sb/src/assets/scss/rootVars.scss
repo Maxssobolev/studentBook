@@ -31,7 +31,6 @@ body{
 
     //цвета
     --accent: #5794da;
-    --deadline: #85a1c1;
     --black: #212121;
     --yellow: #D9DD17;
     --red: #DD2317;
@@ -45,6 +44,10 @@ body{
     --timetable-date-color: rgba(87, 148, 218, 1);
     --timetable-bg: #fff;
     --timetable-prev-color: #85A1C1;
+
+    --deadline-bg: #aad2ffcf;
+    --deadline-color: #fff;
+    --deadline-progress: var(--accent);
     
     //button
 
