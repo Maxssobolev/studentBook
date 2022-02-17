@@ -73,6 +73,7 @@ a {
 //стили для карточек
 .main-card-wrapper{
     position: relative;
+    width: max-content;
 }
 .newsCard-wrapper {
     position: relative;
@@ -135,6 +136,10 @@ a {
 
     
 }
+
+
+
+/*
 .deadline-indicator{
     position: relative;
     width: 100%;
@@ -169,24 +174,8 @@ a {
         background: #FFE4CB;
     }
 }
+*/
 
-.subjectIcon{
-    pointer-events: none;
-    position: absolute;
-    right: 20px;
-    border: 2px solid rgba(87, 148, 218, 0.5);
-    top: 50px;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    z-index: 10;
-    justify-content: center;
-    img{
-        max-width: 30px;
-    }
-}
 
 .nothing-to-show{
     pointer-events: none;
@@ -295,3 +284,33 @@ a {
         }
     }
 }
+
+
+
+//CIRCLE DIAGRAM
+/*
+.circle-diagram-wrapper {
+    
+    svg {
+        .chart-text {
+            
+            fill: var(--accent);
+            -moz-transform: translateY(0.25em);
+            -ms-transform: translateY(0.25em);
+            -webkit-transform: translateY(0.25em);
+            transform: translateY(0.25em);
+        }
+        .chart-number {
+            font-family: Gilroy;
+            font-weight: 600;
+            font-size: 0.6rem !important;
+            line-height: 1;
+            text-anchor: middle;
+            -moz-transform: translateY(-0.25em);
+            -ms-transform: translateY(-0.25em);
+            -webkit-transform: translateY(-0.25em);
+            transform: translateY(-0.25em);
+        }
+    }
+}
+*/

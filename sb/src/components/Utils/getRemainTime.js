@@ -20,7 +20,7 @@ export function getRemainDeadline(publishDate, deadline) {
     let wholeRopeWidth = '';
     let progress = '';
     let fromStartToNow = '';
-    let remain_time = '';
+    let remainTime = '';
 
     let publicDate = moment(publishDate);
     let pubicDate_startPoint = moment(publishDate);
@@ -29,11 +29,11 @@ export function getRemainDeadline(publishDate, deadline) {
         deadline = moment(deadline);
         wholeRopeWidth = deadline.diff(publicDate, 'hours');
         fromStartToNow = moment().diff(pubicDate_startPoint, 'hours');
-        progress = 100 - (fromStartToNow / wholeRopeWidth) * 100 + '%';
+        progress = Math.round((fromStartToNow / wholeRopeWidth) * 100);
     }
     if (moment(deadline).isAfter(moment())) {
         let remain_actual_time = moment(deadline).diff(moment(), 'hours');
-        remain_time =
+        remainTime =
             Math.floor(remain_actual_time / 24) > 0
                 ? Math.floor(remain_actual_time / 24) +
                 'д ' +
@@ -41,5 +41,5 @@ export function getRemainDeadline(publishDate, deadline) {
                 'ч'
                 : remain_actual_time - 24 * Math.floor(remain_actual_time / 24) + 'ч';
     }
-    return { remain_time, progress }
+    return { remainTime, progress }
 }

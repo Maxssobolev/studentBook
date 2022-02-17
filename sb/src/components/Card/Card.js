@@ -8,10 +8,11 @@ import Like from '../Actions/Like/Like';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion/dist/es/index'
 import { getSubject } from '../../config/subjectsList'
+import CircleDiagram from '../CircleDiagram/CircleDiagram';
 
 export default function Card({ __id, title, content, publishDate, deadline, isLiked, type, subjectID }) {
 
-    const { progress } = getRemainDeadline(publishDate, deadline)
+    const { remainTime, progress } = getRemainDeadline(publishDate, deadline)
 
     //if it is homework's card
     const subject = getSubject(subjectID)
@@ -25,7 +26,11 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
             className='main-card-wrapper'
         >
             {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
-            {type === 'homework' && (<div></div>)}
+            {type === 'homework' && (
+                <div className='deadline-circle'>
+                    <CircleDiagram current={remainTime} percentOfFilling={progress} />
+                </div>
+            )}
 
             <div className="newsCard-wrapper">
                 <div className={`newsCard ${type === 'homework' ? 'newsCard_hw' : ''}`}>
