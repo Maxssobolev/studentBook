@@ -4,33 +4,34 @@ html {
     font-family: 'Roboto';
     font-size: 14px;
 }
-body{
+body {
     line-height: normal;
     font-family: inherit;
     font-weight: inherit;
 
-    //background: url('../img//bg-templates.svg') ;
+    // background: url('../img//bg-templates.svg') ;
     background: var(--body-bg);
 }
 :root {
-    
-    
-    //размеры
+
+
+    // размеры
     --rightside-menu-width: 235px;
     --side-menu-width: 80px;
-    --side-menu-height: 80vh; //так же, минимальная высота для основного блока
+    --side-menu-height: 80vh; // так же, минимальная высота для основного блока
     --menu-top-height: 110px;
 
-    --pageSide-gap: 15px; //отступ левой и правой панели от основного контента
-    --pageTop-gap: 10px; //отступ верхней панели от контента
+    --pageSide-gap: 15px; // отступ левой и правой панели от основного контента
+    --pageTop-gap: 10px; // отступ верхней панели от контента
 
-    --page-max-height: 80vh; //максимальная высота основного блока
+    --page-max-height: 80vh; // максимальная высота основного блока
 
-    --newsCard-height: 270px; //высота карточек на главной и в домашке
-    --newsCard-width: 240px; //ширина карточек на главной и в домашке
+    --newsCard-height: 270px; // высота карточек на главной и в домашке
+    --newsCard-width: 240px; // ширина карточек на главной и в домашке
 
-    //цвета
+    // цвета
     --accent: #5794da;
+    --accent-light: #C0DCFC;
     --black: #212121;
     --yellow: #D9DD17;
     --red: #DD2317;
@@ -48,8 +49,8 @@ body{
     --deadline-bg: #aad2ffcf;
     --deadline-color: #fff;
     --deadline-progress: var(--accent);
-    
-    //button
+
+    // button
 
     /*BEGIN readmore btn*/
     --btn-readmore-color: #fff;
@@ -66,7 +67,7 @@ body{
     --btn-showmore-hover-color: #fff;
     /*-END showmore btn*/
 
-    //fontsize 1rem = 14px !!!
+    // fontsize 1rem = 14px !!!
     --fz-head: 1.43rem;
     --fz-medium: 1.15rem;
     --fz-small: 1rem;

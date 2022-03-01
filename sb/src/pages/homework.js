@@ -17,7 +17,7 @@ export default function HomeWorkPage() {
             title: 'ИДЗ с линейным оператором',
             subjectID: 1,
             content: 'Тестовое дз и его описание не должно быть интересным',
-            date: '2022-02-09T17:00:00',
+            publishDate: '2022-02-09T17:00:00',
             deadline: '2022-02-20T18:00:00',
         },
         {
@@ -25,7 +25,7 @@ export default function HomeWorkPage() {
             title: 'ИДЗ с чем то оператором',
             subjectID: 1,
             content: 'Тестовое дз и его описание не должно быть интересным',
-            date: '2022-01-20T17:00:00',
+            publishDate: '2022-01-20T17:00:00',
             deadline: '2022-02-18T19:00:00',
         },
         {
@@ -33,7 +33,7 @@ export default function HomeWorkPage() {
             title: 'ИДЗ с графами',
             subjectID: 2,
             content: 'Тестовое дз и его описание не должно быть интересным',
-            date: '2022-02-01T17:00:00',
+            publishDate: '2022-02-01T17:00:00',
             deadline: '2022-02-25T19:00:00',
         },
         {
@@ -41,7 +41,7 @@ export default function HomeWorkPage() {
             title: 'ИДЗ с матрицами',
             subjectID: 3,
             content: 'Тестовое дз и его описание не должно быть интересным',
-            date: '2022-02-05T17:00:00',
+            publishDate: '2022-02-05T17:00:00',
             deadline: '2022-02-20T19:00:00',
         }
     ]);
@@ -108,7 +108,7 @@ export default function HomeWorkPage() {
                                             subjectID={item.subjectID}
                                             __id={item.id}
                                             title={item.title}
-                                            publishDate={item.date}
+                                            publishDate={item.publishDate}
                                             deadline={item.deadline}
                                             isLiked={item.isLiked}
                                         />

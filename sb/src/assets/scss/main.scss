@@ -9,7 +9,7 @@
 html {
     position: relative;
     overflow-y: hidden;
-    
+
 }
 
 a {
@@ -18,15 +18,29 @@ a {
         color: inherit;
     }
 }
+button {
+    padding: inherit;
+    margin: inherit;
+    background: inherit;
+    color: inherit;
+    border: inherit;
+    font: inherit;
+    &[disabled] {
+        color: #D0E2F6;
+        svg {
+            fill: #D0E2F6 !important;
+        }
+    }
+}
 
-//регулирует отступ контента+левого сайдбара от верхнего меню
+// регулирует отступ контента+левого сайдбара от верхнего меню
 .content {
     display: grid;
     grid-template-columns: var(--side-menu-width) auto var(--rightside-menu-width);
     grid-gap: var(--pageSide-gap);
 }
 
-//button
+// button
 .button {
     font-size: var(--fz-medium);
     font-family: 'Montserrat';
@@ -70,8 +84,8 @@ a {
 }
 
 
-//стили для карточек
-.main-card-wrapper{
+// стили для карточек
+.main-card-wrapper {
     position: relative;
     width: max-content;
 }
@@ -85,24 +99,22 @@ a {
     border-radius: 15px;
     border: 2px solid #D0E2F6;
     background: white;
-    &:last-child {
-        
-    }
+    &:last-child {}
 }
 .newsCard {
-    
+
     $card-padding: 15px;
-    
+
     display: grid;
     grid-template-rows: 2fr 1fr 2fr 3fr;
 
-    &_hw{
+    &_hw {
         grid-template-rows: 0.5fr 1.5fr 1.5fr 1fr 3fr;
-        
+
     }
 
     height: 100%;
-    &__subject{
+    &__subject {
         color: var(--accent);
         font-family: Roboto;
         font-weight: bold;
@@ -115,11 +127,11 @@ a {
         line-height: 1.5rem;
         padding: 0 $card-padding;
     }
-    &__date{
+    &__date {
         margin-top: 5px;
         padding: 0 $card-padding;
     }
-    &__content{
+    &__content {
         margin: 10px 0;
         padding: 0 $card-padding;
         font-weight: 400;
@@ -129,15 +141,14 @@ a {
         &-controllers {
             padding: 0 $card-padding;
         }
-        .button-wrapper{
+        .button-wrapper {
             padding: 0 $card-padding;
-            margin-top: 10px;   
+            margin-top: 10px;
         }
     }
 
-    
-}
 
+}
 
 
 /*
@@ -178,7 +189,7 @@ a {
 */
 
 
-.nothing-to-show{
+.nothing-to-show {
     pointer-events: none;
     position: absolute;
     top: 50%;
@@ -187,10 +198,10 @@ a {
     color: var(--bs-gray);
     font-weight: 300;
 }
-//--------------
+// --------------
 
 .radio {
-    //RADIO
+    // RADIO
     --background: white;
     --radio: var(--radio-color);
     --radio-checked: var(--radio-color);
@@ -203,8 +214,7 @@ a {
         height: var(--radio-size);
         width: var(--radio-size);
         outline: none;
-        margin: 0;
-        margin-right: 10px;
+        margin: 0 10px 0 0;
         cursor: pointer;
         border: 2px solid var(--radio);
         &.radio_red {
@@ -250,7 +260,7 @@ a {
         &:checked {
             --radio: var(--radio-checked);
             &::after {
-                --y: 0%;
+                --y: 0;
                 animation: stretch-animate 0.3s ease-out 0.17s;
             }
             &::before {
@@ -287,8 +297,7 @@ a {
 }
 
 
-
-//CIRCLE DIAGRAM
+// CIRCLE DIAGRAM
 /*
 .circle-diagram-wrapper {
     

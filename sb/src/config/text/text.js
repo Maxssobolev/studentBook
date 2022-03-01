@@ -1,5 +1,6 @@
 export const TEXT = {
     logo: 'Stud.log',
+    loading: 'Загрузка...',
     group: '2-МД-4',
     button: {
         readmore: 'Подробнее',
@@ -14,6 +15,12 @@ export const TEXT = {
         },
         inDevelop: {
             title: 'В разработке'
+        },
+        view: {
+
+            prevPage: 'Предыдущая запись',
+            nextPage: 'Следующая запись'
+
         }
     }
 }

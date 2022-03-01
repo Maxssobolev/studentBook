@@ -1,7 +1,3 @@
-import ProgramIcon from '../assets/img/subjects-icons/programming.svg'
-import MMTIcon from '../assets/img/subjects-icons/mmt.svg'
-import PravoIcon from '../assets/img/subjects-icons/pravo.svg'
-
 
 export const subjects = [
     { label: 'Все предметы', value: 'all', id: 0 },

@@ -56,7 +56,7 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
                         </div>
                         <div className="button-wrapper">
                             <Link to={{
-                                pathname: `/view/news/${__id}`,
+                                pathname: type === 'homework' ? `/view/homework/${__id}` : `/view/news/${__id}`,
                             }}>
                                 <Button type="readmore" />
                             </Link>
