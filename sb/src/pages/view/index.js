@@ -16,9 +16,12 @@ export default function ViewPage() {
         )
     }
     return (
-        <div className="page page-view">
-            <Route path={`${match.path}/:subcomponent/:id`} component={SubPageRenderer} />
-        </div>
+
+
+        <Route path={`${match.path}/:subcomponent/:id`} component={SubPageRenderer} />
+
+
+
     );
 
 }

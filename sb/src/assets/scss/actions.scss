@@ -1,7 +1,7 @@
 .action {
     button {
         background: transparent;
-       
+
         border: 1px solid #D0E2F6;
         width: 45px;
         height: 45px;
@@ -13,13 +13,12 @@
 
     &_like:hover {
         button {
-            svg {
-            }
+            svg {}
         }
     }
 }
 
-//animation
+// animation
 
 .fade-enter {
     opacity: 1;
@@ -44,4 +43,29 @@
 .fade-enter-active,
 .fade-exit-active {
     transition: 100ms;
+}
+
+/*MARK AS DONE ACTION*/
+
+.fade_mark-enter {
+    opacity: 1;
+}
+.fade_mark-enter-active {
+    opacity: 1;
+}
+
+.fade_mark-enter-active,
+.fade_mark-exit-active {
+    transition: 100ms;
+}
+
+.fade_mark-exit-active {
+    opacity: 0.5;
+    stroke: #0080ff;
+}
+.fade_mark-exit {
+    opacity: 1;
+    path:nth-child(2) {
+        stroke: none !important;
+    }
 }

@@ -52,6 +52,7 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
                             <Like
                                 newsCardId={__id}
                                 __isLiked={isLiked}
+                                type="homework"
                             />
                         </div>
                         <div className="button-wrapper">

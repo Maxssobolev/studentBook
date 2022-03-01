@@ -93,6 +93,11 @@
     }
 
     &-view {
+        &__wrapper {
+            width: 90%;
+            margin: 0 auto;
+            padding-top: 15px;
+        }
         .page-controllers {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -167,7 +172,21 @@
                 }
             }
         }
+        .content-wrapper {
+            width: 80%;
 
+            .page-title {
+                font-size: var(--fz-head);
+                font-weight: bold;
+                margin-top: 30px;
+            }
+
+            .page-content {
+                line-height: 2rem;
+                text-indent: var(--fz-head);
+                margin-top: 35px;
+            }
+        }
         &_hw {
 
             ;
@@ -180,7 +199,15 @@
 }
 
 .rightsidebar {
+    .actions {
+        border-radius: 15px;
+        padding: 15px;
+        background: var(--right-menu-bg);
 
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+    }
     .filters {
         border-radius: 15px;
         padding: 15px;
