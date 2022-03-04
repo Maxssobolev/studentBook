@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { subjects } from '../config/subjectsList';
 import Select from 'react-select';
 import { customSelectStyles } from '../components/Utils/customSelectStyles';
 import { DropdownIndicator } from '../components/Utils/dropdownIndicator';
@@ -8,53 +7,14 @@ import Card from '../components/Card/Card';
 import moment from 'moment';
 import { TEXT } from '../config/text/text';
 import { motion, AnimatePresence } from 'framer-motion/dist/es/index'
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function HomeWorkPage() {
-    const [sortBy, setSortBy] = useState('date')
-    const [homeworks, setHomeworks] = useState([
-        {
-            id: 1,
-            title: 'ИДЗ с линейным оператором',
-            subjectID: 1,
-            content: 'Тестовое дз и его описание не должно быть интересным',
-            publishDate: '2022-02-09T17:00:00',
-            deadline: '2022-02-20T18:00:00',
-        },
-        {
-            id: 4,
-            title: 'ИДЗ с чем то оператором',
-            subjectID: 1,
-            content: 'Тестовое дз и его описание не должно быть интересным',
-            publishDate: '2022-01-20T17:00:00',
-            deadline: '2022-02-18T19:00:00',
-        },
-        {
-            id: 2,
-            title: 'ИДЗ с графами',
-            subjectID: 2,
-            content: 'Тестовое дз и его описание не должно быть интересным',
-            publishDate: '2022-02-01T17:00:00',
-            deadline: '2022-02-25T19:00:00',
-        },
-        {
-            id: 3,
-            title: 'ИДЗ с матрицами',
-            subjectID: 3,
-            content: 'Тестовое дз и его описание не должно быть интересным',
-            publishDate: '2022-02-05T17:00:00',
-            deadline: '2022-02-20T19:00:00',
-        }
-    ]);
-    const [dataToShow, setDataToShow] = useState(
-        //изначально данные отсортированны по дате (сначала новые)
-        homeworks.sort(
-            (a, b) => {
-                return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
-            }
-        )
-    )
-
-
+    const subjects = []
+    const [sortBy, setSortBy] = useState('publishDate')
+    const [homeworks, setHomeworks] = useState([]);
+    const [dataToShow, setDataToShow] = useState([])
     const handleChangeSubject = (selectedOpt) => {
         if (selectedOpt.value !== 'all')
             setDataToShow(
@@ -75,7 +35,6 @@ export default function HomeWorkPage() {
         else
             setDataToShow(homeworks)
     }
-
     const handleChangeSort = (event) => {
         setSortBy(event.target.value)
         setDataToShow(prev => [...prev].sort(
@@ -91,6 +50,31 @@ export default function HomeWorkPage() {
         ))
     }
 
+    //api
+    useEffect(() => {
+
+        async function getData(url) {
+            return await axios.get(url);
+        }
+
+        getData(`/api/homework`).then(
+            r => {
+                const recievedData = r.data
+                console.log(recievedData)
+                setHomeworks(recievedData)
+                setDataToShow(
+                    //изначально данные отсортированны по дате (сначала новые)
+                    recievedData.sort(
+                        (a, b) => {
+                            return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
+                        }
+                    )
+                )
+            }
+        )
+
+    }, [])
+
     return (
         <>
 
@@ -105,12 +89,13 @@ export default function HomeWorkPage() {
                                         <Card
                                             key={`hwCardItem_${item.id}`}
                                             type="homework"
-                                            subjectID={item.subjectID}
+                                            subjectID={item.subjectId}
                                             __id={item.id}
                                             title={item.title}
                                             publishDate={item.publishDate}
                                             deadline={item.deadline}
                                             isLiked={item.isLiked}
+                                            subjectTitle={item.subjectTitle}
                                         />
                                     )
                                 })
@@ -130,7 +115,7 @@ export default function HomeWorkPage() {
                         <div className="radio" >
                             <label>
                                 <span>Сначала новые</span>
-                                <input type="radio" name='sortBy' value='date' defaultChecked />
+                                <input type="radio" name='sortBy' value='publishDate' defaultChecked />
                             </label>
                         </div>
                         <div className="radio" >

@@ -22,6 +22,10 @@ app.listen(port, () => {
 });
 
 
+
+/////////////////////ROUTES//////////////
+
+//новости
 app.get('/api/news', function (req, res) {
   pool.query(`select * from news`, (err, rows) => {
     if (err) {
@@ -31,3 +35,79 @@ app.get('/api/news', function (req, res) {
     }
   });
 });
+
+
+
+
+
+//домашка
+app.get('/api/homework', function (req, res) {
+
+  //обьединяем выборку из домашки с выборкой из предметов
+  pool.query(`
+    SELECT homeworks.id as id, 
+           homeworks.content as content, 
+           homeworks.deadline as deadline, 
+           homeworks.title as title, 
+           homeworks.publishDate as publishDate, 
+           subjects.id as subjectId,
+           subjects.title as subjectTitle
+           FROM homeworks INNER JOIN subjects ON 
+                          subjects.id = homeworks.subjectId`, (err, rows) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(rows);
+    }
+  });
+
+});
+app.get('/api/homework/:id', function (req, res) {
+  const id = req.params.id
+  pool.query(`
+    SELECT homeworks.id as id, 
+           homeworks.content as content, 
+           homeworks.deadline as deadline, 
+           homeworks.title as title, 
+           homeworks.publishDate as publishDate, 
+           subjects.id as subjectId,
+           subjects.title as subjectTitle
+           FROM homeworks INNER JOIN subjects ON 
+                          subjects.id = homeworks.subjectId
+           WHERE homeworks.id=${id}`,
+    (err, rows) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(...rows);
+      }
+    });
+
+});
+
+
+//предметы
+app.get('/api/subjects', function (req, res) {
+
+  pool.query(`SELECT * FROM subjects`, (err, rows) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(rows);
+    }
+  });
+
+});
+
+app.get('/api/subjects/:id', function (req, res) {
+  const id = req.params.id
+  pool.query(`SELECT * FROM subjects WHERE id=${id}`, (err, rows) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(...rows);
+    }
+  });
+
+});
+

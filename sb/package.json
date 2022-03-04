@@ -1,5 +1,6 @@
 {
   "name": "sb",
+  "proxy": "http://localhost:3555",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

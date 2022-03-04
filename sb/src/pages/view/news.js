@@ -7,7 +7,6 @@ import { TEXT } from '../../config/text/text'
 import { ReactComponent as ArrowIcon } from '../../assets/img/arrow-right.svg'
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { getSubject } from '../../config/subjectsList';
 import { getRemainDeadline } from '../../components/Utils/getRemainTime';
 import { useEffect } from 'react';
 import SinglePageLoader from '../../components/CustomLoaders/SinglePage';
