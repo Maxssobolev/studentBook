@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 //main styles
 import './assets/scss/main.scss'
 
@@ -15,20 +15,28 @@ import TopMenu from "./components/TopMenu/TopMenu";
 import { Container } from "react-bootstrap";
 
 
+//apolo client and api 
+import { API } from "./config/api/api";
+const client = new ApolloClient({
+  uri: API.uri,
+  cache: new InMemoryCache()
+})
+
 function App() {
   return (
     <Router>
+      <ApolloProvider client={client}>
+        <TopMenu />
 
-      <TopMenu />
+        <Container className="content">
+          <SideMenu />
+          <Switch>
+            <Route path="/:page" component={PageRenderer} />
+            <Route path="/" render={() => <Redirect to="/main" />} />
 
-      <Container className="content">
-        <SideMenu />
-        <Switch>
-          <Route path="/:page" component={PageRenderer} />
-          <Route path="/" render={() => <Redirect to="/main" />} />
-
-        </Switch>
-      </Container>
+          </Switch>
+        </Container>
+      </ApolloProvider>
     </Router>
   );
 }

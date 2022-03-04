@@ -13,19 +13,20 @@ import { Markup } from 'interweave';
 import Like from '../../components/Actions/Like/Like';
 import MarkAsDone from '../../components/Actions/MarkAsDone/MarkAsDone';
 
+//api integration
 
 
 export default function HomeworkViewPage() {
-    let match = useRouteMatch();
-    let history = useHistory();
-
+    const match = useRouteMatch();
+    const history = useHistory();
     const ID = Number(match.params.id)
+
+
 
 
     const [hw, setHw] = useState(null)
 
     useEffect(() => {
-        //полученный ответ с сервера
         const recievedData = {
             nextID: ID + 1,//SELECT * FROM foo WHERE id > 4 ORDER BY id LIMIT 1;
             title: 'ИДЗ с линейным оператором',

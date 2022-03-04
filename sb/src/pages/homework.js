@@ -119,7 +119,7 @@ export default function HomeWorkPage() {
                     </motion.div>)
                     :
                     <div className="nothing-to-show">
-                        {TEXT.page.inDevelop.title}
+                        {TEXT.page.nothingToShow.title}
                     </div>
                 }
             </div>
