@@ -10,6 +10,20 @@ import { motion, AnimatePresence } from 'framer-motion/dist/es/index'
 import { useEffect } from 'react';
 import axios from 'axios';
 
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:3555',
+    headers: {
+        post: {
+            "cache-control": "no-cache, private",
+            "content-type": "application/json",
+            "x-ratelimit-limit": "60",
+            "x-ratelimit-remaining": "59",
+            "access-control-allow-origin": "*",
+
+        }
+    }
+});
+
 export default function HomeWorkPage() {
     const subjects = []
     const [sortBy, setSortBy] = useState('publishDate')
@@ -54,7 +68,7 @@ export default function HomeWorkPage() {
     useEffect(() => {
 
         async function getData(url) {
-            return await axios.get(url);
+            return await axiosInstance.get(url);
         }
 
         getData(`/api/homework`).then(
