@@ -91,8 +91,8 @@ class HomeworkController {
             }
             else {
                 try {
-                    const remove = await Likes.destroy({ where: sentData })
-                    return res.json({ message: 'Like was deleted', like: remove })
+                    await like.destroy()
+                    return res.json({ message: 'Like was deleted' })
                 }
                 catch (deleteError) {
                     next(ApiError.internal(deleteError))
