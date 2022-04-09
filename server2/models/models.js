@@ -2,9 +2,8 @@ const sequelize = require('../db')
 const { DataTypes } = require('sequelize')
 
 const Users = sequelize.define('users', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, unique: true, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
-    vkId: { type: DataTypes.INTEGER, unique: true, allowNull: false },
     role: {
         type: DataTypes.STRING,
         values: [
@@ -21,7 +20,7 @@ const Users = sequelize.define('users', {
     }
 })
 
-const User_likes = sequelize.define('user_likes', {
+const Likes = sequelize.define('likes', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     postType: {
         type: DataTypes.STRING,
@@ -42,8 +41,8 @@ const User_donehomeworks = sequelize.define('user_donehomeworks', {
 
 const Subjects = sequelize.define('subjects', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    title: { type: DataTypes.STRING, allowNull: false },
-    fullName: { type: DataTypes.STRING, allowNull: false }
+    title: { type: DataTypes.STRING, allowNull: false, unique: true },
+    fullName: { type: DataTypes.STRING }
 })
 
 
@@ -110,17 +109,23 @@ const Timetable = sequelize.define('timetable', {
 Subjects.hasMany(Posts)
 Posts.belongsTo(Subjects)
 
-Users.belongsToMany(Posts, { through: User_likes });
-Posts.belongsToMany(Users, { through: User_likes });
-
-
+Users.belongsToMany(Posts, {
+    through: "likes",
+    as: "postsLiked",
+    foreignKey: "userId",
+});
+Posts.belongsToMany(Users, {
+    through: "likes",
+    as: "usersLiked",
+    foreignKey: "postId",
+});
 
 
 
 module.exports = {
     Users,
     Posts,
-    User_likes,
+    Likes,
     User_donehomeworks,
     Subjects,
     Timetable

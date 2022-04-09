@@ -7,11 +7,11 @@ class UserController {
         const { user } = req
         let sentData = {
             name: user.displayName,
-            vkId: user._json.id,
+            id: user._json.id,
             avatarImage: user.photos[0].value
         }
         const [newUser, created] = await Users.findOrCreate({
-            where: { vkId: sentData.vkId },
+            where: { id: sentData.id },
             defaults: sentData
         });
         if (created) {

@@ -15,6 +15,13 @@ router.post(
     validateRequestMiddleware,
     homeworkController.create
 )
+router.post(
+    '/like',
+    body('postId').exists({ checkFalsy: true }),
+    body('userId').exists({ checkFalsy: true }), //userId = vkId
+    validateRequestMiddleware,
+    homeworkController.likeHandler
+)
 router.get('/', homeworkController.getAll)
 router.get('/:id', homeworkController.getOne)
 

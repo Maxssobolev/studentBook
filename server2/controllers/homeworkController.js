@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError")
-const { Posts, Subjects, User_likes } = require('../models/models')
+const { Posts, Subjects, Likes, Users } = require('../models/models')
 const { Op } = require('sequelize')
 const moment = require('moment')
 
@@ -55,7 +55,8 @@ class HomeworkController {
         }
         const homework = await Posts.findOne({
             where: {
-                id
+                id,
+                postType: 'homework'
             },
             include: [
                 {
@@ -70,7 +71,39 @@ class HomeworkController {
         return homework ? res.json(homework) : res.json([])
     }
 
-    async addLike(req, res) {
+    async likeHandler(req, res, next) {
+        /*
+            если лайка нет - добавляет
+            если есть - удаляет
+            только в домашке
+        */
+        const { postId, userId } = req.body
+        const sentData = {
+            postId: postId,
+            userId: userId,
+            postType: 'homework'
+        }
+
+        try {
+            const [like, created] = await Likes.findOrCreate({ where: sentData, defaults: sentData })
+            if (created) {
+                return res.json({ message: 'Like was added', like })
+            }
+            else {
+                try {
+                    const remove = await Likes.destroy({ where: sentData })
+                    return res.json({ message: 'Like was deleted', like: remove })
+                }
+                catch (deleteError) {
+                    next(ApiError.internal(deleteError))
+                }
+
+            }
+
+        }
+        catch (createError) {
+            next(ApiError.internal(createError))
+        }
 
     }
 }
