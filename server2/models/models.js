@@ -137,7 +137,7 @@ module.exports = {
     Users,
     Posts,
     Likes,
-    User_donehomeworks,
+    DoneHomeworks,
     Subjects,
     Timetable
 }

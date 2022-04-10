@@ -1,6 +1,7 @@
 const Router = require('express');
 const { body } = require('express-validator');
 const validateRequestMiddleware = require('../middleware/validateRequestMiddleware')
+const authMiddleware = require('../middleware/authMiddleware')
 
 const router = new Router()
 const homeworkController = require('../controllers/homeworkController');
@@ -12,6 +13,7 @@ router.post(
     body('content').exists({ checkFalsy: true }),
     body('deadline').exists({ checkFalsy: true }),
     body('subjectId').exists({ checkFalsy: true }),
+    authMiddleware(['headman', 'admin']),
     validateRequestMiddleware,
     homeworkController.create
 )
