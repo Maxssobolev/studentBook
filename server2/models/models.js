@@ -33,7 +33,7 @@ const Likes = sequelize.define('likes', {
 
 })
 
-const User_donehomeworks = sequelize.define('user_donehomeworks', {
+const DoneHomeworks = sequelize.define('donehomeworks', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 })
 
@@ -117,6 +117,17 @@ Users.belongsToMany(Posts, {
 Posts.belongsToMany(Users, {
     through: "likes",
     as: "usersLiked",
+    foreignKey: "postId",
+});
+
+Users.belongsToMany(Posts, {
+    through: "donehomeworks",
+    as: "postsDoned",
+    foreignKey: "userId",
+});
+Posts.belongsToMany(Users, {
+    through: "donehomeworks",
+    as: "usersDoned",
     foreignKey: "postId",
 });
 

@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError")
-const { Posts, Subjects, Likes, Users } = require('../models/models')
+const { Posts, Likes } = require('../models/models')
 const { Op } = require('sequelize')
 const moment = require('moment')
 
