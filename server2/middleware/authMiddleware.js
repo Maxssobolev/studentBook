@@ -12,7 +12,7 @@ module.exports = role => (req, res, next) => {
         }
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
 
-        if (role != 'all') {
+        if (role) {
             if (!role.includes(decoded.role)) {
                 return next(ApiError.forbidden(`Ваша роль - ${decoded.role}. Ваших прав не достаточно`))
             }

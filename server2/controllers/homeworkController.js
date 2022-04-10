@@ -5,7 +5,6 @@ const moment = require('moment')
 
 class HomeworkController {
     async create(req, res, next) {
-        const { user } = req
         try {
             const { title, content, deadline, subjectId } = req.body
             const hw = await Posts.create({ title, content, deadline, postType: "homework", subjectId })
@@ -24,11 +23,19 @@ class HomeworkController {
                 where: {
                     postType: 'homework'
                 },
-                include: [{
-                    model: Subjects,
-                    as: 'subject',
-                    attributes: ['id', 'title', 'fullName']
-                }],
+                include: [
+                    {
+                        model: Subjects,
+                        as: 'subject',
+                        attributes: ['id', 'title', 'fullName']
+                    },
+                    {
+                        model: Users,
+                        as: 'usersLiked',
+
+                    }
+                ],
+
             })
         }
         else if (!withOverdueDeadline) {
@@ -39,11 +46,19 @@ class HomeworkController {
                         [Op.gte]: moment()
                     }
                 },
-                include: [{
-                    model: Subjects,
-                    as: 'subject',
-                    attributes: ['id', 'title', 'fullName']
-                }],
+                include: [
+                    {
+                        model: Subjects,
+                        as: 'subject',
+                        attributes: ['id', 'title', 'fullName']
+                    },
+                    {
+                        model: Users,
+                        as: 'usersLiked',
+
+                        attributes: ['id', 'name', 'avatarImage']
+                    }
+                ],
             })
         }
         return homeworks ? res.json(homeworks) : res.json([])
@@ -78,7 +93,8 @@ class HomeworkController {
             если есть - удаляет
             только в домашке
         */
-        const { postId, userId } = req.body
+        const { user: { id: userId } } = req
+        const { postId } = req.body
         const sentData = {
             postId: postId,
             userId: userId,
@@ -86,6 +102,7 @@ class HomeworkController {
         }
 
         try {
+
             const [like, created] = await Likes.findOrCreate({ where: sentData, defaults: sentData })
             if (created) {
                 return res.json({ message: 'Like was added', like })
@@ -96,6 +113,7 @@ class HomeworkController {
                     return res.json({ message: 'Like was deleted' })
                 }
                 catch (deleteError) {
+
                     next(ApiError.internal(deleteError))
                 }
 
@@ -103,6 +121,7 @@ class HomeworkController {
 
         }
         catch (createError) {
+
             next(ApiError.internal(createError))
         }
 

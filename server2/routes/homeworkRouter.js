@@ -13,18 +13,18 @@ router.post(
     body('content').exists({ checkFalsy: true }),
     body('deadline').exists({ checkFalsy: true }),
     body('subjectId').exists({ checkFalsy: true }),
-    authMiddleware(['headman', 'admin']),
+    authMiddleware(['headman', 'admin']), //check user role
     validateRequestMiddleware,
     homeworkController.create
 )
 router.post(
     '/like',
     body('postId').exists({ checkFalsy: true }),
-    body('userId').exists({ checkFalsy: true }), //userId = vkId
+    authMiddleware(),
     validateRequestMiddleware,
     homeworkController.likeHandler
 )
-router.get('/', homeworkController.getAll)
-router.get('/:id', homeworkController.getOne)
+router.get('/', authMiddleware(), homeworkController.getAll)
+router.get('/:id', authMiddleware(), homeworkController.getOne)
 
 module.exports = router

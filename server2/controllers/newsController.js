@@ -59,7 +59,8 @@ class NewsController {
             если есть - удаляет
             только в домашке
         */
-        const { postId, userId } = req.body
+        const { user: { id: userId } } = req
+        const { postId } = req.body
         const sentData = {
             postId: postId,
             userId: userId,
