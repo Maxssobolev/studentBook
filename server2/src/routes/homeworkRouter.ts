@@ -13,7 +13,7 @@ router.post(
     body('content').exists({ checkFalsy: true }),
     body('deadline').exists({ checkFalsy: true }),
     body('subjectId').exists({ checkFalsy: true }),
-    authMiddleware(['headman', 'admin']),
+    authMiddleware(['admin', 'headman']),
     validateRequestMiddleware,
     homeworkController.create
 )

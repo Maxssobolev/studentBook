@@ -1,7 +1,10 @@
+import { NextFunction, Response } from "express";
+import { IDecodedUser, IAuthRequest } from "../types/user.type";
+
 const jwt = require('jsonwebtoken')
 const ApiError = require('../error/ApiError')
 
-module.exports = role => (req, res, next) => {
+module.exports = (role: string[] | 'all') => (req :IAuthRequest, res: Response, next: NextFunction) => {
     if (req.method === "OPTIONS") {
         next()
     }
@@ -10,7 +13,7 @@ module.exports = role => (req, res, next) => {
         if (!token) {
             return res.status(401).json({ message: "Не авторизован" })
         }
-        const decoded = jwt.verify(token, process.env.SECRET_KEY)
+        const decoded: IDecodedUser = jwt.verify(token, process.env.SECRET_KEY)
 
         if (role != 'all') {
             if (!role.includes(decoded.role)) {
