@@ -22,7 +22,7 @@ router.post(
     validateRequestMiddleware,
     newsController.likeHandler
 )
-router.get('/', newsController.getAll)
-router.get('/:id', newsController.getOne)
+router.get('/', authMiddleware(), newsController.getAll)
+router.get('/:id', authMiddleware(), newsController.getOne)
 
 module.exports = router

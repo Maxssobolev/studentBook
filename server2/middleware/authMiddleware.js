@@ -23,10 +23,10 @@ module.exports = role => (req, res, next) => {
         next()
     } catch (e) {
         //сюда мы попадаем, если есть проблемы с токеном
-        //предполагаемая причина - истек срок дейсвтия => отправляем пользователя на повторную авторизацию, удаляя куки
+        //предполагаемая причина - истек срок дейсвтия | нет токена => отправляем пользователя на повторную авторизацию, удаляя куки
         res.status(401)
         res.clearCookie('token')
         res.clearCookie('user')
-        return res.redirect(`${process.env.FRONTEND_URL}/lk`)
+        return res.redirect(`${process.env.FRONTEND_URL}/lk`) //поменять
     }
 };

@@ -9,18 +9,10 @@ import { $authHost } from '../http';
 export default function MainPage() {
     const [sortBy, setSortBy] = useState('newest')
 
-    const [news, setNews] = useState([{
-        id: '1',
-        title: 'Начало зачетной недели',
-        content: 'Нужно прийти в костюмах, костюмы должны быть в костюмах',
-        date: '2021-12-10T17:00:00',
-        deadline: '2021-12-10T19:00:00',
-        isLiked: false
-    },
-    ])
+    const [news, setNews] = useState([])
 
     useEffect(() => {
-        $authHost.get('/api/news').then(r => console.log(r))
+        $authHost.get('/api/news').then(r => setNews(r.data))
     }, [])
 
 
@@ -35,9 +27,9 @@ export default function MainPage() {
                             __id={item.id}
                             title={item.title}
                             content={item.content}
-                            publishDate={item.date}
+                            publishDate={item.createdAt}
                             deadline={item.deadline}
-                            isLiked={item.isLiked}
+                            isLiked={false}
                         />
                     )
                 })}
