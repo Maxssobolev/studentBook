@@ -1,6 +1,7 @@
 const ApiError = require("../error/ApiError")
-const { Posts, Likes } = require('../models/models')
+const { Posts, Likes, Users } = require('../models/models')
 const { Op } = require('sequelize')
+const sequelize = require('../db');
 const moment = require('moment')
 
 class NewsController {
@@ -22,7 +23,17 @@ class NewsController {
             news = await Posts.findAll({
                 where: {
                     postType: 'news'
-                }
+                },
+                include: [
+                    {
+                        model: Users,
+                        as: 'usersLiked',
+                        where: {
+                            id: req.user.id,
+                        },
+                        required: false,
+                    }
+                ]
             })
         }
         else if (!withOverdueDeadline) {
@@ -31,8 +42,18 @@ class NewsController {
                     postType: 'news',
                     deadline: {
                         [Op.gte]: moment()
+                    },
+                },
+                include: [
+                    {
+                        model: Users,
+                        as: 'usersLiked',
+                        where: {
+                            id: req.user.id,
+                        },
+                        required: false,
                     }
-                }
+                ]
             })
         }
         return news ? res.json(news) : res.json([])
@@ -43,14 +64,52 @@ class NewsController {
         if (!id) {
             return next(ApiError.badRequest('Не задан параметр ID'))
         }
-        const news = await Posts.findOne({
-            where: {
-                id,
-                postType: 'news'
-            }
+        try {
+            const currentPost = await Posts.findOne({
+                where: {
+                    id,
+                    postType: 'news'
+                },
+                include: [
+                    {
+                        model: Users,
+                        as: 'usersLiked',
+                        where: {
+                            id: req.user.id,
+                        },
+                        required: false,
+                    }
+                ]
+            })
 
-        })
-        return news ? res.json(news) : res.json([])
+            const nextPost = await Posts.findOne({
+                where: {
+                    createdAt: {
+                        [Op.gt]: currentPost.createdAt,
+                    },
+                    postType: 'news',
+                },
+                attributes: ['id']
+            })
+            const prevPost = await Posts.findAll({
+                where: {
+                    createdAt: {
+                        [Op.lt]: currentPost.createdAt,
+                    },
+                    postType: 'news'
+                },
+                limit: 1,
+                order: [['createdAt', 'DESC']],
+                attributes: ['id']
+            })
+
+            return res.json({ prevPost: prevPost[0] || null, currentPost, nextPost })
+        }
+        catch (e) {
+            return next(ApiError.badRequest('Такой записи нет'))
+        }
+
+
     }
 
     async likeHandler(req, res, next) {

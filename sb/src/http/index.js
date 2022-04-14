@@ -14,7 +14,22 @@ const authInterceptor = config => {
     return config
 }
 
+const tokenErrorInterceptor = error => {
+
+    //ВНИМАНИЕ КОСТЫЛЬ 
+    //если с сервера пришел статус "не авторизован", то удаляем все куки и редиректим на страницу авторизации
+    if (error.response.status == 401) {
+        const { redirect } = error.response.data
+        cookies.remove('user')
+        cookies.remove('token')
+        return window.location.replace(redirect)
+    }
+    return Promise.reject(error);
+
+}
+
 $authHost.interceptors.request.use(authInterceptor)
+$authHost.interceptors.response.use(response => response, tokenErrorInterceptor)
 
 export {
     $host,

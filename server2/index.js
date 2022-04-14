@@ -24,7 +24,7 @@ passport.use(new VKontakteStrategy({
 ));
 
 app.use(cors({
-    "origin": process.env.FRONTEND_URL,
+    "origin": [process.env.FRONTEND_URL],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,

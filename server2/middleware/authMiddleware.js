@@ -8,7 +8,7 @@ module.exports = role => (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1] // Bearer {token}
         if (!token) {
-            return res.status(401).json({ message: "Не авторизован" })
+            return res.status(401).json({ redirect: `${process.env.FRONTEND_URL}/lk` })
         }
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
 
@@ -24,9 +24,8 @@ module.exports = role => (req, res, next) => {
     } catch (e) {
         //сюда мы попадаем, если есть проблемы с токеном
         //предполагаемая причина - истек срок дейсвтия | нет токена => отправляем пользователя на повторную авторизацию, удаляя куки
-        res.status(401)
-        res.clearCookie('token')
-        res.clearCookie('user')
-        return res.redirect(`${process.env.FRONTEND_URL}/lk`) //поменять
+
+        //на фронте будем проверять каждый раз это поле в мидлевэаре
+        return res.status(401).json({ redirect: `${process.env.FRONTEND_URL}/lk` })
     }
 };

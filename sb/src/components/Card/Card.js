@@ -7,10 +7,8 @@ import { getRemainDeadline } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion/dist/es/index'
-import CircleDiagram from '../CircleDiagram/CircleDiagram';
-import { useEffect } from 'react';
-import axios from 'axios';
-export default function Card({ __id, title, content, publishDate, deadline, isLiked, type, subjectTitle = '' }) {
+
+export default function Card({ id, title, content, publishDate, deadline, isLiked, type, subjectTitle = '' }) {
 
     const { remainTime, progress } = getRemainDeadline(publishDate, deadline)
 
@@ -27,7 +25,7 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
 
             <div className="newsCard-wrapper">
                 <div className={`newsCard ${type === 'homework' ? 'newsCard_hw' : ''}`}>
-
+                    {/* Если карточка должна отображать домашнюю работу, то появляется название предмета */}
                     {type === 'homework' && <div className="newsCard__subject">{subjectTitle}</div>}
                     {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
                     {type === 'homework' && (
@@ -47,14 +45,14 @@ export default function Card({ __id, title, content, publishDate, deadline, isLi
                     <div className="newsCard__footer">
                         <div className="newsCard__footer-controllers">
                             <Like
-                                newsCardId={__id}
-                                __isLiked={isLiked}
-                                type="homework"
+                                id={id}
+                                isLiked={isLiked}
+                                type={type}
                             />
                         </div>
                         <div className="button-wrapper">
                             <Link to={{
-                                pathname: type === 'homework' ? `/view/homework/${__id}` : `/view/news/${__id}`,
+                                pathname: type === 'homework' ? `/view/homework/${id}` : `/view/news/${id}`,
                             }}>
                                 <Button type="readmore" />
                             </Link>

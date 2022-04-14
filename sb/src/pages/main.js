@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Card from '../components/Card/Card';
-
+import { TEXT } from '../config/text/text'
 //config
 import { $authHost } from '../http';
 
@@ -16,20 +16,30 @@ export default function MainPage() {
     }, [])
 
 
-
+    if (news.length == 0) {
+        return (
+            <div className="page page-main">
+                <div className="nothing-to-show">
+                    {TEXT.page.nothingToShow.title}
+                </div>
+            </div>
+        )
+    }
     return (
         <>
             <div className="page page-main">
                 {news.map((item) => {
+                    const isLiked = item.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
                     return (
                         <Card
                             key={`newsCardItem_${item.id}`}
-                            __id={item.id}
+                            id={item.id}
                             title={item.title}
                             content={item.content}
                             publishDate={item.createdAt}
                             deadline={item.deadline}
-                            isLiked={false}
+                            isLiked={isLiked}
+                            type={'news'}
                         />
                     )
                 })}

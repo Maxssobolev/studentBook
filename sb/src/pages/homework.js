@@ -8,25 +8,12 @@ import moment from 'moment';
 import { TEXT } from '../config/text/text';
 import { motion, AnimatePresence } from 'framer-motion/dist/es/index'
 import { useEffect } from 'react';
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3555',
-    headers: {
-        post: {
-            "cache-control": "no-cache, private",
-            "content-type": "application/json",
-            "x-ratelimit-limit": "60",
-            "x-ratelimit-remaining": "59",
-            "access-control-allow-origin": "*",
-
-        }
-    }
-});
+import { $authHost } from '../http';
+import useSubjects from '../components/Hooks/useSubjects'
 
 export default function HomeWorkPage() {
-    const subjects = []
-    const [sortBy, setSortBy] = useState('publishDate')
+    const subjects = useSubjects()
+    const [sortBy, setSortBy] = useState('createdAt')
     const [homeworks, setHomeworks] = useState([]);
     const [dataToShow, setDataToShow] = useState([])
     const handleChangeSubject = (selectedOpt) => {
@@ -34,7 +21,7 @@ export default function HomeWorkPage() {
             setDataToShow(
                 [
                     //сначала фильтруем согласно выбранному предмету, создаем копию, чтобы не изменить старый массив
-                    ...(homeworks.filter(({ subjectID }) => subjectID === selectedOpt.id))
+                    ...(homeworks.filter(({ subjectId }) => subjectId === selectedOpt.id))
                 ].sort(
                     (a, b) => {
                         if (sortBy === 'deadline') {
@@ -64,17 +51,10 @@ export default function HomeWorkPage() {
         ))
     }
 
-    //api
     useEffect(() => {
-
-        async function getData(url) {
-            return await axiosInstance.get(url);
-        }
-
-        getData(`/api/homework`).then(
+        $authHost.get(`/api/homeworks`).then(
             r => {
                 const recievedData = r.data
-                console.log(recievedData)
                 setHomeworks(recievedData)
                 setDataToShow(
                     //изначально данные отсортированны по дате (сначала новые)
@@ -99,17 +79,18 @@ export default function HomeWorkPage() {
                         <AnimatePresence>
                             {
                                 dataToShow.map((item) => {
+                                    const isLiked = item.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
+
                                     return (
                                         <Card
                                             key={`hwCardItem_${item.id}`}
                                             type="homework"
-                                            subjectID={item.subjectId}
-                                            __id={item.id}
+                                            id={item.id}
                                             title={item.title}
-                                            publishDate={item.publishDate}
+                                            publishDate={item.createdAt}
                                             deadline={item.deadline}
-                                            isLiked={item.isLiked}
-                                            subjectTitle={item.subjectTitle}
+                                            isLiked={isLiked}
+                                            subjectTitle={item.subject.title}
                                         />
                                     )
                                 })

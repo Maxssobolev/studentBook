@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { getRemainDeadline } from '../../components/Utils/getRemainTime';
 import { useEffect } from 'react';
 import SinglePageLoader from '../../components/CustomLoaders/SinglePage';
+import { $authHost } from '../../http';
 
 
 export default function NewsViewPage() {
@@ -22,22 +23,26 @@ export default function NewsViewPage() {
     const [news, setNews] = useState(null)
 
     useEffect(() => {
-        //полученный ответ с сервера
-        const recievedData = {
-            nextID: ID + 1,//SELECT * FROM foo WHERE id > 4 ORDER BY id LIMIT 1;
-            title: 'ИДЗ с линейным оператором',
-            content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem totam, vitae reiciendis libero eveniet id labore excepturi maxime suscipit reprehenderit, provident repudiandae harum deleniti, recusandae voluptatibus itaque quaerat nulla unde quisquam soluta doloremque debitis odit. Officia sapiente quibusdam labore? Molestiae consequuntur possimus placeat totam repellat. Nobis possimus fuga dignissimos praesentium accusantium laudantium doloribus alias maiores, suscipit quos, a incidunt esse. Omnis aperiam cum asperiores sed placeat at incidunt totam quis distinctio assumenda officiis ullam laboriosam necessitatibus quo minima eum, eaque, rerum, repellat laborum quasi veniam impedit excepturi suscipit? Consequatur, rem! Sequi, id expedita repellendus quos atque aperiam facilis fugit deserunt.',
-            publishDate: '2022-02-09T17:00:00',
-            deadline: '2022-03-20T18:00:00',
-        }
-        const { remainTime, progress } = getRemainDeadline(recievedData.publishDate, recievedData.deadline)
+        $authHost.get(`/api/news/${ID}`).then(({ data: { prevPost, currentPost, nextPost } }) => {
+            const { remainTime, progress } = getRemainDeadline(currentPost.createdAt, currentPost.deadline)
+            const isLiked = currentPost.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
 
-        setNews({
-            ...recievedData,
-            remainTime,
-            progress,
+            setNews({
+                prevPost,
+                currentPost: {
+                    ...currentPost,
+                    remainTime,
+                    progress,
+                    isLiked
+                },
+                nextPost
+            })
+        }).catch(err => {
+            setNews({ currentPost: null })
         })
-    }, [])
+
+    }, [ID])
+
 
     if (!news)
         return (
@@ -50,38 +55,49 @@ export default function NewsViewPage() {
                 <SinglePageLoader />
             </div>
         )
-
-    else
+    else if (!news?.currentPost) {
+        return (
+            <div className="page page-view page-view_news">
+                <div className="nothing-to-show">
+                    {TEXT.page.nothingToShow.title}
+                </div>
+            </div>
+        )
+    }
+    else {
+        const { currentPost } = news
         return (
             <>
                 <div className='page page-view page-view_news'>
                     <div className="page-view__wrapper">
                         <div className="page-controllers">
-                            <button type='button' className="prev-page" onClick={() => history.goBack()}><ArrowIcon />{TEXT.page.view.prevPage}</button>
+
+                            <button type='button' className="prev-page" onClick={() => history.push(`/view/news/${news.prevPost?.id}`)} disabled={news.prevPost ? false : true}><ArrowIcon />{TEXT.page.view.prevPage}</button>
+
                             <div className="subject-name"></div>
-                            {news.nextID &&
-                                <button type='button' className="next-page" onClick={() => history.push(`/view/news/${news.nextID}`)}>{TEXT.page.view.nextPage} <ArrowIcon /> </button>
-                            }
+
+                            <button type='button' className="next-page" onClick={() => history.push(`/view/news/${news.nextPost?.id}`)} disabled={news.nextPost ? false : true}>{TEXT.page.view.nextPage} <ArrowIcon /> </button>
+
                         </div>
 
                         <div className="deadline-indicator">
                             <div className="dates-row">
-                                <div className="dates-row__startDate">{moment(news.publishDate).format('D.MM')}</div>
-                                <div className="dates-row__remain">{news.remainTime}</div>
-                                <div className="dates-row__endDate">{moment(news.deadline).format('D.MM')}</div>
+                                <div className="dates-row__startDate">{moment(currentPost.createdAt).format('D.MM')}</div>
+                                <div className="dates-row__remain">{currentPost.remainTime}</div>
+                                <div className="dates-row__endDate">{moment(currentPost.deadline).format('D.MM')}</div>
                             </div>
 
                             <div className="deadline-chart">
-                                <div className="deadline-chart__progress" style={{ width: news.progress }}></div>
+                                <div className="deadline-chart__progress" style={{ width: currentPost.progress }}></div>
                             </div>
                         </div>
 
                         <div className="content-wrapper">
                             <div className="page-title">
-                                {news.title}
+                                {currentPost.title}
                             </div>
                             <div className="page-content">
-                                <Markup content={news.content} />
+                                <Markup content={currentPost.content} />
                             </div>
                         </div>
                     </div>
@@ -89,7 +105,7 @@ export default function NewsViewPage() {
                 <div className="rightsidebar">
                     <div className="actions">
 
-                        <Like newsCardId={ID} />
+                        <Like id={ID} type='news' isLiked={currentPost.isLiked} />
 
                     </div>
                 </div>
@@ -98,4 +114,5 @@ export default function NewsViewPage() {
 
 
         )
+    }
 }

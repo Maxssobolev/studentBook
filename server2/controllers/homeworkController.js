@@ -2,7 +2,6 @@ const ApiError = require("../error/ApiError")
 const { Posts, Subjects, Likes, Users } = require('../models/models')
 const { Op } = require('sequelize')
 const moment = require('moment')
-const sequelize = require('../db')
 
 class HomeworkController {
     async create(req, res, next) {
@@ -34,7 +33,10 @@ class HomeworkController {
                         {
                             model: Users,
                             as: 'usersLiked',
-
+                            where: {
+                                id: req.user.id,
+                            },
+                            required: false,
                         }
                     ],
 
