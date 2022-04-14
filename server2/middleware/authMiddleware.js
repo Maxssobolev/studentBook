@@ -22,6 +22,11 @@ module.exports = role => (req, res, next) => {
 
         next()
     } catch (e) {
-        res.status(401).json({ message: "Не авторизован" })
+        //сюда мы попадаем, если есть проблемы с токеном
+        //предполагаемая причина - истек срок дейсвтия => отправляем пользователя на повторную авторизацию, удаляя куки
+        res.status(401)
+        res.clearCookie('token')
+        res.clearCookie('user')
+        return res.redirect(`${process.env.FRONTEND_URL}/lk`)
     }
 };

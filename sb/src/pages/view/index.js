@@ -7,7 +7,6 @@ import SubPageRenderer from '../sub-page-renderer';
 export default function ViewPage() {
 
     let match = useRouteMatch();
-    console.log(match)
 
     //there's no subcomponent to render 
     if (match.isExact) {

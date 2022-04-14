@@ -28,10 +28,14 @@ class UserController {
             const token = generateJwt(userFromDB.id, userFromDB.role)
 
             if (created) {
-                return res.json({ message: 'User was created', user: userFromDB, token })
+                res.cookie('token', token)
+                res.cookie('user', userFromDB)
+                return res.redirect(`${process.env.FRONTEND_URL}/lk?logged`,)
             }
             else {
-                return res.json({ message: 'User already exist', user: userFromDB, token })
+                res.cookie('token', token)
+                res.cookie('user', userFromDB)
+                return res.redirect(`${process.env.FRONTEND_URL}/lk?logged`,)
             }
         }
         catch (createError) {

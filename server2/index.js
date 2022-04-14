@@ -15,14 +15,23 @@ const path = require('path')
 passport.use(new VKontakteStrategy({
     clientID: process.env.VK_APP_ID,
     clientSecret: process.env.VK_APP_SECRET,
-    callbackURL: process.env.VK_CALLBACK_REDIRECT_URL
+    callbackURL: process.env.VK_CALLBACK_REDIRECT_URL,
+
 },
     function (accessToken, refreshToken, params, profile, done) {
         return done(null, profile);
     }
 ));
 
-app.use(cors())
+app.use(cors({
+    "origin": process.env.FRONTEND_URL,
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204,
+    "credentials": true,
+
+}))
+
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}))

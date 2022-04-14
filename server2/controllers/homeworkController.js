@@ -2,6 +2,7 @@ const ApiError = require("../error/ApiError")
 const { Posts, Subjects, Likes, Users } = require('../models/models')
 const { Op } = require('sequelize')
 const moment = require('moment')
+const sequelize = require('../db')
 
 class HomeworkController {
     async create(req, res, next) {
@@ -15,53 +16,63 @@ class HomeworkController {
         }
     }
 
-    async getAll(req, res) {
+    async getAll(req, res, next) {
         const { withOverdueDeadline } = req.query
         let homeworks;
-        if (withOverdueDeadline) {
-            homeworks = await Posts.findAll({
-                where: {
-                    postType: 'homework'
-                },
-                include: [
-                    {
-                        model: Subjects,
-                        as: 'subject',
-                        attributes: ['id', 'title', 'fullName']
+        try {
+            if (withOverdueDeadline) {
+                homeworks = await Posts.findAll({
+                    where: {
+                        postType: 'homework'
                     },
-                    {
-                        model: Users,
-                        as: 'usersLiked',
+                    include: [
+                        {
+                            model: Subjects,
+                            as: 'subject',
+                            attributes: ['id', 'title', 'fullName']
+                        },
+                        {
+                            model: Users,
+                            as: 'usersLiked',
 
-                    }
-                ],
+                        }
+                    ],
 
-            })
-        }
-        else if (!withOverdueDeadline) {
-            homeworks = await Posts.findAll({
-                where: {
-                    postType: 'homework',
-                    deadline: {
-                        [Op.gte]: moment()
-                    }
-                },
-                include: [
-                    {
-                        model: Subjects,
-                        as: 'subject',
-                        attributes: ['id', 'title', 'fullName']
+                })
+            }
+            else if (!withOverdueDeadline) {
+
+                homeworks = await Posts.findAll({
+                    where: {
+                        postType: 'homework',
+                        deadline: {
+                            [Op.gte]: moment()
+                        }
                     },
-                    {
-                        model: Users,
-                        as: 'usersLiked',
+                    include: [
+                        {
+                            model: Subjects,
+                            as: 'subject',
+                            attributes: ['id', 'title', 'fullName']
+                        },
+                        {
+                            model: Users,
+                            as: 'usersLiked',
+                            where: {
+                                id: req.user.id,
+                            },
+                            required: false,
+                        }
+                    ],
 
-                        attributes: ['id', 'name', 'avatarImage']
-                    }
-                ],
-            })
+
+                })
+            }
+            return homeworks ? res.json(homeworks) : res.json([])
         }
-        return homeworks ? res.json(homeworks) : res.json([])
+        catch (e) {
+            return next(ApiError.internal(e))
+        }
     }
 
     async getOne(req, res, next) {

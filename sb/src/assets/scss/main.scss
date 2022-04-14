@@ -14,6 +14,7 @@ html {
 
 a {
     color: inherit;
+    text-decoration: none;
     &:hover {
         color: inherit;
     }
@@ -52,6 +53,9 @@ button {
     height: 40px;
     font-weight: 700;
     transition: 300ms ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     svg {
         fill: var(--btn-readmore-color);
     }
@@ -62,6 +66,7 @@ button {
             fill: var(--btn-readmore-hover-color);
         }
     }
+
 
     &_blue {
         font-size: var(--fz-head);

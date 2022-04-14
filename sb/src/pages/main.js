@@ -1,17 +1,13 @@
 import React from 'react';
-import axios from 'axios'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Card from '../components/Card/Card';
-import Button from '../components/Button/Button'
-import Select from 'react-select'
-import { DropdownIndicator } from '../components/Utils/dropdownIndicator';
+
 //config
-import { API } from '../config/api/api';
+import { $authHost } from '../http';
 
 export default function MainPage() {
     const [sortBy, setSortBy] = useState('newest')
-
 
     const [news, setNews] = useState([{
         id: '1',
@@ -22,6 +18,10 @@ export default function MainPage() {
         isLiked: false
     },
     ])
+
+    useEffect(() => {
+        $authHost.get('/api/news').then(r => console.log(r))
+    }, [])
 
 
 
