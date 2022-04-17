@@ -2,7 +2,7 @@ import React from 'react';
 import { cookies } from '../index'
 import { ReactComponent as UserPlaceholder } from '../assets/img/top-menu/user.svg'
 import Button from '../components/Button/Button';
-
+import { Link } from 'react-router-dom';
 export default function LkPage() {
     const justLogged = window.location.search.includes('logged') //means that user has just logged
     const user = cookies.get('user')
@@ -23,6 +23,12 @@ export default function LkPage() {
         <div className="page page-lk">
             <div className="avatar-placeholder">
                 <img src={user.avatarImage} alt="" />
+            </div>
+            <div className="welcome-message">
+                {user.name}
+            </div>
+            <div className="controllers">
+                <Link to='/admin'><Button text='Панель администратора' /></Link>
             </div>
         </div>
     )
