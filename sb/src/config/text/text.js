@@ -5,6 +5,7 @@ export const TEXT = {
     button: {
         readmore: 'Подробнее',
         showmore: 'Показать еще',
+        post: 'Опубликовать'
     },
     page: {
         notFound: {
@@ -22,6 +23,13 @@ export const TEXT = {
             nextPage: 'Следующая запись'
 
         }
+    },
+    form: {
+        title: 'Заголовок',
+        content: 'Описание',
+        deadline: 'Дедлайн',
+        subject: 'Предмет',
+
     }
 }
 

@@ -21,7 +21,7 @@ export default function Button({ type, text, __class, handler }) {
             type="button"
             className={`button button_${modifyClass} ${__class || ''}`}
             {...(
-                handler ? { onClick: handler } : null
+                handler ? { onClick: () => handler() } : null
             )}
         >
             {text}

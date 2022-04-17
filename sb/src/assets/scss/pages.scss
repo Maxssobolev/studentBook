@@ -212,7 +212,7 @@
             justify-content: center;
             overflow: hidden;
 
-            margin: 50px auto 30px;
+            margin: 30px auto 20px;
             svg {
                 stroke-opacity: 1;
             }
@@ -220,6 +220,18 @@
                 object-fit: contain;
                 border-radius: 50%;
                 width: calc(#{$avatar-width} - 5px)
+            }
+        }
+        .welcome-message {
+            text-align: center;
+            font-family: 'Gotham Pro';
+            font-weight: bold;
+            font-size: var(--fz-medium);
+            margin-bottom: 20px;
+        }
+        .controllers {
+            .button {
+                width: 240px;
             }
         }
         &_login {
@@ -231,6 +243,9 @@
                 width: 140px;
             }
         }
+    }
+    &-admin {
+        &__newPost {}
     }
 }
 

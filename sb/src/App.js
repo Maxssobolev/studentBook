@@ -25,7 +25,6 @@ function App() {
         <Switch>
           <Route path="/:page" component={PageRenderer} />
           <Route path="/" render={() => <Redirect to="/main" />} />
-
         </Switch>
       </Container>
     </Router>

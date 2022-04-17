@@ -9,7 +9,7 @@
 html {
     position: relative;
     overflow-y: hidden;
-
+    font-family: Roboto;
 }
 
 a {
@@ -45,14 +45,14 @@ button {
 // button
 .button {
     font-size: var(--fz-medium);
-    font-family: 'Montserrat';
+    font-family: 'Gotham Pro';
     background: var(--btn-readmore-bg);
     border-radius: 20px;
     color: var(--btn-readmore-color);
     border: 1px solid var(--btn-readmore-border-color);
     width: 100%;
     height: 40px;
-    font-weight: 700;
+    font-weight: 500;
     transition: 300ms ease-out;
     display: flex;
     align-items: center;
@@ -65,6 +65,20 @@ button {
         color: var(--btn-readmore-hover-color);
         svg {
             fill: var(--btn-readmore-hover-color);
+        }
+    }
+    &_post {
+        $post-btn-color: rgba(74, 172, 40, 0.91);
+        background: $post-btn-color;
+        border-radius: 15px;
+        border: $post-btn-color;
+        &:hover {
+            background: var(--btn-readmore-hover-bg);
+            color: $post-btn-color;
+            border: 1px solid $post-btn-color;
+            svg {
+                fill: var(--btn-readmore-hover-color);
+            }
         }
     }
 
@@ -88,7 +102,20 @@ button {
         margin-left: 5px;
     }
 }
-
+.field-wrapper {
+    span {
+        font-size: var(--fz-medium);
+    }
+}
+.field {
+    border: none;
+    border-bottom: 1px solid #f7f7f7;
+    width: 100%;
+    height: 35px;
+    padding-left: 10px;
+    outline: none;
+    border-radius: 3px;
+}
 
 // стили для карточек
 .main-card-wrapper {

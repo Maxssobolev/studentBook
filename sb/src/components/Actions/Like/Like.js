@@ -19,6 +19,7 @@ export default function Like({ id, isLiked, type }) {
     useEffect(() => {
         setLike(isLiked)
     }, [isLiked])
+
     return (
         <div className="action action_like">
 
