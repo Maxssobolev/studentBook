@@ -9,6 +9,7 @@ import SubmitOutsideBtn from '../../components/Forms/SpecialFields/SubmitOutside
 import { TEXT } from '../../config/text/text';
 import { DatePickerField } from '../../components/Forms/SpecialFields/DatePickerField';
 import useSubjects from '../../components/Hooks/useSubjects'
+import TextEditor from '../../components/Forms/SpecialFields/TextEditor';
 const SignupSchema = yup.object().shape({
     courseTitle: yup.string().min(3, 'Too Short!').max(200, 'Too Long!').required('Required'),
 });
@@ -61,6 +62,13 @@ export default function NewPost() {
                                                 name="deadline"
                                             />
                                         </div>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <TextEditor
+                                            name='content'
+                                        />
                                     </Col>
                                 </Row>
 

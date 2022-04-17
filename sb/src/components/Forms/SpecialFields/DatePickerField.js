@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 export const DatePickerField = ({ ...props }) => {
-    const { setFieldValue } = useFormikContext();
+    const { setFieldValue, setTouched } = useFormikContext();
     const [field] = useField(props);
     return (
         <DatePicker
@@ -13,10 +13,11 @@ export const DatePickerField = ({ ...props }) => {
             className="field"
             selected={(field.value && new Date(field.value)) || null}
             onChange={val => {
-
                 setFieldValue(field.name, val);
             }}
             autoComplete='off'
+            onBlur={() => setTouched(true)}
+
         />
     );
 };
