@@ -12,7 +12,20 @@ router.post(
     validateRequestMiddleware,
     subjectsController.create
 )
+router.put('/update',
+    body('id').exists({ checkFalsy: true }),
+    body('title').exists({ checkFalsy: true }),
+    authMiddleware(['headman', 'admin']), //check user role
+    validateRequestMiddleware,
+    subjectsController.update
+)
+router.delete('/delete/:id',
+    authMiddleware(['headman', 'admin']), //check user role
+    validateRequestMiddleware,
+    subjectsController.delete
+)
 router.get('/', subjectsController.getAll)
 router.get('/:id', subjectsController.getOne)
+
 
 module.exports = router

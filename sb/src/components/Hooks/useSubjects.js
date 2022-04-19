@@ -16,6 +16,7 @@ function useSubjects({ subjectsOnly = false }) {
                     id: subject.id,
                     value: subject.title,
                     label: subject.title,
+                    fullName: subject.fullName
 
                 })
             })

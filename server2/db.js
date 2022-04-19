@@ -7,6 +7,16 @@ module.exports = new Sequelize(
     {
         dialect: 'postgres',
         host: process.env.DB_HOST,
-        port: process.env.DB_PORT
+        port: process.env.DB_PORT,
+        timezone: '+03:00', //for writing to database
+        dialectOptions: {
+            useUTC: false, //for reading from database
+            typeCast: function (field, next) { // for reading from database
+                if (field.type === 'DATETIME') {
+                    return field.string();
+                }
+                return next();
+            },
+        },
     }
 )

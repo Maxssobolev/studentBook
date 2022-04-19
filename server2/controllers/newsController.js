@@ -53,7 +53,8 @@ class NewsController {
                         },
                         required: false,
                     }
-                ]
+                ],
+                order: [['createdAt', 'DESC']],
             })
         }
         return news ? res.json(news) : res.json([])

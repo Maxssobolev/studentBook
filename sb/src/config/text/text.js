@@ -29,6 +29,11 @@ export const TEXT = {
         content: 'Описание',
         deadline: 'Дедлайн',
         subject: 'Предмет',
+        subjects: {
+            title: 'Название предмета',
+            fullName: 'Расшифровка (если нужно)',
+            list: 'Список созданных предметов'
+        }
 
     }
 }

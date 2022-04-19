@@ -32,7 +32,9 @@
     }
 
     &-main {
-        @include grid;
+        &-cardsWrapper {
+            @include grid;
+        }
     }
 
     &-homework {

@@ -22,9 +22,10 @@ export const DatePickerField = ({ ...props }) => {
 
             autoComplete='off'
             onBlur={() => setTouched({ ...touched, [field.name]: true })}
-            dateFormat="dd.MM.yyyy"
+            dateFormat="dd.MM.yyyy HH:mm"
             locale="ru"
             calendarStartDay={1}
+            showTimeSelect
         />
     );
 };

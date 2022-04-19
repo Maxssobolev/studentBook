@@ -18,6 +18,8 @@ export default function AdminPage() {
         return (
             <div className="page page-admin">
                 <Link to='/admin/newPost?type=homework'>Домашняя работа</Link>
+                <Link to='/admin/newPost?type=news'>Новости</Link>
+                <Link to='/admin/subjects'>Предметы</Link>
             </div>
         )
     }

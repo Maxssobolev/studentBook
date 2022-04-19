@@ -16,6 +16,7 @@ export default function HomeWorkPage() {
     const [sortBy, setSortBy] = useState('createdAt')
     const [homeworks, setHomeworks] = useState([]);
     const [dataToShow, setDataToShow] = useState([])
+
     const handleChangeSubject = (selectedOpt) => {
         if (selectedOpt.value !== 'all')
             setDataToShow(
@@ -110,7 +111,7 @@ export default function HomeWorkPage() {
                         <div className="radio" >
                             <label>
                                 <span>Сначала новые</span>
-                                <input type="radio" name='sortBy' value='publishDate' defaultChecked />
+                                <input type="radio" name='sortBy' value='createdAt' defaultChecked />
                             </label>
                         </div>
                         <div className="radio" >

@@ -9,7 +9,6 @@ const newsController = require('../controllers/newsController');
 router.post(
     '/create',
     body('title').exists({ checkFalsy: true }),
-    body('content').exists({ checkFalsy: true }),
     body('deadline').exists({ checkFalsy: true }),
     authMiddleware(['headman', 'admin']), //check user role
     validateRequestMiddleware,

@@ -73,13 +73,17 @@ button {
         background: $post-btn-color;
         border-radius: 15px;
         border: $post-btn-color;
-        &:hover {
+        &:not(:disabled):hover {
             background: var(--btn-readmore-hover-bg);
             color: $post-btn-color;
             border: 1px solid $post-btn-color;
             svg {
                 fill: var(--btn-readmore-hover-color);
             }
+        }
+        &:disabled {
+            color: white;
+            background: rgba(74, 172, 40, 0.5)
         }
     }
 

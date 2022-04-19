@@ -37,7 +37,7 @@ export default function NewPost() {
         deadline: '',
         content: '',
         postType: type,
-        subjectId: type == 'homework' ? '2' : null
+        subjectId: type == 'homework' ? '2' : ''
     })
 
 
@@ -62,7 +62,17 @@ export default function NewPost() {
                     })
                 }
                 else {
-
+                    $authHost.post('/api/news/create', values).then(r => {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Успешно!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            resetForm({ values: '' })
+                        })
+                    })
                 }
             }}
         >
@@ -78,6 +88,7 @@ export default function NewPost() {
                                             <Field
                                                 name="title"
                                                 className='field'
+                                                maxLength={40}
                                             />
                                         </div>
                                     </Col>
