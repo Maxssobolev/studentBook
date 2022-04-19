@@ -147,6 +147,7 @@ button {
         font-weight: bold;
         line-height: 1.5rem;
         padding: 0 $card-padding;
+        line-break: anywhere;
     }
     &__date {
         margin-top: 5px;
