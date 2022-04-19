@@ -6,11 +6,11 @@
     &-newPost {
         .two-columns-wrapper {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             grid-gap: 15px;
 
             @include if_size('425') {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
         }
     }

@@ -77,6 +77,8 @@ export default function NewPost() {
                                             <span>{TEXT.form.deadline}</span>
                                             <DatePickerField
                                                 name="deadline"
+                                                fromNow
+
                                             />
                                         </div>
                                     </Col>

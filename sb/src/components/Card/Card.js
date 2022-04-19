@@ -6,8 +6,7 @@ import Button from '../Button/Button'
 import { getRemainDeadline } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion/dist/es/index'
-
+import { motion } from 'framer-motion'
 export default function Card({ id, title, content, publishDate, deadline, isLiked, type, subjectTitle = '' }) {
 
     const { remainTime, progress } = getRemainDeadline(publishDate, deadline)

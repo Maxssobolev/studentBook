@@ -6,7 +6,7 @@ import { DropdownIndicator } from '../components/Utils/dropdownIndicator';
 import Card from '../components/Card/Card';
 import moment from 'moment';
 import { TEXT } from '../config/text/text';
-import { motion, AnimatePresence } from 'framer-motion/dist/es/index'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react';
 import { $authHost } from '../http';
 import useSubjects from '../components/Hooks/useSubjects'
@@ -67,7 +67,7 @@ export default function HomeWorkPage() {
             }
         )
 
-    }, [])
+    })
 
     return (
         <>

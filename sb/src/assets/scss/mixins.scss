@@ -1,10 +1,11 @@
 $breakpoints: (
-    '325': 325px,
-    '375': 375px,
+    'extra-small': 375px,
     '425': 425px,
-    'medium': 1024px,
-    'large': 1200px,
-    'extra-large': 1440px, ) !default;
+    'small': 425px,
+    'tablet': 1024px,
+    'm': 1366px,
+    'l': 1440px,
+    'xl': 1600px, ) !default;
 
 @mixin if_size($breakpoint) {
     @if map-has-key($breakpoints, $breakpoint) {
