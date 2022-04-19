@@ -14,9 +14,10 @@ export const DatePickerField = ({ ...props }) => {
             selected={(field.value && new Date(field.value)) || null}
             onChange={val => {
                 setFieldValue(field.name, val);
+                setTouched(field.name, true)
             }}
             autoComplete='off'
-            onBlur={() => setTouched(true)}
+            onBlur={() => setTouched(field.name, true)}
 
         />
     );

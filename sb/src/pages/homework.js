@@ -12,7 +12,7 @@ import { $authHost } from '../http';
 import useSubjects from '../components/Hooks/useSubjects'
 
 export default function HomeWorkPage() {
-    const subjects = useSubjects()
+    const subjects = useSubjects({ subjectsOnly: false })
     const [sortBy, setSortBy] = useState('createdAt')
     const [homeworks, setHomeworks] = useState([]);
     const [dataToShow, setDataToShow] = useState([])

@@ -5,23 +5,16 @@ const fs = require('fs');
 
 class UploadsController {
 
+    //special for ckeditor
     async uploadImage(req, res, next) {
         const { files } = req
 
         let tmpFile = files.upload;
         tmpFile.mv(path.join(__dirname, "..", "/static/", tmpFile.name))
-
-
-
         res.status(200).json({
             uploaded: true,
             url: `${process.env.THIS_URL}/static/${tmpFile.name}`
         });
-
-
-
-
-
     }
 
     async uploadFile(req, res, next) {

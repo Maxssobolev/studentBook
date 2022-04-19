@@ -5,6 +5,7 @@
 @import './actions.scss';
 @import './mixins.scss';
 @import './timetable.scss';
+@import './forms.scss';
 
 html {
     position: relative;
@@ -102,20 +103,7 @@ button {
         margin-left: 5px;
     }
 }
-.field-wrapper {
-    span {
-        font-size: var(--fz-medium);
-    }
-}
-.field {
-    border: none;
-    border-bottom: 1px solid #f7f7f7;
-    width: 100%;
-    height: 35px;
-    padding-left: 10px;
-    outline: none;
-    border-radius: 3px;
-}
+
 
 // стили для карточек
 .main-card-wrapper {
@@ -357,3 +345,7 @@ button {
     }
 }
 */
+
+.react-datepicker-popper {
+    z-index: 1000 !important;
+}

@@ -5,18 +5,18 @@ import { useFormikContext, useField } from 'formik'
 export default function TextEditor({ ...props }) {
     const { setFieldValue, setTouched } = useFormikContext();
     const [field] = useField(props);
-
     return (
         <CKEditor
             editor={ClassicEditor}
             {...field}
             {...props}
 
-            value={field.value || ''}
-            onChange={val => {
-                setFieldValue(field.name, val);
+            value={field.value}
+            onChange={(event, editor) => {
+                setFieldValue(field.name, editor.getData());
+                setTouched(field.name, true);
             }}
-            onBlur={() => setTouched(true)}
+            onBlur={() => setTouched(field.name, true)}
 
             config={
                 {
