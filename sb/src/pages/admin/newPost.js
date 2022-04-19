@@ -12,9 +12,16 @@ import useSubjects from '../../components/Hooks/useSubjects'
 import TextEditor from '../../components/Forms/SpecialFields/TextEditor';
 import { $authHost } from '../../http';
 import Swal from 'sweetalert2'
+import { FieldTitle } from '../../components/Forms/SpecialFields/FieldTitle';
 
 const SignupSchema = yup.object().shape({
-    courseTitle: yup.string().min(3, 'Too Short!').max(200, 'Too Long!').required('Required'),
+    title: yup.string().min(2, 'Нужно хотя бы два символа').max(40, 'Привышен максимум (40 символов)').required('Обязательное поле'),
+    deadline: yup.date().required('Обязательное поле').nullable(),
+    content: yup.string(),
+    subjectId: yup.string().when("postType", {
+        is: 'homework',
+        then: yup.string().required('Обязательное поле'),
+    }),
 });
 
 //for add or uopdate post
@@ -29,6 +36,7 @@ export default function NewPost() {
         title: '',
         deadline: '',
         content: '',
+        postType: type,
         subjectId: type == 'homework' ? '2' : null
     })
 
@@ -36,8 +44,9 @@ export default function NewPost() {
     return (
         <Formik
             initialValues={initialValues}
-            //validationSchema={SignupSchema}
+            validationSchema={SignupSchema}
             enableReinitialize={true}
+            validateOnMount={true}
             onSubmit={(values, { resetForm }) => {
                 if (type == 'homework') {
                     $authHost.post('/api/homeworks/create', values).then(r => {
@@ -65,7 +74,7 @@ export default function NewPost() {
                                 <Row>
                                     <Col>
                                         <div className="field-wrapper">
-                                            <span>{TEXT.form.title}</span>
+                                            <FieldTitle name="title">{TEXT.form.title}</FieldTitle>
                                             <Field
                                                 name="title"
                                                 className='field'
@@ -74,7 +83,7 @@ export default function NewPost() {
                                     </Col>
                                     <Col>
                                         <div className="field-wrapper">
-                                            <span>{TEXT.form.deadline}</span>
+                                            <FieldTitle name="deadline">{TEXT.form.deadline}</FieldTitle>
                                             <DatePickerField
                                                 name="deadline"
                                                 fromNow

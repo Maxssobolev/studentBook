@@ -1,7 +1,9 @@
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
+import ru from "date-fns/locale/ru";
 import { useField, useFormikContext } from "formik";
 import "react-datepicker/dist/react-datepicker.css";
 
+registerLocale('ru', ru);
 
 export const DatePickerField = ({ ...props }) => {
     const { setFieldValue, setTouched, touched } = useFormikContext();
@@ -20,7 +22,9 @@ export const DatePickerField = ({ ...props }) => {
 
             autoComplete='off'
             onBlur={() => setTouched({ ...touched, [field.name]: true })}
-
+            dateFormat="dd.MM.yyyy"
+            locale="ru"
+            calendarStartDay={1}
         />
     );
 };

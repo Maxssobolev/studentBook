@@ -20,6 +20,15 @@
     span {
         font-size: var(--fz-medium);
         margin-bottom: 10px;
+        &[dataerrors]::after {
+            content: ' ' attr(dataerrors) ' ';
+            background: #fff3cd;
+            font-size: 12px;
+            margin-left: 0.25rem;
+            color: #664d03;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
     }
 
 }
