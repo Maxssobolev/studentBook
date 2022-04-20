@@ -5,6 +5,7 @@ import Interweave, { Node } from 'interweave';
 import Button from '../Button/Button'
 import { getRemainDeadline } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
+import MarkAsDone from '../Actions/MarkAsDone/MarkAsDone';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'
 
@@ -17,7 +18,7 @@ const transform = (node, children) => {
     }
 };
 
-export default function Card({ id, title, content, publishDate, deadline, isLiked, type, subjectTitle = '' }) {
+export default function Card({ id, title, content, publishDate, deadline, isLiked, type, isDone, subjectTitle = '' }) {
 
     const { remainTime, progress } = getRemainDeadline(publishDate, deadline)
 
@@ -61,6 +62,13 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                                 isLiked={isLiked}
                                 type={type}
                             />
+                            {type == 'homework' &&
+                                <MarkAsDone
+                                    id={id}
+                                    isDone={isDone}
+                                />
+                            }
+
                         </div>
                         <div className="button-wrapper">
                             <Link to={`/view/post/${id}?type=${type}`}>
