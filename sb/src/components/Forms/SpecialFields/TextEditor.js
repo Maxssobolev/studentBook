@@ -15,7 +15,6 @@ export default function TextEditor({ ...props }) {
                 setFieldValue(field.name, editor.getData());
             }}
             onBlur={() => setTouched({ ...touched, [field.name]: true })}
-
             config={
                 {
 
