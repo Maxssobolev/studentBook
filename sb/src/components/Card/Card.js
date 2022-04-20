@@ -24,15 +24,18 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
 
             <div className="newsCard-wrapper">
                 <div className={`newsCard ${type === 'homework' ? 'newsCard_hw' : ''}`}>
-                    {/* Если карточка должна отображать домашнюю работу, то появляется название предмета */}
-                    {type === 'homework' && <div className="newsCard__subject">{subjectTitle}</div>}
+
                     {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
                     {type === 'homework' && (
-                        <div className="deadline-chart">
-                            <div className="deadline-chart__progress" style={{ width: progress }}></div>
-                            <div className="deadline-chart__text">{remainTime}</div>
+                        <div className="deadline-wrapper">
+                            <div className="deadline-text">{remainTime}</div>
+                            <div className="deadline-chart">
+                                <div className="deadline-chart__progress" style={{ width: progress < 5 ? `0px` : `${progress}%` }}></div>
+                            </div>
                         </div>
                     )}
+                    {/* Если карточка должна отображать домашнюю работу, то появляется название предмета */}
+                    {type === 'homework' && <div className="newsCard__subject">{subjectTitle}</div>}
                     <div className="newsCard__title">{title}</div>
                     <div className="newsCard__date">
                         <div className="dates__publish">{moment(publishDate).format('D MMMM, HH:mm')}</div>

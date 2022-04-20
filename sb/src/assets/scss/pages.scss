@@ -38,28 +38,33 @@
     }
 
     &-homework {
-        .deadline-chart {
-            align-self: center;
+        .deadline-wrapper {
+            display: flex;
             margin: 0 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .deadline-text {
+            color: #000;
+            font-family: Roboto;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .deadline-chart {
+            $deadline-with: 120px;
+            $deadline-height: 23px;
+            width: $deadline-with;
             position: relative;
             background: var(--deadline-bg);
-            height: 30px;
+            height: $deadline-height;
             border-radius: 10px;
             &__progress {
                 position: absolute;
                 background: var(--deadline-progress);
-                height: 30px;
+                height: $deadline-height;
                 border-radius: 10px 0 0 10px;
             }
-            &__text {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                color: var(--deadline-color);
-                font-family: Roboto;
-                font-weight: 600;
-            }
+
         }
         /*.deadline-circle{
             position: relative;
