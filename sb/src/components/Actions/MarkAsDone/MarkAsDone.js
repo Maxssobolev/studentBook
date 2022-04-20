@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import { ReactComponent as MarkIcon } from '../../../assets/img/actions/mark.svg'
 import { ReactComponent as MarkedIcon } from '../../../assets/img/actions/marked.svg'
+import { $authHost } from '../../../http';
 
-export default function MarkAsDone({ newsCardId, __isMarkAsDone: isMarked, type }) {
-    const [mark, setMark] = useState(isMarked || false)
-    const handleMark = () => {
-        setMark(!mark)
+export default function MarkAsDone({ id, isDone }) {
+    const [mark, setMark] = useState(isDone || false)
+    const handleMark = async () => {
+        $authHost.post('/api/homeworks/done', { postId: id }).then(r => setMark(!mark))
     }
+    useEffect(() => {
+        setMark(isDone)
+    }, [isDone])
     return (
         <div className="action action_markAsDone">
 
@@ -18,7 +22,7 @@ export default function MarkAsDone({ newsCardId, __isMarkAsDone: isMarked, type 
                         timeout={200}
                         classNames="fade_mark"
                     >
-                        {mark ? <MarkIcon /> : <MarkedIcon />}
+                        {mark ? <MarkedIcon /> : <MarkIcon />}
                     </CSSTransition>
                 </SwitchTransition>
             </button>

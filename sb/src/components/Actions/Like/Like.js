@@ -7,14 +7,18 @@ import { $authHost } from '../../../http';
 
 export default function Like({ id, isLiked, type }) {
     const [like, setLike] = useState(isLiked || false)
-    const handleLike = () => {
+    const handleLike = async () => {
+        let resp
         if (type == 'news') {
-            $authHost.post('/api/news/like', { postId: id })
+            resp = await $authHost.post('/api/news/like', { postId: id })
         }
         else if (type == 'homework') {
-            $authHost.post('/api/homeworks/like', { postId: id })
+            resp = await $authHost.post('/api/homeworks/like', { postId: id })
         }
-        setLike(!like)
+
+        if (resp.status == 200)
+            setLike(!like)
+
     }
     useEffect(() => {
         setLike(isLiked)

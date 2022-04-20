@@ -30,17 +30,20 @@ export default function PostViewPage() {
         $authHost.get(apiUrl).then(({ data: { prevPost, currentPost, nextPost } }) => {
             const { remainTime, progress } = getRemainDeadline(currentPost.createdAt, currentPost.deadline)
             const isLiked = currentPost.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
+            const isDone = currentPost?.usersDoned?.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не отметил как выполненное
             setData({
                 prevPost,
                 currentPost: {
                     ...currentPost,
                     remainTime,
                     progress,
-                    isLiked
+                    isLiked,
+                    isDone
                 },
                 nextPost
             })
         }).catch(err => {
+
             setData({ currentPost: null })
         })
 
@@ -110,7 +113,7 @@ export default function PostViewPage() {
                     <div className="actions">
 
                         <Like id={id} type={type} isLiked={currentPost.isLiked} />
-                        {type == 'homework' && <MarkAsDone newsCardId={id} __isMarkAsDone={currentPost.isMarkAsDone} />}
+                        {type == 'homework' && <MarkAsDone id={id} isDone={currentPost?.isDone} />}
 
                     </div>
                 </div>

@@ -24,6 +24,16 @@ router.post(
     validateRequestMiddleware,
     homeworkController.likeHandler
 )
+
+router.post(
+    '/done',
+    body('postId').exists({ checkFalsy: true }),
+    authMiddleware(),
+    validateRequestMiddleware,
+    homeworkController.doneHandler
+)
+
+
 router.get('/', authMiddleware(), homeworkController.getAll)
 router.get('/:id', authMiddleware(), homeworkController.getOne)
 

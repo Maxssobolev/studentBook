@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError")
-const { Posts, Subjects, Likes, Users } = require('../models/models')
+const { Posts, Subjects, Likes, Users, DoneHomeworks } = require('../models/models')
 const { Op } = require('sequelize')
 const moment = require('moment')
 
@@ -37,6 +37,14 @@ class HomeworkController {
                                 id: req.user.id,
                             },
                             required: false,
+                        },
+                        {
+                            model: Users,
+                            as: 'usersDoned',
+                            where: {
+                                id: req.user.id,
+                            },
+                            required: false,
                         }
                     ],
 
@@ -60,6 +68,14 @@ class HomeworkController {
                         {
                             model: Users,
                             as: 'usersLiked',
+                            where: {
+                                id: req.user.id,
+                            },
+                            required: false,
+                        },
+                        {
+                            model: Users,
+                            as: 'usersDoned',
                             where: {
                                 id: req.user.id,
                             },
@@ -100,6 +116,14 @@ class HomeworkController {
                         id: req.user.id,
                     },
                     required: false,
+                },
+                {
+                    model: Users,
+                    as: 'usersDoned',
+                    where: {
+                        id: req.user.id,
+                    },
+                    required: false,
                 }
             ],
 
@@ -135,7 +159,6 @@ class HomeworkController {
         /*
             если лайка нет - добавляет
             если есть - удаляет
-            только в домашке
         */
         const { user: { id: userId } } = req
         const { postId } = req.body
@@ -155,6 +178,45 @@ class HomeworkController {
                 try {
                     await like.destroy()
                     return res.json({ message: 'Like was deleted' })
+                }
+                catch (deleteError) {
+
+                    next(ApiError.internal(deleteError))
+                }
+
+            }
+
+        }
+        catch (createError) {
+
+            next(ApiError.internal(createError))
+        }
+
+    }
+
+    async doneHandler(req, res, next) {
+        /*
+            если отметки нет - добавляет
+            если есть - удаляет
+            только в домашке
+        */
+        const { user: { id: userId } } = req
+        const { postId } = req.body
+        const sentData = {
+            postId: postId,
+            userId: userId,
+        }
+
+        try {
+
+            const [done, created] = await DoneHomeworks.findOrCreate({ where: sentData, defaults: sentData })
+            if (created) {
+                return res.json({ message: 'Marked as done', done })
+            }
+            else {
+                try {
+                    await done.destroy()
+                    return res.json({ message: 'Marked was deleted' })
                 }
                 catch (deleteError) {
 
