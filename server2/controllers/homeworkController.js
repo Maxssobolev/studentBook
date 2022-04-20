@@ -89,6 +89,11 @@ class HomeworkController {
             },
             include: [
                 {
+                    model: Subjects,
+                    as: 'subject',
+                    attributes: ['id', 'title', 'fullName']
+                },
+                {
                     model: Users,
                     as: 'usersLiked',
                     where: {
@@ -96,9 +101,12 @@ class HomeworkController {
                     },
                     required: false,
                 }
-            ]
+            ],
 
         })
+        if (!currentPost) {
+            return res.json({ prevPost: null, currentPost: null, nextPost: null })
+        }
         const nextPost = await Posts.findOne({
             where: {
                 createdAt: {

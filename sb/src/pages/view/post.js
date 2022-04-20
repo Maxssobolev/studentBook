@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouteMatch } from 'react-router-dom'
+import { Redirect, useRouteMatch } from 'react-router-dom'
 import { TEXT } from '../../config/text/text'
 import { ReactComponent as ArrowIcon } from '../../assets/img/arrow-right.svg'
 import { useHistory } from 'react-router-dom';
@@ -12,22 +12,25 @@ import { Markup } from 'interweave';
 import Like from '../../components/Actions/Like/Like';
 import MarkAsDone from '../../components/Actions/MarkAsDone/MarkAsDone';
 import { $authHost } from '../../http';
+import useQuery from '../../components/Hooks/useQuery'
 
 
-
-export default function HomeworkViewPage() {
+export default function PostViewPage() {
     const match = useRouteMatch();
+    const query = useQuery()
     const history = useHistory();
-    const ID = Number(match.params.id)
+    const id = Number(match.params.id)
+    const type = query.get('type') // homework | news
 
-    const [hw, setHw] = useState(null)
+    const [data, setData] = useState(null)
 
     useEffect(() => {
-        $authHost.get(`/api/homeworks/${ID}`).then(({ data: { prevPost, currentPost, nextPost } }) => {
+        const apiUrl = type == 'homework' ? `/api/homeworks/${id}` : `/api/news/${id}`
+
+        $authHost.get(apiUrl).then(({ data: { prevPost, currentPost, nextPost } }) => {
             const { remainTime, progress } = getRemainDeadline(currentPost.createdAt, currentPost.deadline)
             const isLiked = currentPost.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
-
-            setHw({
+            setData({
                 prevPost,
                 currentPost: {
                     ...currentPost,
@@ -38,14 +41,16 @@ export default function HomeworkViewPage() {
                 nextPost
             })
         }).catch(err => {
-            setHw({ currentPost: null })
+            setData({ currentPost: null })
         })
 
-    }, [ID])
+    }, [id])
 
-    if (!hw)
+    if (!type || !id || !['homework', 'news'].includes(type))
+        return <Redirect to='/404' />
+    if (!data)
         return (
-            <div className='page page-view page-view_hw'>
+            <div className='page page-view page-view_post'>
                 <div className="page-controllers">
                     <button type='button' className="prev-page" onClick={() => history.goBack()}><ArrowIcon />{TEXT.page.view.prevPage}</button>
                     <div className="subject-name">{TEXT.loading}</div>
@@ -54,9 +59,9 @@ export default function HomeworkViewPage() {
                 <SinglePageLoader />
             </div>
         )
-    else if (!hw?.currentPost) {
+    else if (!data?.currentPost) {
         return (
-            <div className="page page-view page-view_hw">
+            <div className="page page-view page-view_post">
                 <div className="nothing-to-show">
                     {TEXT.page.nothingToShow.title}
                 </div>
@@ -64,16 +69,16 @@ export default function HomeworkViewPage() {
         )
     }
     else {
-        const { currentPost } = hw
+        const { currentPost } = data
 
         return (
             <>
-                <div className='page page-view page-view_hw'>
+                <div className='page page-view page-view_post'>
                     <div className="page-view__wrapper">
                         <div className="page-controllers">
-                            <button type='button' className="prev-page" onClick={() => history.push(`/view/homework/${hw.prevPost?.id}`)} disabled={hw.prevPost ? false : true}><ArrowIcon />{TEXT.page.view.prevPage}</button>
-                            <div className="subject-name">{hw.subjectTitle}</div>
-                            <button type='button' className="next-page" onClick={() => history.push(`/view/homework/${hw.nextPost?.id}`)} disabled={hw.nextPost ? false : true}>{TEXT.page.view.nextPage} <ArrowIcon /> </button>
+                            <button type='button' className="prev-page" onClick={() => history.push(`/view/post/${data.prevPost?.id}?type=${type}`)} disabled={data.prevPost ? false : true}><ArrowIcon />{TEXT.page.view.prevPage}</button>
+                            <div className="subject-name">{currentPost?.subject?.title || ''}</div>
+                            <button type='button' className="next-page" onClick={() => history.push(`/view/post/${data.nextPost?.id}?type=${type}`)} disabled={data.nextPost ? false : true}>{TEXT.page.view.nextPage} <ArrowIcon /> </button>
 
                         </div>
 
@@ -94,7 +99,7 @@ export default function HomeworkViewPage() {
                                 {currentPost.title}
                             </div>
                             <div className="page-content">
-                                <Markup content={currentPost.content} />
+                                <Markup content={currentPost.content} blockList={['figure']} />
                             </div>
                         </div>
 
@@ -104,8 +109,8 @@ export default function HomeworkViewPage() {
                 <div className="rightsidebar">
                     <div className="actions">
 
-                        <Like id={ID} type='homework' isLiked={currentPost.isLiked} />
-                        <MarkAsDone newsCardId={ID} __isMarkAsDone={currentPost.isMarkAsDone} />
+                        <Like id={id} type={type} isLiked={currentPost.isLiked} />
+                        {type == 'homework' && <MarkAsDone newsCardId={id} __isMarkAsDone={currentPost.isMarkAsDone} />}
 
                     </div>
                 </div>

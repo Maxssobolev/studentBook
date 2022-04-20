@@ -63,9 +63,7 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                             />
                         </div>
                         <div className="button-wrapper">
-                            <Link to={{
-                                pathname: type === 'homework' ? `/view/homework/${id}` : `/view/news/${id}`,
-                            }}>
+                            <Link to={`/view/post/${id}?type=${type}`}>
                                 <Button type="readmore" />
                             </Link>
                         </div>
