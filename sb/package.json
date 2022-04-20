@@ -22,6 +22,7 @@
     "moment": "^2.29.2",
     "react": "^17.0.2",
     "react-apexcharts": "^1.3.9",
+    "react-awesome-lightbox": "^1.8.1",
     "react-bootstrap": "^2.0.3",
     "react-content-loader": "^6.1.0",
     "react-datepicker": "^4.7.0",

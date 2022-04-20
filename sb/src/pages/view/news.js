@@ -88,7 +88,7 @@ export default function NewsViewPage() {
                             </div>
 
                             <div className="deadline-chart">
-                                <div className="deadline-chart__progress" style={{ width: currentPost.progress }}></div>
+                                <div className="deadline-chart__progress" style={{ width: currentPost.progress < 5 ? `0px` : `${currentPost.progress}%` }}></div>
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@ export default function NewsViewPage() {
                                 {currentPost.title}
                             </div>
                             <div className="page-content">
-                                <Markup content={currentPost.content} />
+                                <Markup content={currentPost.content} blockList={['figure']} />
                             </div>
                         </div>
                     </div>

@@ -82,22 +82,45 @@ class HomeworkController {
         if (!id) {
             return next(ApiError.badRequest('Не задан параметр ID'))
         }
-        const homework = await Posts.findOne({
+        const currentPost = await Posts.findOne({
             where: {
                 id,
                 postType: 'homework'
             },
             include: [
                 {
-                    model: Subjects,
-                    as: 'subject',
-                    attributes: ['id', 'title', 'fullName']
-                },
-
-            ],
+                    model: Users,
+                    as: 'usersLiked',
+                    where: {
+                        id: req.user.id,
+                    },
+                    required: false,
+                }
+            ]
 
         })
-        return homework ? res.json(homework) : res.json([])
+        const nextPost = await Posts.findOne({
+            where: {
+                createdAt: {
+                    [Op.gt]: currentPost.createdAt,
+                },
+                postType: 'homework',
+            },
+            attributes: ['id']
+        })
+        const prevPost = await Posts.findAll({
+            where: {
+                createdAt: {
+                    [Op.lt]: currentPost.createdAt,
+                },
+                postType: 'homework'
+            },
+            limit: 1,
+            order: [['createdAt', 'DESC']],
+            attributes: ['id']
+        })
+
+        return res.json({ prevPost: prevPost[0] || null, currentPost, nextPost })
     }
 
     async likeHandler(req, res, next) {

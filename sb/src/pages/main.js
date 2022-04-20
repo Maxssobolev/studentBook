@@ -30,7 +30,7 @@ export default function MainPage() {
 
     const handleChangeSort = (event) => {
         setSortBy(event.target.value)
-        setDataToShow(prev => [...prev].sort(
+        setDataToShow([...news].sort(
             (a, b) => {
                 if (event.target.value === 'deadline') {
                     //Если сортировка по дедлайну, то вначале те, что сгорят быстрее
@@ -93,7 +93,7 @@ export default function MainPage() {
                         <div className="radio">
                             <label >
                                 <span>Сначала новые</span>
-                                <input type="radio" name='sortBy' value='newest' defaultChecked />
+                                <input type="radio" name='sortBy' value='createdAt' defaultChecked />
                             </label>
                         </div>
                         <div className="radio">

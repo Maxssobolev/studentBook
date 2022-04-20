@@ -6,6 +6,7 @@
 @import './mixins.scss';
 @import './timetable.scss';
 @import './forms.scss';
+@import './tables.scss';
 
 html {
     position: relative;
@@ -131,7 +132,7 @@ button {
     $card-padding: 15px;
 
     display: grid;
-    grid-template-rows: 2fr 1fr 2fr 3fr;
+    grid-template-rows: 1.5fr 0.6fr 3fr 3fr;
 
     &_hw {
         grid-row-gap: 10px;
@@ -154,15 +155,20 @@ button {
         line-height: 1.5rem;
         padding: 0 $card-padding;
         line-break: anywhere;
+        overflow: hidden;
+
     }
     &__date {
         margin-top: 5px;
         padding: 0 $card-padding;
+
     }
     &__content {
         margin: 10px 0;
         padding: 0 $card-padding;
         font-weight: 400;
+        line-break: anywhere;
+        overflow: hidden;
     }
     &__footer {
         text-align: center;
@@ -355,4 +361,13 @@ button {
 
 .react-datepicker-popper {
     z-index: 1000 !important;
+}
+
+.markup-replacement {
+    background: #fff3cd;
+    font-size: 12px;
+    margin-left: 0.25rem;
+    color: #664d03;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
 }

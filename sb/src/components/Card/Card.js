@@ -1,12 +1,22 @@
 import React from 'react';
 import 'moment/locale/ru';
 import moment from 'moment';
-
+import Interweave, { Node } from 'interweave';
 import Button from '../Button/Button'
 import { getRemainDeadline } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'
+
+const transform = (node, children) => {
+    if (node.tagName.toLowerCase() === "table") {
+        return <span className='markup-replacement'>таблица</span>
+    }
+    else if (node.tagName.toLowerCase() === "img") {
+        return <span className='markup-replacement'>картинка</span>
+    }
+};
+
 export default function Card({ id, title, content, publishDate, deadline, isLiked, type, subjectTitle = '' }) {
 
     const { remainTime, progress } = getRemainDeadline(publishDate, deadline)
@@ -42,7 +52,7 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                     </div>
                     {/* Если карточка должна отображать новость, то появляется ее краткое описание */}
                     {type !== 'homework' && (
-                        <div className="newsCard__content">{content.slice(0, 95)}{content.length > 95 ? '...' : ''}</div>
+                        <div className="newsCard__content"><Interweave content={`${content.slice(0, 95)}${content.length > 95 ? '...' : ''}`} transform={transform} /></div>
                     )}
                     <div className="newsCard__footer">
                         <div className="newsCard__footer-controllers">
