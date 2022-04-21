@@ -1,7 +1,7 @@
 import React from 'react';
 import 'moment/locale/ru';
 import moment from 'moment';
-import Interweave, { Node } from 'interweave';
+import Interweave from 'interweave';
 import Button from '../Button/Button'
 import { getRemainDeadline } from '../Utils/getRemainTime';
 import Like from '../Actions/Like/Like';

@@ -196,7 +196,12 @@
                     text-indent: var(--fz-head);
                 }
                 img {
-                    max-width: 100%
+                    max-width: 50%
+                }
+                .image-in-post {
+                    margin: 10px 0;
+                    cursor: zoom-in;
+                    float: left;
                 }
             }
         }

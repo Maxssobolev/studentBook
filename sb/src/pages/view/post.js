@@ -8,12 +8,25 @@ import { getRemainDeadline } from '../../components/Utils/getRemainTime';
 import { useEffect } from 'react';
 import moment from 'moment';
 import SinglePageLoader from '../../components/CustomLoaders/SinglePage';
-import { Markup } from 'interweave';
+import Interweave from 'interweave';
 import Like from '../../components/Actions/Like/Like';
 import MarkAsDone from '../../components/Actions/MarkAsDone/MarkAsDone';
 import { $authHost } from '../../http';
 import useQuery from '../../components/Hooks/useQuery'
+import Lightbox from "react-awesome-lightbox";
+import "react-awesome-lightbox/build/style.css";
 
+const ImageComponent = ({ imageSrc }) => {
+    const [lightbox, setLightBox] = useState(false)
+    return !lightbox ? <img src={imageSrc} onClick={() => setLightBox(true)} alt='' className="image-in-post" /> : <Lightbox image={imageSrc} onClose={() => setLightBox(false)} />
+
+}
+
+const transform = (node, children) => {
+    if (node.tagName.toLowerCase() === "img") {
+        return <ImageComponent imageSrc={`${node.getAttribute('src')}`} />
+    }
+};
 
 export default function PostViewPage() {
     const match = useRouteMatch();
@@ -102,7 +115,7 @@ export default function PostViewPage() {
                                 {currentPost.title}
                             </div>
                             <div className="page-content">
-                                <Markup content={currentPost.content} blockList={['figure']} />
+                                <Interweave content={currentPost.content} blockList={['figure']} transform={transform} />
                             </div>
                         </div>
 
