@@ -4,7 +4,7 @@ const passport = require('passport');
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const sequelize = require('./db')
 const PORT = process.env.PORT || 5000
-const models = require('./models/models')
+const { Subjects } = require('./models/models')
 const cors = require('cors');
 const router = require('./routes/index')
 const app = express()
@@ -38,11 +38,18 @@ app.use(fileUpload({}))
 app.use('/api', router)
 app.use(errorHandler)
 
+const createDefaultRows = async () => {
+    let defaultSubject = {
+        title: 'default',
+    }
+    await Subjects.findOrCreate({ where: defaultSubject, defaults: defaultSubject })
+}
 
 const start = async () => {
     try {
         await sequelize.authenticate()
         await sequelize.sync()
+        await createDefaultRows()
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     }
     catch (e) {

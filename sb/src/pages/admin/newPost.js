@@ -35,7 +35,7 @@ export default function NewPost() {
         deadline: '',
         content: '',
         postType: type,
-        subjectId: type == TYPE_HOMEWORK ? '2' : null
+        subjectId: type == TYPE_HOMEWORK ? `1` : null
     })
 
 

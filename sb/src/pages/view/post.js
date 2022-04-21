@@ -86,14 +86,14 @@ export default function PostViewPage() {
     }
     else {
         const { currentPost } = data
-
+        const subjTitle = currentPost?.subject?.title == 'default' ? 'Без предмета' : currentPost?.subject?.title || ''
         return (
             <>
                 <div className='page page-view page-view_post'>
                     <div className="page-view__wrapper">
                         <div className="page-controllers">
                             <button type='button' className="prev-page" onClick={() => history.push(`/view/post/${data.prevPost?.id}?type=${type}`)} disabled={data.prevPost ? false : true}><ArrowIcon />{TEXT.page.view.prevPage}</button>
-                            <div className="subject-name">{currentPost?.subject?.title || ''}</div>
+                            <div className="subject-name">{subjTitle}</div>
                             <button type='button' className="next-page" onClick={() => history.push(`/view/post/${data.nextPost?.id}?type=${type}`)} disabled={data.nextPost ? false : true}>{TEXT.page.view.nextPage} <ArrowIcon /> </button>
 
                         </div>

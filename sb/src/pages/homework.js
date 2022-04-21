@@ -82,7 +82,7 @@ export default function HomeWorkPage() {
                                 dataToShow.map((item) => {
                                     const isLiked = item.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
                                     const isDone = item.usersDoned.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
-
+                                    const subjTitle = item.subject.title == 'default' ? 'Без предмета' : item.subject.title
                                     return (
                                         <Card
                                             key={`hwCardItem_${item.id}`}
@@ -93,7 +93,7 @@ export default function HomeWorkPage() {
                                             deadline={item.deadline}
                                             isLiked={isLiked}
                                             isDone={isDone}
-                                            subjectTitle={item.subject.title}
+                                            subjectTitle={subjTitle}
                                         />
                                     )
                                 })

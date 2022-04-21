@@ -26,6 +26,8 @@ export default function Subjects() {
         $authHost.get('/api/subjects').then(r => {
             let preparedData = []
             r.data.forEach(subject => {
+                if (subject.title == 'default')
+                    return
                 preparedData.push({
                     id: subject.id,
                     label: subject.title,
@@ -77,9 +79,31 @@ export default function Subjects() {
                 })
             }
             if (isDenied) {
-                $authHost.delete(`/api/subjects/delete/${id}`).then(r => {
-                    showSuccessMessage()
+                Swal.fire({
+                    title: 'Удалить так же все домашние работы?',
+                    html: `<p>В противном случае домашние работы сохранятся, но им будет присвоен предмет "Default". Вы сможете изменить его на новый вручную.</p>`,
+                    type: 'warning',
+                    showCancelButton: true,
+                    showDenyButton: true,
+                    cancelButtonColor: 'grey',
+                    cancelButtonText: 'Вообще не удалять',
+                    confirmButtonText: 'Оставить домашки',
+                    denyButtonText: `Удалить!`,
+                }).then(function (result2) {
+                    const { isConfirmed, isDenied } = result2
+
+                    if (isDenied) {
+                        $authHost.delete(`/api/subjects/delete/${id}?deleteAll=true`).then(r => {
+                            showSuccessMessage()
+                        })
+                    }
+                    else if (isConfirmed) {
+                        $authHost.delete(`/api/subjects/delete/${id}`).then(r => {
+                            showSuccessMessage()
+                        })
+                    }
                 })
+
             }
         }).catch(() => { })
     }

@@ -12,6 +12,9 @@ function useSubjects({ subjectsOnly = false }) {
             }
 
             r.data.forEach(subject => {
+                if (subject.title == 'default')
+                    return
+
                 preparedData.push({
                     id: subject.id,
                     value: subject.title,
@@ -19,6 +22,7 @@ function useSubjects({ subjectsOnly = false }) {
                     fullName: subject.fullName
 
                 })
+
             })
             setSubjects(preparedData)
         })

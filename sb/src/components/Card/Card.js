@@ -8,6 +8,7 @@ import Like from '../Actions/Like/Like';
 import MarkAsDone from '../Actions/MarkAsDone/MarkAsDone';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'
+import { TYPE_HOMEWORK } from '../../config/postTypes'
 
 const transform = (node, children) => {
     if (node.tagName.toLowerCase() === "table") {
@@ -46,7 +47,7 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                         </div>
                     )}
                     {/* Если карточка должна отображать домашнюю работу, то появляется название предмета */}
-                    {type === 'homework' && <div className="newsCard__subject">{subjectTitle}</div>}
+                    {type == TYPE_HOMEWORK && <div className="newsCard__subject">{subjectTitle}</div>}
                     <div className="newsCard__title">{title}</div>
                     <div className="newsCard__date">
                         <div className="dates__publish">{moment(publishDate).format('D MMMM, HH:mm')}</div>
