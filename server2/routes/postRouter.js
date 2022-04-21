@@ -2,26 +2,41 @@ const Router = require('express');
 const { body } = require('express-validator');
 const validateRequestMiddleware = require('../middleware/validateRequestMiddleware')
 const authMiddleware = require('../middleware/authMiddleware')
+
 const router = new Router()
-const newsController = require('../controllers/newsController');
+const postController = require('../controllers/postController');
 
 
 router.post(
     '/create',
     body('title').exists({ checkFalsy: true }),
+    body('content').exists(),
     body('deadline').exists({ checkFalsy: true }),
+    body('postType').exists({ checkFalsy: true }),
+    body('subjectId').exists(),
     authMiddleware(['headman', 'admin']), //check user role
     validateRequestMiddleware,
-    newsController.create
+    postController.create
 )
 router.post(
     '/like',
     body('postId').exists({ checkFalsy: true }),
-    authMiddleware(), //for all users
+    body('postType').exists({ checkFalsy: true }),
+    authMiddleware(),
     validateRequestMiddleware,
-    newsController.likeHandler
+    postController.likeHandler
 )
-router.get('/', authMiddleware(), newsController.getAll)
-router.get('/:id', authMiddleware(), newsController.getOne)
+
+router.post(
+    '/done',
+    body('postId').exists({ checkFalsy: true }),
+    authMiddleware(),
+    validateRequestMiddleware,
+    postController.doneHandler
+)
+
+
+router.get('/', authMiddleware(), postController.getAll)
+router.get('/:id', authMiddleware(), postController.getOne)
 
 module.exports = router

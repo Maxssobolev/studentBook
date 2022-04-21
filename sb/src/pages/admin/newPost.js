@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { cookies } from '../../index'
 import { Formik, Form, Field } from "formik"
 import { Row, Col } from "react-bootstrap"
-import isEmpty from 'lodash.isempty'
 import useQuery from '../../components/Hooks/useQuery';
 import * as yup from 'yup'
 import SubmitOutsideBtn from '../../components/Forms/SpecialFields/SubmitOutsideBtn';
@@ -13,21 +11,21 @@ import TextEditor from '../../components/Forms/SpecialFields/TextEditor';
 import { $authHost } from '../../http';
 import Swal from 'sweetalert2'
 import { FieldTitle } from '../../components/Forms/SpecialFields/FieldTitle';
+import { TYPE_NEWS, TYPE_HOMEWORK } from '../../config/postTypes';
 
 const SignupSchema = yup.object().shape({
     title: yup.string().min(2, 'Нужно хотя бы два символа').max(40, 'Привышен максимум (40 символов)').required('Обязательное поле'),
     deadline: yup.date().required('Обязательное поле').nullable(),
     content: yup.string(),
-    subjectId: yup.string().when("postType", {
-        is: 'homework',
-        then: yup.string().required('Обязательное поле'),
+    subjectId: yup.string().nullable().when("postType", {
+        is: TYPE_HOMEWORK,
+        then: yup.string().nullable().required('Обязательное поле'),
     }),
 });
 
 //for add or uopdate post
 export default function NewPost() {
     const query = useQuery();
-    const token = cookies.get('token')
 
     const subjects = useSubjects({ subjectsOnly: true })
     const type = query.get('type')
@@ -37,7 +35,7 @@ export default function NewPost() {
         deadline: '',
         content: '',
         postType: type,
-        subjectId: type == 'homework' ? '2' : ''
+        subjectId: type == TYPE_HOMEWORK ? '2' : null
     })
 
 
@@ -48,32 +46,20 @@ export default function NewPost() {
             enableReinitialize={true}
             validateOnMount={true}
             onSubmit={(values, { resetForm }) => {
-                if (type == 'homework') {
-                    $authHost.post('/api/homeworks/create', values).then(r => {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Успешно!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            resetForm({ values: '' })
-                        })
+
+                $authHost.post('/api/posts/create', values).then(r => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Успешно!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        resetForm({ values: '' })
                     })
-                }
-                else {
-                    $authHost.post('/api/news/create', values).then(r => {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Успешно!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            resetForm({ values: '' })
-                        })
-                    })
-                }
+                })
+
+
             }}
         >
             {
@@ -103,7 +89,7 @@ export default function NewPost() {
                                         </div>
                                     </Col>
                                 </Row>
-                                {type == 'homework' &&
+                                {type == TYPE_HOMEWORK &&
                                     <Row>
                                         <div className="two-columns-wrapper radio" >
                                             {subjects.map((itm) => {

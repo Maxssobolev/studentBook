@@ -15,6 +15,7 @@ import { $authHost } from '../../http';
 import useQuery from '../../components/Hooks/useQuery'
 import Lightbox from "react-awesome-lightbox";
 import "react-awesome-lightbox/build/style.css";
+import { TYPE_NEWS, TYPE_HOMEWORK } from '../../config/postTypes';
 
 const ImageComponent = ({ imageSrc }) => {
     const [lightbox, setLightBox] = useState(false)
@@ -38,9 +39,8 @@ export default function PostViewPage() {
     const [data, setData] = useState(null)
 
     useEffect(() => {
-        const apiUrl = type == 'homework' ? `/api/homeworks/${id}` : `/api/news/${id}`
 
-        $authHost.get(apiUrl).then(({ data: { prevPost, currentPost, nextPost } }) => {
+        $authHost.get(`/api/posts/${id}?postType=${type}`).then(({ data: { prevPost, currentPost, nextPost } }) => {
             const { remainTime, progress } = getRemainDeadline(currentPost.createdAt, currentPost.deadline)
             const isLiked = currentPost.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
             const isDone = currentPost?.usersDoned?.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не отметил как выполненное
@@ -62,7 +62,7 @@ export default function PostViewPage() {
 
     }, [id])
 
-    if (!type || !id || !['homework', 'news'].includes(type))
+    if (!type || !id || ![TYPE_NEWS, TYPE_HOMEWORK].includes(type))
         return <Redirect to='/404' />
     if (!data)
         return (
@@ -126,7 +126,7 @@ export default function PostViewPage() {
                     <div className="actions">
 
                         <Like id={id} type={type} isLiked={currentPost.isLiked} />
-                        {type == 'homework' && <MarkAsDone id={id} isDone={currentPost?.isDone} />}
+                        {type == TYPE_HOMEWORK && <MarkAsDone id={id} isDone={currentPost?.isDone} />}
 
                     </div>
                 </div>

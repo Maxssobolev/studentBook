@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react';
 import { $authHost } from '../http';
 import useSubjects from '../components/Hooks/useSubjects'
-
+import { TYPE_HOMEWORK } from '../config/postTypes'
 export default function HomeWorkPage() {
     const subjects = useSubjects({ subjectsOnly: false })
     const [sortBy, setSortBy] = useState('createdAt')
@@ -53,7 +53,7 @@ export default function HomeWorkPage() {
     }
 
     useEffect(() => {
-        $authHost.get(`/api/homeworks`).then(
+        $authHost.get(`/api/posts?postType=${TYPE_HOMEWORK}`).then(
             r => {
                 const recievedData = r.data
                 setHomeworks(recievedData)
@@ -86,7 +86,7 @@ export default function HomeWorkPage() {
                                     return (
                                         <Card
                                             key={`hwCardItem_${item.id}`}
-                                            type="homework"
+                                            type={TYPE_HOMEWORK}
                                             id={item.id}
                                             title={item.title}
                                             publishDate={item.createdAt}

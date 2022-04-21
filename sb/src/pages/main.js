@@ -6,6 +6,7 @@ import { TEXT } from '../config/text/text'
 import { motion, AnimatePresence } from 'framer-motion'
 import { $authHost } from '../http';
 import moment from 'moment';
+import { TYPE_NEWS } from '../config/postTypes'
 
 export default function MainPage() {
     const [sortBy, setSortBy] = useState('createdAt')
@@ -13,7 +14,7 @@ export default function MainPage() {
     const [news, setNews] = useState([])
     const [dataToShow, setDataToShow] = useState([])
     useEffect(() => {
-        $authHost.get('/api/news').then(
+        $authHost.get(`/api/posts?postType=${TYPE_NEWS}`).then(
             r => {
                 const recievedData = r.data
                 setNews(recievedData)
@@ -73,7 +74,7 @@ export default function MainPage() {
                                             publishDate={item.createdAt}
                                             deadline={item.deadline}
                                             isLiked={isLiked}
-                                            type={'news'}
+                                            type={TYPE_NEWS}
                                         />
                                     )
                                 })

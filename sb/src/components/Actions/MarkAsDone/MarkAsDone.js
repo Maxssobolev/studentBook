@@ -7,7 +7,7 @@ import { $authHost } from '../../../http';
 export default function MarkAsDone({ id, isDone }) {
     const [mark, setMark] = useState(isDone || false)
     const handleMark = async () => {
-        $authHost.post('/api/homeworks/done', { postId: id }).then(r => setMark(!mark))
+        $authHost.post('/api/posts/done', { postId: id }).then(r => setMark(!mark))
     }
     useEffect(() => {
         setMark(isDone)
