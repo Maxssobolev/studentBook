@@ -11,24 +11,57 @@ import PageRenderer from './page-renderer'
 //components
 import SideMenu from "./components/SideMenu/SideMenu";
 import TopMenu from "./components/TopMenu/TopMenu";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
+import useWindowSize from "./components/Hooks/useWindowSize";
 
 
 
 function App() {
-  return (
-    <Router>
-      <TopMenu />
+  const [isMobile] = useWindowSize()
 
-      <Container className="content">
-        <SideMenu />
-        <Switch>
-          <Route path="/:page" component={PageRenderer} />
-          <Route path="/" render={() => <Redirect to="/main" />} />
-        </Switch>
-      </Container>
-    </Router>
-  );
+  if (isMobile === undefined) {
+    return (
+      <MainLoader />
+    )
+  }
+  else if (!isMobile)
+    return (
+      <Router>
+        <TopMenu />
+
+        <Container className="content">
+          <SideMenu />
+          <Switch>
+            <Route path="/:page" component={PageRenderer} />
+            <Route path="/" render={() => <Redirect to="/main" />} />
+          </Switch>
+        </Container>
+      </Router>
+    );
+  else
+    return (
+      <Router>
+        <TopMenu />
+        <Container>
+          <Switch>
+            <Route path="/:page" component={PageRenderer} />
+            <Route path="/" render={() => <Redirect to="/main" />} />
+          </Switch>
+        </Container>
+      </Router>
+    )
 }
+
+const MainLoader = () => (
+  <div style={{
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }}>
+    <Spinner animation="grow" />
+  </div>
+)
 
 export default App;
