@@ -88,6 +88,7 @@ class PostController {
 
         const nextPost = await Posts.findOne({
             where: {
+                deadline: { [Op.gte]: moment() },
                 createdAt: {
                     [Op.gt]: currentPost.createdAt,
                 },
@@ -95,8 +96,10 @@ class PostController {
             },
             attributes: ['id']
         })
+
         const prevPost = await Posts.findAll({
             where: {
+                deadline: { [Op.gte]: moment() },
                 createdAt: {
                     [Op.lt]: currentPost.createdAt,
                 },

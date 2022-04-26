@@ -243,6 +243,7 @@
         }
         .controllers {
             .button {
+                margin: 0 auto;
                 width: 240px;
             }
         }
@@ -257,6 +258,9 @@
         }
     }
     &-admin {
+        .button {
+            margin-bottom: 20px;
+        }
         &__newPost {}
     }
 }

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { cookies } from '../../index'
 import { Formik, Form, Field } from "formik"
 import { Row, Col } from "react-bootstrap"
-import { ListGroup } from 'react-bootstrap';
 import * as yup from 'yup'
 import SubmitOutsideBtn from '../../components/Forms/SpecialFields/SubmitOutsideBtn';
 import { TEXT } from '../../config/text/text';
@@ -18,7 +16,6 @@ const SignupSchema = yup.object().shape({
 
 
 export default function Subjects() {
-    const token = cookies.get('token')
     const [reload, setReload] = useState(false)
     const [subjects, setSubjects] = useState([])
 
@@ -40,73 +37,7 @@ export default function Subjects() {
 
     }, [reload])
 
-    const handleEditSubject = (id, title, fullName) => {
-        const showSuccessMessage = () => Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Успешно!',
-            showConfirmButton: false,
-            timer: 700
-        }).then(() => {
-            setReload(!reload)
-        })
 
-        Swal.fire({
-            title: 'Изменить предмет?',
-            html:
-                `<p>Название<input id="swal-input1" class="swal2-input" value=${title}></p>` +
-                `<p>Полное<input id="swal-input2" class="swal2-input" value=${fullName}></p>`,
-            preConfirm: () => ({
-                title: document.getElementById('swal-input1').value,
-                fullName: document.getElementById('swal-input2').value,
-            }),
-            type: 'warning',
-            showCancelButton: true,
-            showDenyButton: true,
-            cancelButtonColor: 'grey',
-            cancelButtonText: 'Не трогать',
-            confirmButtonText: 'Обновить',
-            denyButtonText: `Удалить`,
-        }).then(function (result) {
-            const { isConfirmed, isDenied, value: { title: inputTitle, fullName: inputFullName } } = result
-            if (isConfirmed) {
-                $authHost.put('/api/subjects/update', {
-                    id,
-                    title: inputTitle,
-                    fullName: inputFullName,
-                }).then(r => {
-                    showSuccessMessage()
-                })
-            }
-            if (isDenied) {
-                Swal.fire({
-                    title: 'Удалить так же все домашние работы?',
-                    html: `<p>В противном случае домашние работы сохранятся, но им будет присвоен предмет "Default". Вы сможете изменить его на новый вручную.</p>`,
-                    type: 'warning',
-                    showCancelButton: true,
-                    showDenyButton: true,
-                    cancelButtonColor: 'grey',
-                    cancelButtonText: 'Вообще не удалять',
-                    confirmButtonText: 'Оставить домашки',
-                    denyButtonText: `Удалить!`,
-                }).then(function (result2) {
-                    const { isConfirmed, isDenied } = result2
-
-                    if (isDenied) {
-                        $authHost.delete(`/api/subjects/delete/${id}?deleteAll=true`).then(r => {
-                            showSuccessMessage()
-                        })
-                    }
-                    else if (isConfirmed) {
-                        $authHost.delete(`/api/subjects/delete/${id}`).then(r => {
-                            showSuccessMessage()
-                        })
-                    }
-                })
-
-            }
-        }).catch(() => { })
-    }
 
     return (
         <div className="page page-admin page-admin__subjects">
@@ -138,8 +69,6 @@ export default function Subjects() {
             >
                 {
                     ({ values, errors }) => (
-
-
                         <Form className='form form-subjects'>
                             <Row>
                                 <Col>
@@ -165,32 +94,9 @@ export default function Subjects() {
                             </Row>
                             <SubmitOutsideBtn />
                         </Form>
-
-
-
                     )
                 }
             </Formik>
-
-            <h4
-                style={{
-                    marginTop: '20px',
-                    marginBottom: '15px'
-                }}
-            >{TEXT.form.subjects.list}</h4>
-
-            <ListGroup dataReload={reload}>
-                {subjects.map((itm) => {
-
-                    return (
-
-                        <ListGroup.Item key={`subjects-_${itm.id}`} onClick={() => handleEditSubject(itm.id, itm.label, itm.fullName || '')} >
-                            {itm.label}
-                        </ListGroup.Item>
-
-                    )
-                })}
-            </ListGroup>
 
         </div>
     )
