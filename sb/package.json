@@ -8,6 +8,8 @@
     "@ckeditor/ckeditor5-build-classic": "^34.0.0",
     "@ckeditor/ckeditor5-ckfinder": "^34.0.0",
     "@ckeditor/ckeditor5-react": "^5.0.0",
+    "@ionic/react": "^6.1.2",
+    "@ionic/react-router": "^6.1.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

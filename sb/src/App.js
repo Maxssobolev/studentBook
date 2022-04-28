@@ -42,7 +42,7 @@ function App() {
     return (
       <Router>
         <TopMenu />
-        <Container>
+        <Container className="content">
           <Switch>
             <Route path="/:page" component={PageRenderer} />
             <Route path="/" render={() => <Redirect to="/main" />} />

@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { cookies } from '../index'
 import { ReactComponent as UserPlaceholder } from '../assets/img/top-menu/user.svg'
 import Button from '../components/Button/Button';
 import { Link } from 'react-router-dom';
+import useQuery from '../components/Hooks/useQuery';
+import { $authHost } from '../http/index'
 export default function LkPage() {
-    const justLogged = window.location.search.includes('logged') //means that user has just logged
     const user = cookies.get('user')
+
+    const query = useQuery()
+
+    const token = query.get('token')
+    const isJustLogged = query.get('logged')
+
+    useEffect(() => {
+        if (token && isJustLogged) {
+            cookies.set('token', token)
+            $authHost.get('/api/user/get').then(({ data }) => cookies.set('user', data))
+        }
+    }, [query])
 
 
     if (!user) {

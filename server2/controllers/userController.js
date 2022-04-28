@@ -11,7 +11,17 @@ const generateJwt = (id, role) => {
 }
 
 class UserController {
-
+    async getUser(req, res, next) {
+        const { user: { id } } = req
+        try {
+            const user = await Users.findOne({ where: { id } })
+            return res.json(user)
+        }
+        catch (e) {
+            console.log(e)
+            next(ApiError.badRequest(e))
+        }
+    }
 
     async checkUser(req, res, next) {
         const { user } = req
@@ -30,12 +40,12 @@ class UserController {
             if (created) {
                 res.cookie('token', token)
                 res.cookie('user', userFromDB)
-                return res.redirect(`${process.env.FRONTEND_URL}/lk?logged`,)
+                return res.redirect(`${process.env.FRONTEND_URL}/lk?token=${token}}&logged=true`,)
             }
             else {
                 res.cookie('token', token)
                 res.cookie('user', userFromDB)
-                return res.redirect(`${process.env.FRONTEND_URL}/lk?logged`,)
+                return res.redirect(`${process.env.FRONTEND_URL}/lk?token=${token}&logged=true`)
             }
         }
         catch (createError) {
