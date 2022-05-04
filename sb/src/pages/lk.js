@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { cookies } from '../index'
 import { ReactComponent as UserPlaceholder } from '../assets/img/top-menu/user.svg'
 import Button from '../components/Button/Button';
@@ -12,16 +12,18 @@ export default function LkPage() {
 
     const token = query.get('token')
     const isJustLogged = query.get('logged')
+    const [mount, setMount] = useState(false)
+
 
     useEffect(() => {
         if (token && isJustLogged) {
             cookies.set('token', token)
-            $authHost.get('/api/user/get').then(({ data }) => cookies.set('user', data))
+            $authHost.get('/api/user/get').then(({ data }) => { cookies.set('user', data); setMount(true) })
         }
     }, [query])
 
 
-    if (!user) {
+    if (!user && !mount) {
         return (
             <div className="page page-lk page-lk_login">
                 <div className="avatar-placeholder">

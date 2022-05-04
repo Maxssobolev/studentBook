@@ -19,7 +19,7 @@ export default function AdminPage() {
             <div className="page page-admin">
                 <Link to='/admin/newPost?type=homework'><Button text='Домашняя работа' /></Link>
                 <Link to='/admin/newPost?type=news'><Button text='Новости' /></Link>
-                {/*<Link to='/admin/subjects'>Предметы</Link>*/}
+                <Link to='/admin/subjects'>Предметы</Link>
             </div>
         )
     }
