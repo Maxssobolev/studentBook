@@ -8,9 +8,21 @@ const { Subjects } = require('./models/models')
 const cors = require('cors');
 const router = require('./routes/index')
 const app = express()
+const https = require('https');
 const fileUpload = require('express-fileupload')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require('path')
+const fs = require('fs');
+
+//SSL
+var key = fs.readFileSync(__dirname + '/certs/selfsigned.key');
+
+var cert = fs.readFileSync(__dirname + '/certs/selfsigned.crt');
+var options = {
+    key: key,
+    cert: cert
+};
+var server = https.createServer(options, app);
 
 passport.use(new VKontakteStrategy({
     clientID: process.env.VK_APP_ID,
@@ -50,7 +62,7 @@ const start = async () => {
         await sequelize.authenticate()
         await sequelize.sync()
         await createDefaultRows()
-        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+        server.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     }
     catch (e) {
         console.log(e)
