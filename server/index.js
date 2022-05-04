@@ -1,113 +1,60 @@
-const express = require('express');
-const mysql = require('mysql');
+require('dotenv').config()
+const express = require('express')
+const passport = require('passport');
+const VKontakteStrategy = require('passport-vkontakte').Strategy;
+const sequelize = require('./db')
+const PORT = process.env.PORT || 5000
+const { Subjects } = require('./models/models')
 const cors = require('cors');
-const app = express();
-const port = 3555;
-const path = require('path');
-const moment = require('moment');
-const fs = require('fs');
+const router = require('./routes/index')
+const app = express()
+const fileUpload = require('express-fileupload')
+const errorHandler = require('./middleware/ErrorHandlingMiddleware')
+const path = require('path')
 
+passport.use(new VKontakteStrategy({
+    clientID: process.env.VK_APP_ID,
+    clientSecret: process.env.VK_APP_SECRET,
+    callbackURL: process.env.VK_CALLBACK_REDIRECT_URL,
 
-const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  database: 'sb',
-  password: 'root',
-});
-
-app.use(express.json());
-
-app.listen(port, () => {
-  console.log(`App server now listening to port ${port}`);
-});
-
-
-
-/////////////////////ROUTES//////////////
-
-//новости
-app.get('/api/news', function (req, res) {
-  pool.query(`select * from news`, (err, rows) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(rows);
+},
+    function (accessToken, refreshToken, params, profile, done) {
+        return done(null, profile);
     }
-  });
-});
+));
 
+app.use(cors({
+    "origin": [process.env.FRONTEND_URL],
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204,
+    "credentials": true,
 
+}))
 
+app.use(express.json())
+app.use('/static', express.static(path.resolve(__dirname + '/static')))
+app.use(fileUpload({}))
+app.use('/api', router)
+app.use(errorHandler)
 
-
-//домашка
-app.get('/api/homework', function (req, res) {
-
-  //обьединяем выборку из домашки с выборкой из предметов
-  pool.query(`
-    SELECT homeworks.id as id, 
-           homeworks.content as content, 
-           homeworks.deadline as deadline, 
-           homeworks.title as title, 
-           homeworks.publishDate as publishDate, 
-           subjects.id as subjectId,
-           subjects.title as subjectTitle
-           FROM homeworks INNER JOIN subjects ON 
-                          subjects.id = homeworks.subjectId`, (err, rows) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(rows);
+const createDefaultRows = async () => {
+    let defaultSubject = {
+        title: 'default',
     }
-  });
+    await Subjects.findOrCreate({ where: defaultSubject, defaults: defaultSubject })
+}
 
-});
-app.get('/api/homework/:id', function (req, res) {
-  const id = req.params.id
-  pool.query(`
-    SELECT homeworks.id as id, 
-           homeworks.content as content, 
-           homeworks.deadline as deadline, 
-           homeworks.title as title, 
-           homeworks.publishDate as publishDate, 
-           subjects.id as subjectId,
-           subjects.title as subjectTitle
-           FROM homeworks INNER JOIN subjects ON 
-                          subjects.id = homeworks.subjectId
-           WHERE homeworks.id=${id}`,
-    (err, rows) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send(...rows);
-      }
-    });
-
-});
-
-
-//предметы
-app.get('/api/subjects', function (req, res) {
-
-  pool.query(`SELECT * FROM subjects`, (err, rows) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(rows);
+const start = async () => {
+    try {
+        await sequelize.authenticate()
+        await sequelize.sync()
+        await createDefaultRows()
+        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     }
-  });
-
-});
-
-app.get('/api/subjects/:id', function (req, res) {
-  const id = req.params.id
-  pool.query(`SELECT * FROM subjects WHERE id=${id}`, (err, rows) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(...rows);
+    catch (e) {
+        console.log(e)
     }
-  });
+}
 
-});
-
+start()
