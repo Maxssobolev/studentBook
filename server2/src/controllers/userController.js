@@ -11,7 +11,17 @@ const generateJwt = (id, role) => {
 }
 
 class UserController {
-
+    async getUser(req, res, next) {
+        const { user: { id } } = req
+        try {
+            const user = await Users.findOne({ where: { id } })
+            return res.json(user)
+        }
+        catch (e) {
+            console.log(e)
+            next(ApiError.badRequest(e))
+        }
+    }
 
     async checkUser(req, res, next) {
         const { user } = req
@@ -28,10 +38,14 @@ class UserController {
             const token = generateJwt(userFromDB.id, userFromDB.role)
 
             if (created) {
-                return res.json({ message: 'User was created', user: userFromDB, token })
+                res.cookie('token', token)
+                res.cookie('user', userFromDB)
+                return res.redirect(`${process.env.FRONTEND_URL}/lk?token=${token}}&logged=true`,)
             }
             else {
-                return res.json({ message: 'User already exist', user: userFromDB, token })
+                res.cookie('token', token)
+                res.cookie('user', userFromDB)
+                return res.redirect(`${process.env.FRONTEND_URL}/lk?token=${token}&logged=true`)
             }
         }
         catch (createError) {

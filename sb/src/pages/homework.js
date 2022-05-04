@@ -6,35 +6,23 @@ import { DropdownIndicator } from '../components/Utils/dropdownIndicator';
 import Card from '../components/Card/Card';
 import moment from 'moment';
 import { TEXT } from '../config/text/text';
-import { motion, AnimatePresence } from 'framer-motion/dist/es/index'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react';
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3555',
-    headers: {
-        post: {
-            "cache-control": "no-cache, private",
-            "content-type": "application/json",
-            "x-ratelimit-limit": "60",
-            "x-ratelimit-remaining": "59",
-            "access-control-allow-origin": "*",
-
-        }
-    }
-});
-
+import { $authHost } from '../http';
+import useSubjects from '../components/Hooks/useSubjects'
+import { TYPE_HOMEWORK } from '../config/postTypes'
 export default function HomeWorkPage() {
-    const subjects = []
-    const [sortBy, setSortBy] = useState('publishDate')
+    const subjects = useSubjects({ subjectsOnly: false })
+    const [sortBy, setSortBy] = useState('createdAt')
     const [homeworks, setHomeworks] = useState([]);
     const [dataToShow, setDataToShow] = useState([])
+
     const handleChangeSubject = (selectedOpt) => {
         if (selectedOpt.value !== 'all')
             setDataToShow(
                 [
                     //сначала фильтруем согласно выбранному предмету, создаем копию, чтобы не изменить старый массив
-                    ...(homeworks.filter(({ subjectID }) => subjectID === selectedOpt.id))
+                    ...(homeworks.filter(({ subjectId }) => subjectId === selectedOpt.id))
                 ].sort(
                     (a, b) => {
                         if (sortBy === 'deadline') {
@@ -64,17 +52,10 @@ export default function HomeWorkPage() {
         ))
     }
 
-    //api
     useEffect(() => {
-
-        async function getData(url) {
-            return await axiosInstance.get(url);
-        }
-
-        getData(`/api/homework`).then(
+        $authHost.get(`/api/posts?postType=${TYPE_HOMEWORK}`).then(
             r => {
                 const recievedData = r.data
-                console.log(recievedData)
                 setHomeworks(recievedData)
                 setDataToShow(
                     //изначально данные отсортированны по дате (сначала новые)
@@ -99,17 +80,20 @@ export default function HomeWorkPage() {
                         <AnimatePresence>
                             {
                                 dataToShow.map((item) => {
+                                    const isLiked = item.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
+                                    const isDone = item.usersDoned.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
+                                    const subjTitle = item.subject.title == 'default' ? 'Без предмета' : item.subject.title
                                     return (
                                         <Card
                                             key={`hwCardItem_${item.id}`}
-                                            type="homework"
-                                            subjectID={item.subjectId}
-                                            __id={item.id}
+                                            type={TYPE_HOMEWORK}
+                                            id={item.id}
                                             title={item.title}
-                                            publishDate={item.publishDate}
+                                            publishDate={item.createdAt}
                                             deadline={item.deadline}
-                                            isLiked={item.isLiked}
-                                            subjectTitle={item.subjectTitle}
+                                            isLiked={isLiked}
+                                            isDone={isDone}
+                                            subjectTitle={subjTitle}
                                         />
                                     )
                                 })
@@ -129,7 +113,7 @@ export default function HomeWorkPage() {
                         <div className="radio" >
                             <label>
                                 <span>Сначала новые</span>
-                                <input type="radio" name='sortBy' value='publishDate' defaultChecked />
+                                <input type="radio" name='sortBy' value='createdAt' defaultChecked />
                             </label>
                         </div>
                         <div className="radio" >

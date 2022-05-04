@@ -110,23 +110,23 @@ Subjects.hasMany(Posts)
 Posts.belongsTo(Subjects)
 
 Users.belongsToMany(Posts, {
-    through: "likes",
+    through: { model: Likes, unique: false },
     as: "postsLiked",
     foreignKey: "userId",
 });
 Posts.belongsToMany(Users, {
-    through: "likes",
+    through: { model: Likes, unique: false },
     as: "usersLiked",
     foreignKey: "postId",
 });
 
 Users.belongsToMany(Posts, {
-    through: "donehomeworks",
+    through: { model: DoneHomeworks, unique: false },
     as: "postsDoned",
     foreignKey: "userId",
 });
 Posts.belongsToMany(Users, {
-    through: "donehomeworks",
+    through: { model: DoneHomeworks, unique: false },
     as: "usersDoned",
     foreignKey: "postId",
 });

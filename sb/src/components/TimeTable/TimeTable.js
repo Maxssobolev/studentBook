@@ -50,6 +50,7 @@ export default function TimeTable() {
 
         for (let i in calendar) {
             if (weekday == calendar[i].weekday) {
+
                 //если совпадает четность недели
                 if (calendar[i].weekparity == weekParity || calendar[i].weekparity == 'both') {
                     let startTime = moment(calendar[i].start, 'HH:mm'); //время начала пары
@@ -88,15 +89,16 @@ export default function TimeTable() {
                         paraStart.push(startTime);
 
                         if (isIbeforeAll && !firstPara) {
+
                             // Если ни одной пары еще не было, берем во фьючер первую
-                            let startTimef = moment(calendar[0].start, 'HH:mm'); //время начала пары
+                            let startTimef = moment(nextSub[0].start, 'HH:mm'); //время начала пары
                             let endTimef = moment(startTimef).add({ hours: 1, minutes: 25 }); //время окончания пары
                             firstPara = {
                                 startObj: startTimef,
                                 start: startTimef.format('HH:mm'),
                                 end: endTimef.format('HH:mm'),
-                                name: calendar[0].name,
-                                link: calendar[0].link,
+                                name: nextSub[0].name,
+                                link: nextSub[0].link,
                             };
                         }
                     }

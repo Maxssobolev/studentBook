@@ -8,7 +8,7 @@ const generatePage = page => {
         return React.createElement(component())
     } catch (err) {
         console.warn(err)
-        //return React.createElement(() => <Redirect to="/404" />)
+        return React.createElement(() => <Redirect to="/404" />)
     }
 }
 

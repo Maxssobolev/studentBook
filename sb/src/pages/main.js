@@ -1,55 +1,100 @@
 import React from 'react';
-import axios from 'axios'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Card from '../components/Card/Card';
-import Button from '../components/Button/Button'
-import Select from 'react-select'
-import { DropdownIndicator } from '../components/Utils/dropdownIndicator';
-//config
-import { API } from '../config/api/api';
+import { TEXT } from '../config/text/text'
+import { motion, AnimatePresence } from 'framer-motion'
+import { $authHost } from '../http';
+import moment from 'moment';
+import { TYPE_NEWS } from '../config/postTypes'
 
 export default function MainPage() {
-    const [sortBy, setSortBy] = useState('newest')
+    const [sortBy, setSortBy] = useState('createdAt')
 
+    const [news, setNews] = useState([])
+    const [dataToShow, setDataToShow] = useState([])
+    useEffect(() => {
+        $authHost.get(`/api/posts?postType=${TYPE_NEWS}`).then(
+            r => {
+                const recievedData = r.data
+                setNews(recievedData)
+                setDataToShow(
+                    //изначально данные отсортированны по дате (сначала новые)
+                    recievedData.sort(
+                        (a, b) => {
+                            return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
+                        }
+                    )
+                )
+            })
+    }, [])
 
-    const [news, setNews] = useState([{
-        id: '1',
-        title: 'Начало зачетной недели',
-        content: 'Нужно прийти в костюмах, костюмы должны быть в костюмах',
-        date: '2021-12-10T17:00:00',
-        deadline: '2021-12-10T19:00:00',
-        isLiked: false
-    },
-    ])
+    const handleChangeSort = (event) => {
+        setSortBy(event.target.value)
+        setDataToShow([...news].sort(
+            (a, b) => {
+                if (event.target.value === 'deadline') {
+                    //Если сортировка по дедлайну, то вначале те, что сгорят быстрее
+                    return new moment(a[event.target.value]).format('YYYYMMDD') - new moment(b[event.target.value]).format('YYYYMMDD')
+                }
+                else {
+                    return new moment(b[event.target.value]).format('YYYYMMDD') - new moment(a[event.target.value]).format('YYYYMMDD')
+                }
+            }
+        ))
+    }
 
-
-
+    if (news.length == 0) {
+        return (
+            <div className="page page-main">
+                <div className="nothing-to-show">
+                    {TEXT.page.nothingToShow.title}
+                </div>
+            </div>
+        )
+    }
     return (
         <>
             <div className="page page-main">
-                {news.map((item) => {
-                    return (
-                        <Card
-                            key={`newsCardItem_${item.id}`}
-                            __id={item.id}
-                            title={item.title}
-                            content={item.content}
-                            publishDate={item.date}
-                            deadline={item.deadline}
-                            isLiked={item.isLiked}
-                        />
-                    )
-                })}
+
+
+                {dataToShow.length > 0 ?
+                    (<motion.div layout className='page-main-cardsWrapper'>
+                        <AnimatePresence>
+                            {
+                                dataToShow.map((item) => {
+                                    const isLiked = item.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
+
+                                    return (
+                                        <Card
+                                            key={`newsCardItem_${item.id}`}
+                                            id={item.id}
+                                            title={item.title}
+                                            content={item.content}
+                                            publishDate={item.createdAt}
+                                            deadline={item.deadline}
+                                            isLiked={isLiked}
+                                            type={TYPE_NEWS}
+                                        />
+                                    )
+                                })
+                            }
+                        </AnimatePresence>
+                    </motion.div>)
+                    :
+                    <div className="nothing-to-show">
+                        {TEXT.page.nothingToShow.title}
+                    </div>
+                }
 
             </div>
             <div className="rightsidebar">
                 <div className="filters">
-                    <div className="filters__radio-wrapper" onChange={event => setSortBy(event.target.value)}>
+                    <div className="filters__radio-wrapper" onChange={handleChangeSort} >
                         <div className="radio">
                             <label >
                                 <span>Сначала новые</span>
-                                <input type="radio" name='sortBy' value='newest' defaultChecked />
+                                <input type="radio" name='sortBy' value='createdAt' defaultChecked />
                             </label>
                         </div>
                         <div className="radio">

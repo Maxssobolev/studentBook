@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -5,6 +6,10 @@ import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
 import { store } from './state/store/configStore';
+
+import Cookies from 'universal-cookie';
+
+export const cookies = new Cookies();
 
 ReactDOM.render(
   <React.StrictMode>

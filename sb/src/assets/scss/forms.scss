@@ -1,0 +1,43 @@
+.form {
+    .row {
+        margin-bottom: 30px;
+    }
+
+    &-newPost {
+        .two-columns-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 15px;
+
+            @include if_size('425') {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+}
+
+.field-wrapper {
+    span {
+        font-size: var(--fz-medium);
+        margin-bottom: 10px;
+        &[dataerrors]::after {
+            content: ' ' attr(dataerrors) ' ';
+            background: #fff3cd;
+            font-size: 12px;
+            margin-left: 0.25rem;
+            color: #664d03;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
+    }
+
+}
+.field {
+    border: none;
+    border-bottom: 1px solid #f7f7f7;
+    width: 100%;
+    height: 35px;
+    padding-left: 10px;
+    outline: none;
+    border-radius: 3px;
+}

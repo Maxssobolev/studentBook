@@ -5,15 +5,18 @@
 @import './actions.scss';
 @import './mixins.scss';
 @import './timetable.scss';
+@import './forms.scss';
+@import './tables.scss';
 
 html {
     position: relative;
     overflow-y: hidden;
-
+    font-family: Roboto;
 }
 
 a {
     color: inherit;
+    text-decoration: none;
     &:hover {
         color: inherit;
     }
@@ -23,6 +26,7 @@ button {
     margin: inherit;
     background: inherit;
     color: inherit;
+    outline: none;
     border: inherit;
     font: inherit;
     &[disabled] {
@@ -43,15 +47,18 @@ button {
 // button
 .button {
     font-size: var(--fz-medium);
-    font-family: 'Montserrat';
+    font-family: 'Gotham Pro';
     background: var(--btn-readmore-bg);
     border-radius: 20px;
     color: var(--btn-readmore-color);
     border: 1px solid var(--btn-readmore-border-color);
     width: 100%;
     height: 40px;
-    font-weight: 700;
+    font-weight: 500;
     transition: 300ms ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     svg {
         fill: var(--btn-readmore-color);
     }
@@ -62,6 +69,25 @@ button {
             fill: var(--btn-readmore-hover-color);
         }
     }
+    &_post {
+        $post-btn-color: rgba(74, 172, 40, 0.91);
+        background: $post-btn-color;
+        border-radius: 15px;
+        border: $post-btn-color;
+        &:not(:disabled):hover {
+            background: var(--btn-readmore-hover-bg);
+            color: $post-btn-color;
+            border: 1px solid $post-btn-color;
+            svg {
+                fill: var(--btn-readmore-hover-color);
+            }
+        }
+        &:disabled {
+            color: white;
+            background: rgba(74, 172, 40, 0.5)
+        }
+    }
+
 
     &_blue {
         font-size: var(--fz-head);
@@ -106,10 +132,11 @@ button {
     $card-padding: 15px;
 
     display: grid;
-    grid-template-rows: 2fr 1fr 2fr 3fr;
+    grid-template-rows: 1.5fr 0.6fr 3fr 3fr;
 
     &_hw {
-        grid-template-rows: 0.5fr 1.5fr 1.5fr 1fr 3fr;
+        grid-row-gap: 10px;
+        grid-template-rows: 0.6fr 1fr 2fr 1fr 3fr;
 
     }
 
@@ -119,27 +146,39 @@ button {
         font-family: Roboto;
         font-weight: bold;
         padding: 0 $card-padding;
+        align-items: center;
     }
     &__title {
         font-size: var(--fz-head);
-        font-family: Gilroy;
+        font-family: 'Gotham Pro';
         font-weight: bold;
         line-height: 1.5rem;
         padding: 0 $card-padding;
+        line-break: anywhere;
+        overflow: hidden;
+
     }
     &__date {
         margin-top: 5px;
         padding: 0 $card-padding;
+
     }
     &__content {
         margin: 10px 0;
         padding: 0 $card-padding;
         font-weight: 400;
+        line-break: anywhere;
+        overflow: hidden;
     }
     &__footer {
         text-align: center;
         &-controllers {
             padding: 0 $card-padding;
+            display: flex;
+            justify-content: center;
+            .action {
+                margin: 0 5px;
+            }
         }
         .button-wrapper {
             padding: 0 $card-padding;
@@ -324,3 +363,16 @@ button {
     }
 }
 */
+
+.react-datepicker-popper {
+    z-index: 1000 !important;
+}
+
+.markup-replacement {
+    background: #fff3cd;
+    font-size: 12px;
+    margin-left: 0.25rem;
+    color: #664d03;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+}

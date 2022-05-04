@@ -32,32 +32,39 @@
     }
 
     &-main {
-        @include grid;
+        &-cardsWrapper {
+            @include grid;
+        }
     }
 
     &-homework {
-        .deadline-chart {
-            align-self: center;
+        .deadline-wrapper {
+            display: flex;
             margin: 0 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .deadline-text {
+            color: #000;
+            font-family: Roboto;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .deadline-chart {
+            $deadline-with: 120px;
+            $deadline-height: 23px;
+            width: $deadline-with;
             position: relative;
             background: var(--deadline-bg);
-            height: 30px;
+            height: $deadline-height;
             border-radius: 10px;
             &__progress {
                 position: absolute;
                 background: var(--deadline-progress);
-                height: 30px;
+                height: $deadline-height;
                 border-radius: 10px 0 0 10px;
             }
-            &__text {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                color: var(--deadline-color);
-                font-family: Roboto;
-                font-weight: 600;
-            }
+
         }
         /*.deadline-circle{
             position: relative;
@@ -121,7 +128,7 @@
             }
             .subject-name {
                 /* subject name */
-                color: var(--black);
+                color: var(--accent);
                 justify-self: center
             }
             .next-page {
@@ -173,28 +180,88 @@
             }
         }
         .content-wrapper {
-            width: 80%;
 
             .page-title {
                 font-size: var(--fz-head);
                 font-weight: bold;
-                margin-top: 30px;
+                margin-top: 20px;
+                color: #444444;
+                text-align: center;
             }
 
             .page-content {
                 line-height: 2rem;
-                text-indent: var(--fz-head);
-                margin-top: 35px;
+                margin-top: 25px;
+                p {
+                    text-indent: var(--fz-head);
+                }
+                img {
+                    max-width: 50%
+                }
+                .image-in-post {
+                    margin: 10px 0;
+                    cursor: zoom-in;
+                    float: left;
+                }
             }
         }
-        &_hw {
-
-            ;
 
 
-            /* homework view page*/
+    }
+    &-lk {
+        .avatar-placeholder {
+            $avatar-width: 100px;
 
+            border-radius: 50%;
+            padding: 20px;
+            border: 1px solid rgba(87, 148, 218, 0.2);
+
+            width: $avatar-width;
+            height: 100px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            margin: 30px auto 20px;
+            svg {
+                stroke-opacity: 1;
+            }
+            img {
+                object-fit: contain;
+                border-radius: 50%;
+                width: calc(#{$avatar-width} - 5px)
+            }
         }
+        .welcome-message {
+            text-align: center;
+            font-family: 'Gotham Pro';
+            font-weight: bold;
+            font-size: var(--fz-medium);
+            margin-bottom: 20px;
+        }
+        .controllers {
+            .button {
+                margin: 0 auto;
+                width: 240px;
+            }
+        }
+        &_login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .button {
+                width: 140px;
+            }
+        }
+    }
+    &-admin {
+        .button {
+            margin-bottom: 20px;
+        }
+        &__newPost {}
     }
 }
 
