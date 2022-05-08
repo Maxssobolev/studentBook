@@ -11,9 +11,10 @@ import { useEffect } from 'react';
 import { $authHost } from '../http';
 import useSubjects from '../components/Hooks/useSubjects'
 import { TYPE_HOMEWORK } from '../config/postTypes'
-import useWindowSize from '../components/Hooks/useWindowSize';
+import { useSelector } from 'react-redux';
+
 export default function HomeWorkPage() {
-    const [isMobile] = useWindowSize()
+    const { isMobile } = useSelector(state => state.window)
 
     const subjects = useSubjects({ subjectsOnly: false })
     const [sortBy, setSortBy] = useState('createdAt')

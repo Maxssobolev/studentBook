@@ -4,23 +4,19 @@ import { createSlice } from '@reduxjs/toolkit'
 const windowReducer = createSlice({
   name: 'window',
   initialState: {
-    isMobile: false,
+    isMobile: undefined,
   },
   reducers: {
     setMobile(state, action) {
-      state.isMobile = true
+      state.isMobile = action.payload
     },
-    setDesktop(state, action) {
-      state.isMobile = false
-    }
 
   }
 })
 
 const { reducer, actions } = windowReducer
 export const {
-  setMobile,
-  setDesktop
+  setMobile
 } = actions
 
 export default reducer

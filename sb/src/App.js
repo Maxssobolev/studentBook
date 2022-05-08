@@ -15,18 +15,32 @@ import { Container, Spinner } from "react-bootstrap";
 import useWindowSize from "./components/Hooks/useWindowSize";
 import TopMenuMobile from "./components/mobile/TopMenuMobile/TopMenuMobile";
 import FooterMobile from "./components/mobile/FooterMobile/FooterMobile";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setMobile } from "./state/reducers/windowReducer";
 
 
 
 function App() {
-  const [isMobile] = useWindowSize()
 
-  if (isMobile === undefined) {
+  //set up window dimensions
+  const [isMobile] = useWindowSize()
+  const dispatch = useDispatch()
+  const window = useSelector(state => state.window)
+
+
+  useEffect(() => {
+    dispatch(setMobile(isMobile))
+  }, [dispatch, isMobile])
+  // ----------------------
+
+
+  if (window.isMobile === undefined) {
     return (
       <MainLoader />
     )
   }
-  else if (!isMobile)
+  else if (!window.isMobile)
     return (
       <Router>
         <TopMenu />

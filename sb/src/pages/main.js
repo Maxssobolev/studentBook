@@ -7,10 +7,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { $authHost } from '../http';
 import moment from 'moment';
 import { TYPE_NEWS } from '../config/postTypes'
-import useWindowSize from '../components/Hooks/useWindowSize';
+import { useSelector } from 'react-redux';
 
 export default function MainPage() {
-    const [isMobile] = useWindowSize()
+    const { isMobile } = useSelector(state => state.window)
 
     const [sortBy, setSortBy] = useState('createdAt')
 

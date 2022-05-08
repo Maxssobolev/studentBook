@@ -9,6 +9,7 @@ import MarkAsDone from '../Actions/MarkAsDone/MarkAsDone';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import { TYPE_HOMEWORK } from '../../config/postTypes'
+import { useSelector } from 'react-redux';
 
 const transform = (node, children) => {
     if (node.tagName.toLowerCase() === "table") {
@@ -21,6 +22,7 @@ const transform = (node, children) => {
 
 export default function Card({ id, title, content, publishDate, deadline, isLiked, type, isDone, subjectTitle = '' }) {
 
+    const { isMobile } = useSelector(state => state.window)
     const { remainTime, progress } = getRemainDeadline(publishDate, deadline)
 
     return (
