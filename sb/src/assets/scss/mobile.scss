@@ -1,0 +1,58 @@
+.content {
+    // common container styles for mobile
+    &_mobile {
+        overflow-x: hidden;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr;
+        grid-template-areas: "head" "main" "footer";
+        grid-template-rows: 100px 1fr 80px;
+        height: 100vh;
+
+        .topMenu-mobile {
+            grid-area: head;
+            .timetable-mobile {}
+        }
+        .page {
+            grid-area: main;
+            min-height: unset;
+            max-height: unset;
+            .main-card-wrapper {
+                width: 100%;
+            }
+            .newsCard-wrapper {
+                width: var(--mobile-newsCard-width);
+                height: var(--mobile-newsCard-height);
+                .newsCard {
+                    $card-padding: 10px;
+                }
+                .deadline-chart {
+                    width: 100%;
+                }
+            }
+
+        }
+
+        .footer-mobile {
+            grid-area: footer;
+
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            border-radius: 15px;
+            background: var(--side-menu-bg);
+
+            .sideMenu__item {
+                width: 50px;
+                height: 50px;
+                // убираем подсказку
+                &:hover {
+                    &:after {
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+    }
+
+}

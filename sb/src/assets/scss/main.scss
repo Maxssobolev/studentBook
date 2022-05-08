@@ -7,6 +7,7 @@
 @import './timetable.scss';
 @import './forms.scss';
 @import './tables.scss';
+@import './mobile.scss';
 
 html {
     position: relative;
@@ -39,9 +40,11 @@ button {
 
 // регулирует отступ контента+левого сайдбара от верхнего меню
 .content {
-    display: grid;
-    grid-template-columns: var(--side-menu-width) auto var(--rightside-menu-width);
-    grid-gap: var(--pageSide-gap);
+    &_desktop {
+        display: grid;
+        grid-template-columns: var(--side-menu-width) auto var(--rightside-menu-width);
+        grid-gap: var(--pageSide-gap);
+    }
 }
 
 // button

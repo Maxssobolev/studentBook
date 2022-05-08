@@ -3,11 +3,13 @@
 html {
     font-family: 'Roboto';
     font-size: 14px;
+    height: 100%;
 }
 body {
     line-height: normal;
     font-family: inherit;
     font-weight: inherit;
+    height: 100%;
 
     // background: url('../img//bg-templates.svg') ;
     background: var(--body-bg);
@@ -28,6 +30,8 @@ body {
 
     --newsCard-height: 270px; // высота карточек на главной и в домашке
     --newsCard-width: 240px; // ширина карточек на главной и в домашке
+    --mobile-newsCard-height: 200px;
+    --mobile-newsCard-width: 100%;
 
     // цвета
     --accent: #5794da;
@@ -71,4 +75,8 @@ body {
     --fz-head: 1.43rem;
     --fz-medium: 1.15rem;
     --fz-small: 1rem;
+
+
+    // mobile
+    --mobile-footer-height: 65px;
 }

@@ -11,7 +11,10 @@ import { useEffect } from 'react';
 import { $authHost } from '../http';
 import useSubjects from '../components/Hooks/useSubjects'
 import { TYPE_HOMEWORK } from '../config/postTypes'
+import useWindowSize from '../components/Hooks/useWindowSize';
 export default function HomeWorkPage() {
+    const [isMobile] = useWindowSize()
+
     const subjects = useSubjects({ subjectsOnly: false })
     const [sortBy, setSortBy] = useState('createdAt')
     const [homeworks, setHomeworks] = useState([]);
@@ -106,46 +109,47 @@ export default function HomeWorkPage() {
                     </div>
                 }
             </div>
+            {!isMobile &&
+                <div className="rightsidebar">
+                    <div className="filters">
+                        <div className="filters__radio-wrapper" onChange={handleChangeSort} >
+                            <div className="radio" >
+                                <label>
+                                    <span>Сначала новые</span>
+                                    <input type="radio" name='sortBy' value='createdAt' defaultChecked />
+                                </label>
+                            </div>
+                            <div className="radio" >
+                                <label>
+                                    <span>По дедлайну</span>
+                                    <input type="radio" name='sortBy' value='deadline' />
+                                </label>
+                            </div>
+                        </div>
+                        <div className="select-wrapper">
+                            <label >
 
-            <div className="rightsidebar">
-                <div className="filters">
-                    <div className="filters__radio-wrapper" onChange={handleChangeSort} >
-                        <div className="radio" >
-                            <label>
-                                <span>Сначала новые</span>
-                                <input type="radio" name='sortBy' value='createdAt' defaultChecked />
+                                <Select styles={customSelectStyles} options={subjects} onChange={handleChangeSubject}
+                                    components={{ DropdownIndicator }}
+                                    responsive={{
+                                        xsmall: {
+                                            display: 'bottom',
+                                            touchUi: true
+                                        },
+                                        small: {
+                                            display: 'bottom',
+                                            touchUi: true
+                                        },
+
+                                    }}
+                                    placeholder='Все предметы'
+                                />
                             </label>
                         </div>
-                        <div className="radio" >
-                            <label>
-                                <span>По дедлайну</span>
-                                <input type="radio" name='sortBy' value='deadline' />
-                            </label>
-                        </div>
+
                     </div>
-                    <div className="select-wrapper">
-                        <label >
-
-                            <Select styles={customSelectStyles} options={subjects} onChange={handleChangeSubject}
-                                components={{ DropdownIndicator }}
-                                responsive={{
-                                    xsmall: {
-                                        display: 'bottom',
-                                        touchUi: true
-                                    },
-                                    small: {
-                                        display: 'bottom',
-                                        touchUi: true
-                                    },
-
-                                }}
-                                placeholder='Все предметы'
-                            />
-                        </label>
-                    </div>
-
                 </div>
-            </div>
+            }
         </>
     )
 }

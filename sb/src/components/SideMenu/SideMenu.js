@@ -4,7 +4,7 @@ import Login from './Login'
 
 import '../../assets/scss/sideMenu.scss'
 //Обьект с навигацией
-import { nav } from './navObject'
+import { nav } from '../../config/navObject'
 
 export default function SideMenu() {
 

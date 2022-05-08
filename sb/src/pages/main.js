@@ -7,8 +7,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { $authHost } from '../http';
 import moment from 'moment';
 import { TYPE_NEWS } from '../config/postTypes'
+import useWindowSize from '../components/Hooks/useWindowSize';
 
 export default function MainPage() {
+    const [isMobile] = useWindowSize()
+
     const [sortBy, setSortBy] = useState('createdAt')
 
     const [news, setNews] = useState([])
@@ -88,26 +91,28 @@ export default function MainPage() {
                 }
 
             </div>
-            <div className="rightsidebar">
-                <div className="filters">
-                    <div className="filters__radio-wrapper" onChange={handleChangeSort} >
-                        <div className="radio">
-                            <label >
-                                <span>Сначала новые</span>
-                                <input type="radio" name='sortBy' value='createdAt' defaultChecked />
-                            </label>
+            {!isMobile &&
+                <div className="rightsidebar">
+                    <div className="filters">
+                        <div className="filters__radio-wrapper" onChange={handleChangeSort} >
+                            <div className="radio">
+                                <label >
+                                    <span>Сначала новые</span>
+                                    <input type="radio" name='sortBy' value='createdAt' defaultChecked />
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label >
+                                    <span>По дедлайну</span>
+                                    <input type="radio" name='sortBy' value='deadline' />
+                                </label>
+                            </div>
                         </div>
-                        <div className="radio">
-                            <label >
-                                <span>По дедлайну</span>
-                                <input type="radio" name='sortBy' value='deadline' />
-                            </label>
-                        </div>
+
+
                     </div>
-
-
                 </div>
-            </div>
+            }
         </>
     )
 }
