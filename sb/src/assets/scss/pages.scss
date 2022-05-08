@@ -66,34 +66,7 @@
             }
 
         }
-        /*.deadline-circle{
-            position: relative;
-            
-            .circle-diagram-wrapper{
-                position: absolute;
-                top: -22px;
-                right: -1px;
-                z-index: 10;
-                width: 50px;
-                [id*="SvgjsText"]:first-child{
-                    //remain time
 
-                    //выравнивание текста по центру
-                    -moz-transform: translateY(0.25em);
-                    -ms-transform: translateY(0.25em);
-                    -webkit-transform: translateY(0.25em);
-                    transform: translateY(0.25em);
-                    //-----------
-                    
-                    font-size: 10px;
-                    font-family: "Gotham Pro" !important;
-                }
-                [id*="SvgjsText"]:last-child{
-                    //percent of filling
-                    display: none;
-                }
-            
-        }}*/
         &-cardsWrapper {
             @include grid;
         }

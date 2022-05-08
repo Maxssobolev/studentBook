@@ -69,3 +69,32 @@
         stroke: none !important;
     }
 }
+
+
+.deadline-circle {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    .circle-diagram-wrapper {
+        height: 100%;
+        svg > g {
+            // transform: translate(-7px, 4px);
+            &.chart-text {
+                -moz-transform: translateY(0.25em);
+                -ms-transform: translateY(0.25em);
+                -webkit-transform: translateY(0.25em);
+                transform: translateY(0.25em);
+            }
+            .chart-number {
+                font-weight: 500;
+                font-size: 0.8em;
+                line-height: 1;
+                text-anchor: middle;
+                transform: translateY(-0.00em);
+            }
+
+        }
+
+
+    }
+}

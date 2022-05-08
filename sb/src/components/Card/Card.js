@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import { TYPE_HOMEWORK } from '../../config/postTypes'
 import { useSelector } from 'react-redux';
+import CircleDiagram from '../CircleDiagram/CircleDiagram';
+import RemainDedaline from '../Actions/RemainDeadline/RemainDeadline';
 
 const transform = (node, children) => {
     if (node.tagName.toLowerCase() === "table") {
@@ -23,7 +25,7 @@ const transform = (node, children) => {
 export default function Card({ id, title, content, publishDate, deadline, isLiked, type, isDone, subjectTitle = '' }) {
 
     const { isMobile } = useSelector(state => state.window)
-    const { remainTime, progress } = getRemainDeadline(publishDate, deadline)
+    const { remainTime, progress, remainShort } = getRemainDeadline(publishDate, deadline)
 
     return (
         <motion.div
@@ -40,14 +42,15 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                 <div className={`newsCard ${type === 'homework' ? 'newsCard_hw' : ''}`}>
 
                     {/* Если карточка должна отображать домашнюю работу, то появляется дедлайн-индикатор */}
-                    {type === 'homework' && (
+                    {/*type === 'homework' && (
                         <div className="deadline-wrapper">
                             <div className="deadline-text">{remainTime}</div>
                             <div className="deadline-chart">
                                 <div className="deadline-chart__progress" style={{ width: progress < 5 ? `0px` : `${progress}%` }}></div>
                             </div>
                         </div>
-                    )}
+                    )*/}
+
                     {/* Если карточка должна отображать домашнюю работу, то появляется название предмета */}
                     {type == TYPE_HOMEWORK && <div className="newsCard__subject">{subjectTitle}</div>}
                     <div className="newsCard__title">{title}</div>
@@ -71,6 +74,11 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                                     isDone={isDone}
                                 />
                             }
+                            {type === 'homework' && (
+
+                                <RemainDedaline current={remainShort} progress={progress} />
+
+                            )}
 
                         </div>
                         <div className="button-wrapper">

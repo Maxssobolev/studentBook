@@ -21,7 +21,7 @@ export function getRemainDeadline(publishDate, deadline) {
     let progress = '';
     let fromStartToNow = '';
     let remainTime = '';
-
+    let remainShort = ''
     let publicDate = moment(publishDate);
     let pubicDate_startPoint = moment(publishDate);
 
@@ -40,6 +40,7 @@ export function getRemainDeadline(publishDate, deadline) {
                 (remain_actual_time - 24 * Math.floor(remain_actual_time / 24)) +
                 'ч'
                 : remain_actual_time - 24 * Math.floor(remain_actual_time / 24) + 'ч';
+        remainShort = Math.floor(remain_actual_time / 24) > 0 ? Math.floor(remain_actual_time / 24) + 'д' : remain_actual_time - 24 * Math.floor(remain_actual_time / 24) + 'ч';
     }
-    return { remainTime, progress }
+    return { remainTime, progress, remainShort }
 }
