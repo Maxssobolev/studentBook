@@ -6,11 +6,11 @@
         grid-gap: 10px;
         grid-template-columns: 1fr;
         grid-template-areas: "head" "main" "footer";
-        grid-template-rows: 100px 1fr 80px;
-        height: 100vh;
+        grid-template-rows: 110px 1fr 80px;
+        height: calc(var(--vh) * 100);
 
         .topMenu-mobile {
-            padding: 5px 10px;
+            padding: 10px 5px 0;
             background: var(--timetable-bg);
             border-radius: 15px;
             grid-area: head;
@@ -64,6 +64,14 @@
                         &_now {
                             background: var(--accent);
                         }
+                        &_placeholder {
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: #b0c0d1;
+
+                        }
                     }
                 }
             }
@@ -78,11 +86,11 @@
             .newsCard-wrapper {
                 width: var(--mobile-newsCard-width);
                 height: var(--mobile-newsCard-height);
-                padding-top: 7px;
-                padding-bottom: 7px;
+                padding-top: 10px;
+                padding-bottom: 10px;
                 .newsCard {
 
-                    $card-padding: 7px;
+                    $card-padding: 10px;
                     &_hw {}
                     height: 100%;
                     &__subject {

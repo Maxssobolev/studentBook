@@ -26,7 +26,7 @@ export default function RemainDedaline({ current, progress }) {
                         stroke="url(#linear)" strokeWidth="5"
                         /* здесь первое значение (в процентах)  - синий круг (filling) */
                         strokeDasharray={[progress, 100 - progress]}
-                        strokeDashoffset="-35" //25 - справа налево
+                        strokeDashoffset="25" //25 - справа налево
                     ></circle>
 
 

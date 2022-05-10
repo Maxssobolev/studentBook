@@ -13,9 +13,9 @@ export default function TimeTable() {
         { "id": "2", "weekday": "Mon", "weekparity": "0", "start": "11:40", "name": "Правоведение", "link": "0x" },
         { "id": "3", "weekday": "Mon", "weekparity": "both", "start": "13:45", "name": "Программирование (пр)", "link": "0x" },
         { "id": "4", "weekday": "Mon", "weekparity": "1", "start": "15:20", "name": "Правоведение (пр)", "link": "0x" },
-        { "id": "5", "weekday": "Tue", "weekparity": "both", "start": "11:40", "name": "Экономика", "link": "0x" },
-        { "id": "6", "weekday": "Tue", "weekparity": "both", "start": "16:45", "name": "Прикладной дизайн", "link": "0x" },
-        { "id": "7", "weekday": "Tue", "weekparity": "both", "start": "15:20", "name": "Экономика (пр)", "link": "0x" },
+        { "id": "5", "weekday": "Tue", "weekparity": "0", "start": "11:40", "name": "Экономика", "link": "0x" },
+        { "id": "6", "weekday": "Tue", "weekparity": "0", "start": "13:45", "name": "Прикладной дизайн", "link": "0x" },
+        { "id": "7", "weekday": "Tue", "weekparity": "0", "start": "15:20", "name": "Экономика (пр)", "link": "0x" },
         { "id": "8", "weekday": "Wed", "weekparity": "both", "start": "8:30", "name": "Ин. яз.", "link": "0x" },
         { "id": "9", "weekday": "Wed", "weekparity": "both", "start": "10:05", "name": "Физ-ра", "link": "0x" },
         { "id": "10", "weekday": "Thu", "weekparity": "both", "start": "10:05", "name": "ИО и МО (пр)", "link": "0x" },
@@ -136,6 +136,7 @@ export default function TimeTable() {
                 ? currentSub
                 : {
                     breakTime: result,
+                    noSubjectsForToday: true
                 }
             ,
 
@@ -171,7 +172,6 @@ export default function TimeTable() {
         }
 
     }, [time, calendar])
-
     //если раписание еще не загрузилось
     if (!todayTimeTable) {
         return (
@@ -208,6 +208,12 @@ export default function TimeTable() {
                 {todayTimeTable.map((itm, idx) => {
                     if (itm) {
                         let now = itm.now ?? false
+                        if (itm?.noSubjectsForToday) {
+                            return <SubjectCardMobile
+                                isPlaceholder={true}
+                                key={`timetable__${idx}`}
+                            />
+                        }
                         return (
                             <SubjectCardMobile
                                 start={itm.start}

@@ -24,23 +24,32 @@ import { setMobile } from "./state/reducers/windowReducer";
 function App() {
 
   //set up window dimensions
-  const [isMobile] = useWindowSize()
+  const [_isMobile] = useWindowSize()
   const dispatch = useDispatch()
-  const window = useSelector(state => state.window)
+  const { isMobile } = useSelector(state => state.window)
 
 
   useEffect(() => {
-    dispatch(setMobile(isMobile))
-  }, [dispatch, isMobile])
+    dispatch(setMobile(_isMobile))
+  }, [dispatch, _isMobile])
   // ----------------------
 
+  useEffect(() => {
+    //setting correct inner width
+    window.addEventListener('resize', () => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    })
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 
-  if (window.isMobile === undefined) {
+  }, [])
+
+  if (isMobile === undefined) {
     return (
       <MainLoader />
     )
   }
-  else if (!window.isMobile)
+  else if (!isMobile)
     return (
       <Router>
         <TopMenu />

@@ -78,6 +78,9 @@
             width: 90%;
             margin: 0 auto;
             padding-top: 15px;
+            @media(max-width: 1390px) {
+                width: 100%;
+            }
         }
         .page-controllers {
             display: grid;
