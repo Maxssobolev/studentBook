@@ -10,8 +10,63 @@
         height: 100vh;
 
         .topMenu-mobile {
+            padding: 5px 10px;
+            background: var(--timetable-bg);
+            border-radius: 15px;
             grid-area: head;
-            .timetable-mobile {}
+            overflow-x: hidden;
+
+            .timetable-mobile {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+                &__info-row {
+                    display: flex;
+
+                    font-family: 'Gotham Pro';
+                    font-weight: 600;
+                    .day {
+                        text-transform: capitalize;
+                        color: var(--black);
+                    }
+                    .week {
+                        color: var(--accent);
+                        margin: 0 10px;
+                    }
+                }
+                &__main-row {
+                    transition: all 0.5s;
+                    display: flex;
+
+                    overflow-x: scroll;
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+                    .subjectCard {
+                        margin: 0 5px;
+                        width: 150px;
+                        min-width: 150px;
+                        height: 65px;
+                        background: var(--accent-light);
+                        border-radius: 10px;
+                        color: var(--white);
+                        font-family: "Gilroy";
+                        font-weight: 600;
+                        padding: 8px 13px;
+
+                        &__time {
+                            display: flex;
+                        }
+                        &__name {
+                            font-size: 12px;
+                        }
+                        &_now {
+                            background: var(--accent);
+                        }
+                    }
+                }
+            }
         }
         .page {
             grid-area: main;

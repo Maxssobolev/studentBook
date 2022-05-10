@@ -4,6 +4,8 @@ import moment from 'moment';
 import 'moment/locale/ru';
 
 import { Code } from 'react-content-loader'
+import SubjectCardMobile from './SubjectCardMobile';
+import { useRef } from 'react';
 
 export default function TimeTable() {
     const [calendar, setCalendar] = useState([
@@ -11,9 +13,9 @@ export default function TimeTable() {
         { "id": "2", "weekday": "Mon", "weekparity": "0", "start": "11:40", "name": "Правоведение", "link": "0x" },
         { "id": "3", "weekday": "Mon", "weekparity": "both", "start": "13:45", "name": "Программирование (пр)", "link": "0x" },
         { "id": "4", "weekday": "Mon", "weekparity": "1", "start": "15:20", "name": "Правоведение (пр)", "link": "0x" },
-        { "id": "5", "weekday": "Tue", "weekparity": "0", "start": "11:40", "name": "Экономика", "link": "0x" },
-        { "id": "6", "weekday": "Tue", "weekparity": "0", "start": "13:45", "name": "Прикладной дизайн", "link": "0x" },
-        { "id": "7", "weekday": "Tue", "weekparity": "0", "start": "15:20", "name": "Экономика (пр)", "link": "0x" },
+        { "id": "5", "weekday": "Tue", "weekparity": "both", "start": "11:40", "name": "Экономика", "link": "0x" },
+        { "id": "6", "weekday": "Tue", "weekparity": "both", "start": "16:45", "name": "Прикладной дизайн", "link": "0x" },
+        { "id": "7", "weekday": "Tue", "weekparity": "both", "start": "15:20", "name": "Экономика (пр)", "link": "0x" },
         { "id": "8", "weekday": "Wed", "weekparity": "both", "start": "8:30", "name": "Ин. яз.", "link": "0x" },
         { "id": "9", "weekday": "Wed", "weekparity": "both", "start": "10:05", "name": "Физ-ра", "link": "0x" },
         { "id": "10", "weekday": "Thu", "weekparity": "both", "start": "10:05", "name": "ИО и МО (пр)", "link": "0x" },
@@ -28,7 +30,7 @@ export default function TimeTable() {
     const [time, setTime] = useState(Date.now());
     const [todayTimeTable, setTodayTimeTable] = useState()
 
-    const today = moment().format('ddd DD.MM')
+    const today = moment().format('dddd DD.MM')
     const weekParity = moment().week() % 2
 
     //обрабатываем обьекты предметов в расписании
@@ -71,6 +73,7 @@ export default function TimeTable() {
                             end: endTime.format('HH:mm'),
                             name: calendar[i].name,
                             link: calendar[i].link,
+                            now: true,
                         };
                         isIbeforeAll = false;
                     }
@@ -126,36 +129,100 @@ export default function TimeTable() {
         //-------------------------------------
 
 
-        return {
-            prevSub: prevSub ?? '',
-            currentSub: currentSub
+        return [
+            prevSub ?? '',
+
+            currentSub
                 ? currentSub
                 : {
                     breakTime: result,
-                },
-            nextSub: nextSub ? (firstPara ? firstPara : nextSub[0]) : '',
-        }
+                }
+            ,
+
+            nextSub ? (firstPara ? firstPara : nextSub[0]) : ''
+        ]
 
     }
 
 
     //Заводим таймер обновления состояния каждые десять секунд
     useEffect(() => {
+
+
         const interval = setInterval(() => setTime(Date.now()), 10 * 1000);
         return () => {
             clearInterval(interval);
         };
     }, []);
 
+    const timtableRef = useRef()
     //вызываем функцию и подписываемся на обновления таймера 
     useEffect(() => {
         let timetable = getTimeTable()
         setTodayTimeTable(timetable)
+
+        //костыль какой-то, мне не нравится
+        if (timtableRef.current && timetable.length > 2) {
+            timtableRef.current.scrollTo({
+                left: 150,
+                top: 0,
+                behavior: "smooth"
+            })
+        }
+
     }, [time, calendar])
+
+    //если раписание еще не загрузилось
+    if (!todayTimeTable) {
+        return (
+            <div className="timetable-mobile">
+                <div className='timetable-mobile__info-row'>
+                    <div className="day">{today}</div>
+                    <div className="week">
+                        {weekParity ? 'Нечетная' : 'Четная'} неделя
+                    </div>
+                </div>
+                <div className='timetable-mobile__main-row'>
+                    {/* Анимационная заглушка загружающегося расписания */}
+                    <Code
+                        height={50}
+                    />
+
+                </div>
+
+            </div >
+        )
+    }
+
 
 
     return (
         <div className="timetable-mobile">
+            <div className='timetable-mobile__info-row'>
+                <div className="day">{today}</div>
+                <div className="week">
+                    {weekParity ? 'Нечетная' : 'Четная'} неделя
+                </div>
+            </div>
+            <div className='timetable-mobile__main-row' ref={timtableRef} >
+                {todayTimeTable.map((itm, idx) => {
+                    if (itm) {
+                        let now = itm.now ?? false
+                        return (
+                            <SubjectCardMobile
+                                start={itm.start}
+                                end={itm.end}
+                                name={itm.name}
+                                link={itm.link}
+                                now={now}
+
+                                key={`timetable__${idx}`}
+                            />
+                        )
+                    }
+                })}
+            </div>
+
 
         </div>
     )
