@@ -5,7 +5,7 @@ export default function RemainDedaline({ current, progress }) {
 
     return (
 
-        <div className="deadline-circle">
+        <div className="action deadline-circle">
             <div className="circle-diagram-wrapper">
                 <svg width="100%" height="100%" viewBox="0 0 42 42" className="donut">
                     <defs>
@@ -14,7 +14,7 @@ export default function RemainDedaline({ current, progress }) {
                             y1="0%"
 
                             y2="100%">
-                            <stop offset="0%" stopColor="rgba(52, 128, 192, 1)" />
+                            <stop offset="0%" stopColor="#C0DCFC" />
                             <stop offset={`${progress}%`} stopColor="var(--accent)" />
                         </linearGradient>
                     </defs>
@@ -26,8 +26,8 @@ export default function RemainDedaline({ current, progress }) {
                         stroke="url(#linear)" strokeWidth="5"
                         /* здесь первое значение (в процентах)  - синий круг (filling) */
                         strokeDasharray={[progress, 100 - progress]}
-                        strokeDashoffset="25"
-                        strokeLinecap="round"></circle>
+                        strokeDashoffset="-35" //25 - справа налево
+                    ></circle>
 
 
                     <g className="chart-text">

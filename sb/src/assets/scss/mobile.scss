@@ -23,8 +23,55 @@
             .newsCard-wrapper {
                 width: var(--mobile-newsCard-width);
                 height: var(--mobile-newsCard-height);
+                padding-top: 7px;
+                padding-bottom: 7px;
                 .newsCard {
-                    $card-padding: 10px;
+
+                    $card-padding: 7px;
+                    &_hw {}
+                    height: 100%;
+                    &__subject {
+                        padding: 0 $card-padding;
+                    }
+                    &__title {
+                        padding: 0 $card-padding;
+                    }
+                    &__date {
+                        padding: 0 $card-padding;
+                    }
+                    &__content {
+                        padding: 0 $card-padding;
+                    }
+                    &__footer {
+                        display: flex;
+                        align-items: flex-end;
+                        text-align: center;
+                        &-controllers {
+                            width: 100%;
+                            padding: 0 $card-padding;
+                            display: flex;
+                            justify-content: space-evenly;
+                            flex-wrap: wrap;
+                            align-items: center;
+                            .action {
+                                margin: 0;
+                                transform: scale(0.8);
+
+
+                            }
+                            @include if_size('380') {
+                                flex-wrap: nowrap;
+                            }
+
+
+                        }
+                        .button-wrapper {
+                            padding: 0 $card-padding;
+                            margin-top: 10px;
+                        }
+                    }
+
+
                 }
                 .deadline-chart {
                     width: 100%;

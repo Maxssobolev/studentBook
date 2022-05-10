@@ -24,6 +24,7 @@
         @media(max-width: 1200px) {
             grid-template-columns: 1fr 1fr;
             justify-items: center;
+            grid-column-gap: 10px;
         }
         @include if_size('xl') {
             justify-items: center;

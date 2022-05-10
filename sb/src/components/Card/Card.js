@@ -53,7 +53,7 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
 
                     {/* Если карточка должна отображать домашнюю работу, то появляется название предмета */}
                     {type == TYPE_HOMEWORK && <div className="newsCard__subject">{subjectTitle}</div>}
-                    <div className="newsCard__title">{title}</div>
+                    <div className="newsCard__title"> {isMobile ? <Link to={`/view/post/${id}?type=${type}`}>{title}</Link> : title}</div>
                     <div className="newsCard__date">
                         <div className="dates__publish">{moment(publishDate).format('D MMMM, HH:mm')}</div>
                     </div>
@@ -81,11 +81,13 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                             )}
 
                         </div>
-                        <div className="button-wrapper">
-                            <Link to={`/view/post/${id}?type=${type}`}>
-                                <Button type="readmore" />
-                            </Link>
-                        </div>
+                        {!isMobile &&
+                            <div className="button-wrapper">
+                                <Link to={`/view/post/${id}?type=${type}`}>
+                                    <Button type="readmore" />
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

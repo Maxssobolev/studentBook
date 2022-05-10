@@ -16,6 +16,7 @@ import useQuery from '../../components/Hooks/useQuery'
 import Lightbox from "react-awesome-lightbox";
 import "react-awesome-lightbox/build/style.css";
 import { TYPE_NEWS, TYPE_HOMEWORK } from '../../config/postTypes';
+import { useSelector } from 'react-redux';
 
 const ImageComponent = ({ imageSrc }) => {
     const [lightbox, setLightBox] = useState(false)
@@ -30,6 +31,8 @@ const transform = (node, children) => {
 };
 
 export default function PostViewPage() {
+    const { isMobile } = useSelector(state => state.window)
+
     const match = useRouteMatch();
     const query = useQuery()
     const history = useHistory();
@@ -68,9 +71,9 @@ export default function PostViewPage() {
         return (
             <div className='page page-view page-view_post'>
                 <div className="page-controllers">
-                    <button type='button' className="prev-page" onClick={() => history.goBack()}><ArrowIcon />{TEXT.page.view.prevPage}</button>
+                    <button type='button' className="prev-page" onClick={() => history.goBack()}><ArrowIcon />{!isMobile ? TEXT.page.view.prevPage : ''}</button>
                     <div className="subject-name">{TEXT.loading}</div>
-                    <button type='button' className="next-page" disabled>{TEXT.page.view.nextPage} <ArrowIcon /> </button>
+                    <button type='button' className="next-page" disabled>{!isMobile ? TEXT.page.view.nextPage : ''} <ArrowIcon /> </button>
                 </div>
                 <SinglePageLoader />
             </div>
@@ -92,9 +95,9 @@ export default function PostViewPage() {
                 <div className='page page-view page-view_post'>
                     <div className="page-view__wrapper">
                         <div className="page-controllers">
-                            <button type='button' className="prev-page" onClick={() => history.push(`/view/post/${data.prevPost?.id}?type=${type}`)} disabled={data.prevPost ? false : true}><ArrowIcon />{TEXT.page.view.prevPage}</button>
+                            <button type='button' className="prev-page" onClick={() => history.push(`/view/post/${data.prevPost?.id}?type=${type}`)} disabled={data.prevPost ? false : true}><ArrowIcon />{!isMobile ? TEXT.page.view.prevPage : ''}</button>
                             <div className="subject-name">{subjTitle}</div>
-                            <button type='button' className="next-page" onClick={() => history.push(`/view/post/${data.nextPost?.id}?type=${type}`)} disabled={data.nextPost ? false : true}>{TEXT.page.view.nextPage} <ArrowIcon /> </button>
+                            <button type='button' className="next-page" onClick={() => history.push(`/view/post/${data.nextPost?.id}?type=${type}`)} disabled={data.nextPost ? false : true}>{!isMobile ? TEXT.page.view.nextPage : ''} <ArrowIcon /> </button>
 
                         </div>
 
@@ -122,14 +125,16 @@ export default function PostViewPage() {
 
                     </div>
                 </div>
-                <div className="rightsidebar">
-                    <div className="actions">
+                {!isMobile &&
+                    <div className="rightsidebar">
+                        <div className="actions">
 
-                        <Like id={id} type={type} isLiked={currentPost.isLiked} />
-                        {type == TYPE_HOMEWORK && <MarkAsDone id={id} isDone={currentPost?.isDone} />}
+                            <Like id={id} type={type} isLiked={currentPost.isLiked} />
+                            {type == TYPE_HOMEWORK && <MarkAsDone id={id} isDone={currentPost?.isDone} />}
 
+                        </div>
                     </div>
-                </div>
+                }
             </>
 
 
