@@ -129,18 +129,29 @@ button {
     border: 2px solid #D0E2F6;
     background: white;
     &:last-child {}
+
+
 }
 .newsCard {
 
     $card-padding: 15px;
 
     display: grid;
-    grid-template-rows: 2fr 0.6fr 3fr 3fr;
+    grid-template-rows: 3fr 0.6fr 3fr 3fr;
     grid-row-gap: 10px;
+    @media(max-width: 450px) {
+        grid-template-rows: 2.5fr 0.6fr 1fr 1fr;
+        grid-row-gap: 3px;
+
+    }
 
     &_hw {
         grid-row-gap: 10px;
         grid-template-rows: 0.5fr 2fr 0.6fr 3fr;
+        @media(max-width: 450px) {
+            grid-template-rows: 0.5fr 1.5fr 0.6fr 1fr;
+            grid-row-gap: 3px;
+        }
     }
 
     height: 100%;
@@ -159,6 +170,10 @@ button {
         padding: 0 $card-padding;
         line-break: anywhere;
         overflow: hidden;
+
+        @media(max-width: 450px) {
+            font-size: 1.3rem;
+        }
 
     }
     &__date {
