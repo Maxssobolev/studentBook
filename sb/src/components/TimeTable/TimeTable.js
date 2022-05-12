@@ -7,8 +7,11 @@ import { ReactComponent as ArrowDown } from '../../assets/img/timetable-arrow-do
 import { useEffect } from 'react';
 import { calendar } from '../../config/api';
 import { Code } from 'react-content-loader'
+import { setFullTimeTable } from '../../state/reducers/modalsReducer';
+import { useDispatch } from 'react-redux';
 
 export default function TimeTable() {
+    const dispath = useDispatch()
 
     const [time, setTime] = useState(Date.now());
     const [todayTimeTable, setTodayTimeTable] = useState()
@@ -250,7 +253,7 @@ export default function TimeTable() {
                         }
                     </div>
                 </div>
-                <div className="arrow-down">
+                <div className="arrow-down" onClick={() => dispath(setFullTimeTable(true))}>
                     <ArrowDown />
                 </div>
             </div>

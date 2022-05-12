@@ -7,6 +7,7 @@ import { ReactComponent as LogoIcon } from '../../assets/img/top-menu/bank.svg'
 //файл со всеми надписями
 import { TEXT } from '../../config/text/text';
 import TimeTable from '../TimeTable/TimeTable';
+import FullTimeTable from '../FullTimeTable/FullTimeTable';
 
 export default function TopMenu() {
 
@@ -17,6 +18,8 @@ export default function TopMenu() {
                 <div className="logo__subtitle">{TEXT.group.toUpperCase()}</div>
             </div>
             <TimeTable />
+
+            <FullTimeTable />
         </Container>
     )
 }

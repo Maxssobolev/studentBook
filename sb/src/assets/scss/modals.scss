@@ -1,0 +1,38 @@
+.modal {
+    &_fullTimeTable {
+        .info {
+            display: flex;
+            font-size: var(--fz-medium);
+            .day {
+                color: var(--black);
+                text-transform: capitalize;
+                margin-right: 10px;
+            }
+            .week {
+                color: var(--timetable-date-color);
+            }
+        }
+        .daytimetable {
+            tr {
+                background: white;
+            }
+            td:last-child {
+                border-right: none;
+            }
+            .weekday {
+
+                background: #5794da1f;
+                td {
+                    color: var(--black);
+                    font-weight: 600;
+                    font-family: 'Gotham Pro';
+                    text-align: left;
+                    border-radius: 5px;
+                }
+            }
+            .anotherWeekparity {
+                color: #c7c7c7;
+            }
+        }
+    }
+}
