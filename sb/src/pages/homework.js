@@ -8,7 +8,7 @@ import moment from 'moment';
 import { TEXT } from '../config/text/text';
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react';
-import { $authHost } from '../http';
+import { $host } from '../http';
 import useSubjects from '../components/Hooks/useSubjects'
 import { TYPE_HOMEWORK } from '../config/postTypes'
 import { useSelector } from 'react-redux';
@@ -57,7 +57,7 @@ export default function HomeWorkPage() {
     }
 
     useEffect(() => {
-        $authHost.get(`/api/posts?postType=${TYPE_HOMEWORK}`).then(
+        $host.get(`/api/posts?postType=${TYPE_HOMEWORK}`).then(
             r => {
                 const recievedData = r.data
                 setHomeworks(recievedData)

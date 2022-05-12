@@ -5,11 +5,12 @@ const moment = require('moment')
 
 class PostController {
     includeOptions = (req, postType) => {
+        let userId = req?.user?.id || 0
         let options = [{
             model: Users,
             as: 'usersLiked',
             where: {
-                id: req.user.id,
+                id: userId
             },
             required: false,
         }]
@@ -25,7 +26,7 @@ class PostController {
                     model: Users,
                     as: 'usersDoned',
                     where: {
-                        id: req.user.id,
+                        id: userId,
                     },
                     required: false,
                 }

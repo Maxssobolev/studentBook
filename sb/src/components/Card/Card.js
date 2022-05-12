@@ -55,7 +55,7 @@ export default function Card({ id, title, content, publishDate, deadline, isLike
                     {type == TYPE_HOMEWORK && <div className="newsCard__subject">{subjectTitle}</div>}
                     <div className="newsCard__title"> {isMobile ? <Link to={`/view/post/${id}?type=${type}`}>{title}</Link> : title}</div>
                     <div className="newsCard__date">
-                        <div className="dates__publish">{moment(publishDate).format('D MMMM, HH:mm')}</div>
+                        <div className="dates__publish">до {moment(deadline).format('D MMMM, HH:mm')}</div>
                     </div>
                     {/* Если карточка должна отображать новость, то появляется ее краткое описание */}
                     {type !== 'homework' && (

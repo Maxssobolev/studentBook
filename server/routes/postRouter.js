@@ -36,7 +36,7 @@ router.post(
 )
 
 
-router.get('/', authMiddleware(), postController.getAll)
-router.get('/:id', authMiddleware(), postController.getOne)
+router.get('/', postController.getAll)
+router.get('/:id', postController.getOne)
 
 module.exports = router

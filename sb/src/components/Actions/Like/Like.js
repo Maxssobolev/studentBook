@@ -19,7 +19,7 @@ export default function Like({ id, isLiked, type }) {
     return (
         <div className="action action_like">
 
-            <button type='button' onClick={handleLike}>
+            <button type='button' onClick={handleLike} >
                 <SwitchTransition mode='out-in'>
                     <CSSTransition
                         key={like}

@@ -22,7 +22,7 @@ const tokenErrorInterceptor = error => {
         const { redirect } = error.response.data
         cookies.remove('user')
         cookies.remove('token')
-        return window.location.replace(redirect)
+        return window.location.replace(redirect + '?access=denied')
     }
     return Promise.reject(error);
 
