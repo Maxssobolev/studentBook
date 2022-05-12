@@ -11,7 +11,7 @@ import { setFullTimeTable } from '../../state/reducers/modalsReducer';
 import { useDispatch } from 'react-redux';
 
 export default function TimeTable() {
-    const dispath = useDispatch()
+    const dispatch = useDispatch()
 
     const [time, setTime] = useState(Date.now());
     const [todayTimeTable, setTodayTimeTable] = useState()
@@ -253,7 +253,7 @@ export default function TimeTable() {
                         }
                     </div>
                 </div>
-                <div className="arrow-down" onClick={() => dispath(setFullTimeTable(true))}>
+                <div className="arrow-down" onClick={() => dispatch(setFullTimeTable(true))}>
                     <ArrowDown />
                 </div>
             </div>

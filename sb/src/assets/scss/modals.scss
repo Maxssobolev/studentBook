@@ -33,6 +33,10 @@
             .anotherWeekparity {
                 color: #c7c7c7;
             }
+
+            @media(max-width: 900px) {
+                width: 100%;
+            }
         }
     }
 }

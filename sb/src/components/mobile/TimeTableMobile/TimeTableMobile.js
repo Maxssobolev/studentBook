@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 
 import moment from 'moment';
 import 'moment/locale/ru';
+import { ReactComponent as ArrowDown } from '../../../assets/img/timetable-arrow-down.svg'
 
 import { Code } from 'react-content-loader'
 import SubjectCardMobile from './SubjectCardMobile';
 import { useRef } from 'react';
 import { calendar } from '../../../config/api';
+import { useDispatch } from 'react-redux';
+import { setFullTimeTable } from '../../../state/reducers/modalsReducer';
 export default function TimeTable() {
-
+    const dispatch = useDispatch()
     const [time, setTime] = useState(Date.now());
     const [todayTimeTable, setTodayTimeTable] = useState()
 
@@ -110,17 +113,12 @@ export default function TimeTable() {
         let result = minutes ? (hours ? hours + ' ч ' : '') + minutes + ' мин' : '∞';
         //-------------------------------------
 
-
+        if (!prevSub && !currentSub && !nextSub)
+            return []
         return [
             prevSub ?? '',
 
-            currentSub
-                ? currentSub
-                : {
-                    breakTime: result,
-                    noSubjectsForToday: true
-                }
-            ,
+            currentSub ?? '',
 
             nextSub ? (firstPara ? firstPara : nextSub[0]) : ''
         ]
@@ -185,17 +183,15 @@ export default function TimeTable() {
                 <div className="week">
                     {weekParity ? 'Нечетная' : 'Четная'} неделя
                 </div>
+                <div className="arrow-down" onClick={() => dispatch(setFullTimeTable(true))}>
+                    <ArrowDown />
+                </div>
             </div>
             <div className='timetable-mobile__main-row' ref={timtableRef} >
                 {todayTimeTable.map((itm, idx) => {
+                    console.log(itm)
                     if (itm) {
                         let now = itm.now ?? false
-                        if (itm?.noSubjectsForToday) {
-                            return <SubjectCardMobile
-                                isPlaceholder={true}
-                                key={`timetable__${idx}`}
-                            />
-                        }
                         return (
                             <SubjectCardMobile
                                 start={itm.start}
@@ -209,6 +205,11 @@ export default function TimeTable() {
                         )
                     }
                 })}
+
+                {todayTimeTable.length == 0 && <SubjectCardMobile
+                    isPlaceholder={true}
+                    key={`timetable_done}`}
+                />}
             </div>
 
 
