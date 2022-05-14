@@ -7,9 +7,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { $authHost } from '../http';
 import moment from 'moment';
 import { TYPE_NEWS } from '../config/postTypes'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { seenAllIncomingPosts } from '../state/reducers/postsReducer';
 
 export default function MainPage() {
+    const dispatch = useDispatch()
     const { isMobile } = useSelector(state => state.window)
     const { news } = useSelector(state => state.posts)
 
@@ -28,6 +30,10 @@ export default function MainPage() {
         )
 
     }, [news])
+
+    useEffect(() => {
+        dispatch(seenAllIncomingPosts({ postType: TYPE_NEWS }))
+    }, [dispatch])
 
     const handleChangeSort = (event) => {
         setSortBy(event.target.value)
