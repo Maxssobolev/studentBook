@@ -174,8 +174,6 @@ export default function TimeTable() {
         )
     }
 
-
-
     return (
         <div className="timetable-mobile">
             <div className='timetable-mobile__info-row'>
@@ -189,7 +187,6 @@ export default function TimeTable() {
             </div>
             <div className='timetable-mobile__main-row' ref={timtableRef} >
                 {todayTimeTable.map((itm, idx) => {
-                    console.log(itm)
                     if (itm) {
                         let now = itm.now ?? false
                         return (

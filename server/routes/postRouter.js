@@ -36,7 +36,10 @@ router.post(
 )
 
 
-router.get('/', postController.getAll)
+router.get('/all', postController.getAll)
+router.get('/connect', postController.connect)
 router.get('/:id', postController.getOne)
+
+
 
 module.exports = router

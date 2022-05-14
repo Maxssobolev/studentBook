@@ -11,26 +11,23 @@ import { useSelector } from 'react-redux';
 
 export default function MainPage() {
     const { isMobile } = useSelector(state => state.window)
+    const { news } = useSelector(state => state.posts)
 
     const [sortBy, setSortBy] = useState('createdAt')
 
-    const [news, setNews] = useState([])
     const [dataToShow, setDataToShow] = useState([])
     useEffect(() => {
-        $authHost.get(`/api/posts?postType=${TYPE_NEWS}`).then(
-            r => {
-                const recievedData = r.data
-                setNews(recievedData)
-                setDataToShow(
-                    //изначально данные отсортированны по дате (сначала новые)
-                    recievedData.sort(
-                        (a, b) => {
-                            return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
-                        }
-                    )
-                )
-            })
-    }, [])
+
+        setDataToShow(
+            //изначально данные отсортированны по дате (сначала новые)
+            [...news].sort(
+                (a, b) => {
+                    return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
+                }
+            )
+        )
+
+    }, [news])
 
     const handleChangeSort = (event) => {
         setSortBy(event.target.value)

@@ -18,6 +18,7 @@ import FooterMobile from "./components/mobile/FooterMobile/FooterMobile";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMobile } from "./state/reducers/windowReducer";
+import { getPosts, pushNewPost } from "./state/reducers/postsReducer";
 
 
 
@@ -43,6 +44,23 @@ function App() {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 
   }, [])
+
+  //put all posts in global redux state
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [dispatch])
+  //subscribe on new posts
+  useEffect(() => {
+    subscribeOnNewPosts()
+  }, [])
+
+  const subscribeOnNewPosts = async () => {
+    const eventSource = new EventSource(`${process.env.REACT_APP_API_URL}/api/posts/connect`)
+    eventSource.onmessage = function (event) {
+      const post = JSON.parse(event.data)
+      dispatch(pushNewPost(post))
+    }
+  }
 
   if (isMobile === undefined) {
     return (

@@ -8,17 +8,19 @@ import moment from 'moment';
 import { TEXT } from '../config/text/text';
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react';
-import { $host } from '../http';
 import useSubjects from '../components/Hooks/useSubjects'
 import { TYPE_HOMEWORK } from '../config/postTypes'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { seenAllIncomingPosts } from '../state/reducers/postsReducer';
 
 export default function HomeWorkPage() {
+    const dispatch = useDispatch()
     const { isMobile } = useSelector(state => state.window)
+    const { homeworks } = useSelector(state => state.posts)
 
     const subjects = useSubjects({ subjectsOnly: false })
     const [sortBy, setSortBy] = useState('createdAt')
-    const [homeworks, setHomeworks] = useState([]);
+
     const [dataToShow, setDataToShow] = useState([])
 
     const handleChangeSubject = (selectedOpt) => {
@@ -57,22 +59,18 @@ export default function HomeWorkPage() {
     }
 
     useEffect(() => {
-        $host.get(`/api/posts?postType=${TYPE_HOMEWORK}`).then(
-            r => {
-                const recievedData = r.data
-                setHomeworks(recievedData)
-                setDataToShow(
-                    //изначально данные отсортированны по дате (сначала новые)
-                    recievedData.sort(
-                        (a, b) => {
-                            return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
-                        }
-                    )
-                )
+        setDataToShow([...homeworks].sort(
+            (a, b) => {
+                return new moment(b[sortBy]).format('YYYYMMDD') - new moment(a[sortBy]).format('YYYYMMDD')
             }
-        )
+        ))
 
-    }, [])
+    }, [homeworks])
+
+    useEffect(() => {
+        dispatch(seenAllIncomingPosts({ postType: TYPE_HOMEWORK }))
+    }, [dispatch])
+
 
     return (
         <>
@@ -84,8 +82,8 @@ export default function HomeWorkPage() {
                         <AnimatePresence>
                             {
                                 dataToShow.map((item) => {
-                                    const isLiked = item.usersLiked.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
-                                    const isDone = item.usersDoned.length > 0 //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
+                                    const isLiked = item?.usersLiked?.length > 0  //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
+                                    const isDone = item?.usersDoned?.length > 0  //в данном запросе возвращается пустой массив, если текущий пользователь не лайкнул
                                     const subjTitle = item.subject.title == 'default' ? 'Без предмета' : item.subject.title
                                     return (
                                         <Card
@@ -100,6 +98,7 @@ export default function HomeWorkPage() {
                                             subjectTitle={subjTitle}
                                         />
                                     )
+
                                 })
                             }
                         </AnimatePresence>

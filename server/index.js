@@ -40,6 +40,9 @@ app.use('/api', router)
 app.use(errorHandler)
 
 const createDefaultRows = async () => {
+    /*
+        Создаем категорию по умолчанию для тех постов, которые остались без предмета
+    */
     let defaultSubject = {
         title: 'default',
     }

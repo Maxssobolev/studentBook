@@ -2,6 +2,8 @@ const ApiError = require("../error/ApiError")
 const { Posts, Subjects, Likes, Users, DoneHomeworks } = require('../models/models')
 const { Op } = require('sequelize')
 const moment = require('moment')
+const events = require('events')
+const emitter = new events.EventEmitter();
 
 class PostController {
     includeOptions = (req, postType) => {
@@ -36,11 +38,24 @@ class PostController {
         return options
     }
 
-    async create(req, res, next) {
+    create = async (req, res, next) => {
         try {
             const { title, content, deadline, postType, subjectId = null } = req.body
             const post = await Posts.create({ title, content, deadline, postType, subjectId })
-            return res.json(post)
+
+            //getting created post with included fields
+            const createdPost = await Posts.findOne({
+                where: {
+                    id: post.id,
+                    postType
+                },
+                include: this.includeOptions(req, postType)
+            })
+            //notificate connected users about new post
+            emitter.emit('newPost', createdPost)
+            res.status(200)
+
+            return res.json(createdPost)
         }
         catch (e) {
             next(ApiError.badRequest(e.message))
@@ -48,21 +63,34 @@ class PostController {
     }
 
     getAll = async (req, res, next) => {
-        const { withOverdueDeadline, postType } = req.query
-        let post;
+        const { withOverdueDeadline } = req.query
         let whereOptions = {
-            postType,
             ...(!withOverdueDeadline ? { deadline: { [Op.gte]: moment() } } : {})
         }
 
-        try {
-            post = await Posts.findAll({
-                where: whereOptions,
-                include: this.includeOptions(req, postType),
-                order: [['createdAt', 'DESC']],
+        let news = [];
+        let homeworks = [];
 
+        try {
+            news = await Posts.findAll({
+                where: { ...whereOptions, postType: 'news' },
+                include: this.includeOptions(req, 'news'),
+                order: [['createdAt', 'DESC']],
             })
-            return post ? res.json(post) : res.json([])
+
+
+            homeworks = await Posts.findAll({
+                where: { ...whereOptions, postType: 'homework' },
+                include: this.includeOptions(req, 'homework'),
+                order: [['createdAt', 'DESC']],
+            })
+
+
+
+            return res.json({
+                news,
+                homeworks
+            })
         }
         catch (e) {
             console.log(e)
@@ -70,9 +98,24 @@ class PostController {
         }
     }
 
+    connect = async (req, res, next) => {
+
+        res.writeHead(200, {
+            'Connection': 'keep-alive',
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+        })
+
+        emitter.on('newPost', (post) => {
+            res.write(`data: ${JSON.stringify(post)}\n\n`)
+        })
+
+    }
+
     getOne = async (req, res) => {
         const { id } = req.params
-        const { postType } = req.query
+        const { postType = '' } = req.query
+
 
         const currentPost = await Posts.findOne({
             where: {
@@ -82,6 +125,8 @@ class PostController {
             include: this.includeOptions(req, postType)
 
         })
+
+
         //если сходу нет такого поста - возвращаем все пустое 
         if (!currentPost) {
             return res.json({ prevPost: null, currentPost: null, nextPost: null })
