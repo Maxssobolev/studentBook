@@ -10,7 +10,7 @@ const router = require('./routes/index')
 const app = express()
 const fileUpload = require('express-fileupload')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
-const path = require('path')
+const path = require('path');
 
 
 passport.use(new VKontakteStrategy({
